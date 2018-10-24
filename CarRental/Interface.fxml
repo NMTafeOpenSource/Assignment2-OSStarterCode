@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="btServiceRequired" prefHeight="555.0" prefWidth="608.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CarRental.InterfaceController">
+   <children>
+      <Label layoutX="139.0" layoutY="14.0" prefHeight="65.0" prefWidth="326.0" text="Li's Car Rental Program" textFill="#29d64d">
+         <font>
+            <Font name="Centaur" size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="37.0" layoutY="95.0" prefHeight="25.0" prefWidth="125.0" text="Vehical Manufacturer:" />
+      <Label layoutX="293.0" layoutY="205.0" prefHeight="25.0" prefWidth="76.0" text="Trip Distance:" />
+      <Label layoutX="37.0" layoutY="205.0" prefHeight="25.0" prefWidth="83.0" text="Fuel Economy:" />
+      <Button fx:id="btPrintRceipt" layoutX="33.0" layoutY="322.0" mnemonicParsing="false" onAction="#PrintReceipt" prefHeight="27.0" prefWidth="134.0" text="Print Receipt">
+         <font>
+            <Font name="System Bold Italic" size="18.0" />
+         </font>
+      </Button>
+      <TextField fx:id="tfTotalKiloTravelled" layoutX="373.0" layoutY="205.0" prefHeight="25.0" prefWidth="134.0" />
+      <Label layoutX="510.0" layoutY="205.0" prefHeight="25.0" prefWidth="21.0" text="KM" />
+      <Label layoutX="315.0" layoutY="95.0" prefHeight="25.0" prefWidth="83.0" text="Vehical Model:" />
+      <TextField fx:id="tfModel" layoutX="398.0" layoutY="95.0" />
+      <TextField fx:id="tfManufacturer" layoutX="162.0" layoutY="95.0" prefHeight="25.0" prefWidth="125.0" />
+      <Label layoutX="37.0" layoutY="130.0" prefHeight="25.0" prefWidth="125.0" text="Vehical MadeOfYear:" />
+      <TextField fx:id="tfMadeOfYear" layoutX="162.0" layoutY="130.0" prefHeight="25.0" prefWidth="83.0" />
+      <Label layoutX="37.0" layoutY="244.0" prefHeight="27.0" prefWidth="125.0" text="Last Service Odometer:" />
+      <TextField fx:id="tfLastServiceOdo" layoutX="169.0" layoutY="245.0" prefHeight="25.0" prefWidth="134.0" />
+      <Label layoutX="305.0" layoutY="245.0" prefHeight="25.0" prefWidth="21.0" text="KM" />
+      <Label layoutX="331.0" layoutY="244.0" prefHeight="27.0" prefWidth="83.0" text="Service Count:" />
+      <TextField fx:id="tfServiceCount" layoutX="414.0" layoutY="245.0" prefHeight="25.0" prefWidth="95.0" />
+      <Label layoutX="209.0" layoutY="205.0" prefHeight="25.0" prefWidth="53.0" text="L/100KM" />
+      <Label layoutX="264.0" layoutY="130.0" prefHeight="25.0" prefWidth="141.0" text="Vehical Registration No.:" />
+      <TextField fx:id="tfRegistrationNo" layoutX="417.0" layoutY="129.0" prefHeight="27.0" prefWidth="162.0" />
+      <TextField fx:id="tfServiceRequired" layoutX="151.0" layoutY="278.0" prefHeight="25.0" prefWidth="188.0" />
+      <Button fx:id="btServiceReqired" layoutX="33.0" layoutY="278.0" mnemonicParsing="false" onAction="#ServiceRequired" prefHeight="25.0" prefWidth="110.0" text="Service Required" />
+      <TextField fx:id="tfFuelEconomy" layoutX="126.0" layoutY="205.0" prefHeight="25.0" prefWidth="83.0" />
+      <Label layoutX="37.0" layoutY="169.0" prefHeight="25.0" prefWidth="83.0" text="Tank Capacity:" />
+      <TextField fx:id="tfTankCapacity" layoutX="116.0" layoutY="169.0" prefHeight="25.0" prefWidth="134.0" />
+      <Label layoutX="250.0" layoutY="169.0" prefHeight="25.0" prefWidth="14.0" text="L" />
+      <Label layoutX="274.0" layoutY="169.0" prefHeight="25.0" prefWidth="83.0" text="Fuel Left:" />
+      <TextField fx:id="tfFuelLeft" layoutX="331.0" layoutY="169.0" prefHeight="25.0" prefWidth="83.0" />
+      <Label layoutX="418.0" layoutY="169.0" prefHeight="25.0" prefWidth="14.0" text="L" />
+      <TextArea fx:id="taReceipt" layoutX="43.0" layoutY="369.0" prefHeight="196.0" prefWidth="493.0" />
+   </children>
+</AnchorPane>
