@@ -5,9 +5,9 @@ public class Vehicle {
 	private String	manufacturer;
 	private String	model;
 	private int	makeYear;
-        // TODO add Registration Number 
-        // TODO add variable for OdometerReading (in KM), 
-        // TODO add variable for TankCapacity (in litres)
+        private int  registrationNo;
+        private double  odemeterReading;
+        private double  tankCapacity;
                
 	private FuelPurchase	fuelPurchase;
 
@@ -17,28 +17,77 @@ public class Vehicle {
 	 * @param manufacturer
 	 * @param model
 	 * @param makeYear
+	 * @param registrationNo
+	 * @param odemeterReading
+	 * @param tankCapacity
 	 */
-	public Vehicle(String manufacturer, String model, int makeYear) {
+	public Vehicle(String manufacturer, String model, int makeYear, int registrationNo, double odemeterReading, double tankCapacity) {
 		this.manufacturer = manufacturer;
 		this.model = model;
 		this.makeYear = makeYear;
+		this.registrationNo = registrationNo;
+		this.odemeterReading = odemeterReading;
+		this.tankCapacity = tankCapacity;
 		fuelPurchase = new FuelPurchase();
 	}
-
-        // TODO Add missing getter and setter methods
+        
+        // getters and setters
+        
+        public String getManufacturer(){
+            return this.manufacturer;
+        }
+	public void setManufacturer(String manufacturer) {
+		this.manufacturer = manufacturer;
+	}
+        
+        public String getModel(){
+            return this.model;
+        }
+	public void setModel(String model) {
+		this.model = model;
+	}
+        
+        public int getMakeYear(){
+            return this.makeYear;
+        }
+	public void setMakeYear(int makeYear) {
+		this.makeYear = makeYear;
+	}
+        
+        public int getRegistrationNo(){
+            return this.registrationNo;
+        }
+	public void setRegistrationNo(int registrationNo) {
+		this.registrationNo = registrationNo;
+	}
+        
+        public double getOdemeterReading(){
+            return this.odemeterReading;
+        }
+	public void setOdemeterReading(double odemeterReading) {
+		this.odemeterReading = odemeterReading;
+	}
+        
+        public double getTankCapacity(){
+            return this.tankCapacity;
+        }
+	public void setTankCapacity(double tankCapacity) {
+		this.tankCapacity = tankCapacity;
+	}
         
 	/**
 	 * Prints details for {@link Vehicle}
 	 */
 	public void printDetails() {
-		System.out.println("Vehicle: " + makeYear + " " + manufacturer + " " + model);		
-                // TODO Display additional information about this vehicle
+		System.out.println("Vehicle: " + makeYear + " " + manufacturer + " " + model + ", registration: " + registrationNo + ", odemeter: " + odemeterReading + ", tank capacity: " + tankCapacity);
 	}
 
         
-        // TODO Create an addKilometers method which takes a parameter for distance travelled 
-        // and adds it to the odometer reading. 
-
+        // adds kilometers to the odometer reading. 
+        public void addKilometers(double distanceTravelled) {
+            this.odemeterReading += distanceTravelled;
+        }
+        
         // adds fuel to the car
         public void addFuel(double litres, double price){            
             fuelPurchase.purchaseFuel(litres, price);
