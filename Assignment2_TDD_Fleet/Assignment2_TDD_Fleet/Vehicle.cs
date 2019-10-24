@@ -8,8 +8,8 @@ namespace Assignment2_TDD_Fleet
 {
     public class Vehicle
     {
-        private String manufacturer;
-        private String model;
+        private string manufacturer;
+        private string model;
         private int makeYear;
         // TODO add Registration Number 
         // TODO add variable for OdometerReading (in KM), 
@@ -24,7 +24,7 @@ namespace Assignment2_TDD_Fleet
          * @param model
          * @param makeYear
          */
-        public Vehicle(String manufacturer, String model, int makeYear)
+        public Vehicle(string manufacturer, string model, int makeYear)
         {
             this.manufacturer = manufacturer;
             this.model = model;
