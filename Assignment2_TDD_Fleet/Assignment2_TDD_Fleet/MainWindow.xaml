@@ -5,8 +5,146 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assignment2_TDD_Fleet"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="CarFleetDashboard" Height="450" Width="800">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top"
+              HorizontalAlignment="Left"
+              VerticalAlignment="Top"
+              Width="790">
+            <MenuItem x:Name="File"
+                      Header="File"/>
+            <MenuItem x:Name="RentCar"
+                      Header="RentCar"/>
+            <MenuItem x:Name="Vehicle" 
+                      Header="Vehicle">
+                <MenuItem x:Name="AddVehicle"
+                          Header="Add Vehicle"/>
+                <MenuItem x:Name="EditVehicle"
+                          Header="Edit Vehicle"/>
+            </MenuItem>
+            <Separator></Separator>
+            <MenuItem x:Name="About" 
+                      Header="About"/>
+        </Menu>
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="36"/>
+                            <ColumnDefinition Width="36"/>
+                            <ColumnDefinition Width="36"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+
+            <StatusBarItem>
+                <TextBlock x:Name="MessageTextBlock">Loading...</TextBlock>
+            </StatusBarItem>
+            <Separator Grid.Column="1"
+                       Margin="5"
+                       Width="1"
+                       Foreground="DimGray"/>
+
+            <StatusBarItem Grid.Column="2">
+                <TextBlock x:Name="SetTextBlock">Set</TextBlock>
+            </StatusBarItem>
+
+            <StatusBarItem Grid.Column="5"
+                           x:Name="NumLockStatus"
+                           Foreground="Gray"
+                           HorizontalContentAlignment="Center" Height="22" VerticalAlignment="Bottom">
+                <TextBlock>NUM</TextBlock>
+            </StatusBarItem>
+
+            <StatusBarItem Grid.Column="6"
+                           x:Name="CapsLockStatus"
+                           Foreground="Gray"
+                           HorizontalContentAlignment="Center">
+                <TextBlock>CAPS</TextBlock>
+            </StatusBarItem>
+
+            <StatusBarItem Grid.Column="7"
+                           x:Name="ScrollLockStatus"
+                           Foreground="Gray"
+                           HorizontalContentAlignment="Center">
+                <TextBlock>SCRL</TextBlock>
+            </StatusBarItem>
+        </StatusBar>
         
-    </Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40*"
+                               MinHeight="40"/>
+                <RowDefinition Height="250*"
+                               MinHeight="250"/>
+                <RowDefinition Height="40*"
+                               MinHeight="40"/>
+            </Grid.RowDefinitions>
+
+            <DataGrid x:Name="CarRentDataGrid"
+                      HorizontalAlignment="Center"
+                      Grid.Row="1"
+                      Height="auto"
+                      MinWidth="400"
+                      Width="790">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding RegistraionID}"
+                                        Width="*"
+                                        Header="Registration ID"
+                                        />
+
+                    <DataGridTextColumn Binding="{Binding CarManufacture}"
+                                        Width="*"
+                                        Header="Manufacture"
+                                        />
+
+                    <DataGridTextColumn Binding="{Binding CarModel}"
+                                        Width="*"
+                                        Header="Model"
+                                        />
+
+                    <DataGridTextColumn Binding="{Binding CarYear}"
+                                        Width="*"
+                                        Header="Year"
+                                        />
+
+                    <DataGridTextColumn Binding="{Binding created_at}"
+                                        Width="*"
+                                        Header="Created At"
+                                        />
+
+                    <DataGridTextColumn Binding="{Binding update_at}"
+                                        Width="*"
+                                        Header="Last Updated"
+                                        />
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Label Content="Filter"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="10,10,0,0"
+                   />
+
+            <TextBox x:Name="FilterTextBox" 
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Top"
+                     TextWrapping="Wrap"
+                     Text=""
+                     Margin="54,13,0,0"
+                     Height="23"
+                     Width="120"/>
+        </Grid>
+    </DockPanel>
+    
 </Window>

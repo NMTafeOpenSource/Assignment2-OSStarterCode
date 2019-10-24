@@ -45,10 +45,10 @@ namespace Assignment2_TDD_Fleet
          * 
          * @return the number of services needed per SERVICE_KILOMETER_LIMIT
          */
-        public int getTotalScheduledServices()
+        /*public int getTotalScheduledServices()
         {
             return (int)Math.Floor(lastServiceOdometerKm / SERVICE_KILOMETER_LIMIT);
-        }
+        }*/
 
     }
 }
