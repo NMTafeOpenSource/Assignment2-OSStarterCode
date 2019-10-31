@@ -16,7 +16,8 @@
             <MenuItem x:Name="Vehicle" 
                       Header="Vehicle">
                 <MenuItem x:Name="AddVehicle"
-                          Header="Add Vehicle"/>
+                          Header="Add Vehicle" Click="AddVehicle_Clicked"
+                          />
                 <MenuItem x:Name="EditVehicle"
                           Header="Edit Vehicle"/>
             </MenuItem>
@@ -102,7 +103,7 @@
                       MinWidth="400"
                       Width="790">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding RegistraionID}"
+                    <DataGridTextColumn Binding="{Binding RegistrationID}"
                                         Width="*"
                                         Header="Registration ID"
                                         />

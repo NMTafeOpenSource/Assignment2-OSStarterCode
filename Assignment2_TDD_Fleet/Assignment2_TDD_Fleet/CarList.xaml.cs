@@ -80,5 +80,11 @@ namespace Assignment2_TDD_Fleet
                 await Task.Delay(100);
             }
         }
+
+        private void AddVehicle_Clicked(object sender, RoutedEventArgs e)
+        {
+            AddVehicle addVehicle = new AddVehicle();
+            addVehicle.ShowDialog();
+        }
     }
 }
