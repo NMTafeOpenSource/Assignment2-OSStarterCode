@@ -80,7 +80,7 @@
                 <TextBlock>SCRL</TextBlock>
             </StatusBarItem>
         </StatusBar>
-        
+
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="40*"
@@ -118,14 +118,14 @@
                                         Header="Year"
                                         />
 
-                    <DataGridTextColumn Binding="{Binding created_at}"
+                    <DataGridTextColumn Binding="{Binding FuelType}"
                                         Width="*"
-                                        Header="Created At"
+                                        Header="Fuel Type"
                                         />
 
-                    <DataGridTextColumn Binding="{Binding update_at}"
+                    <DataGridTextColumn Binding="{Binding TankCapacity}"
                                         Width="*"
-                                        Header="Last Updated"
+                                        Header="Tank Capacity"
                                         />
                 </DataGrid.Columns>
             </DataGrid>
@@ -146,5 +146,5 @@
                      Width="120"/>
         </Grid>
     </DockPanel>
-    
+
 </Window>
