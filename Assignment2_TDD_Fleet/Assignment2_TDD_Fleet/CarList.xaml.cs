@@ -1,29 +1,28 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Assignment2_TDD_Fleet
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class CarList : Window
     {
-        public MainWindow()
+        public bool vehicleListChanged;
+
+        public CarList()
         {
+            //LoadVehicle();
             InitializeComponent();
             ScanStatusKeysInBackground();
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(VehicleListView.ItemsSource);
         }
 
         public void CheckKeyStatus()
@@ -81,10 +80,27 @@ namespace Assignment2_TDD_Fleet
             }
         }
 
+        public void LoadVehicle()
+        {
+            List<Vehicle> items;
+            using (StreamReader r = new StreamReader("../../Vehicles.json"))
+            {
+                string json = r.ReadToEnd();
+                items = JsonConvert.DeserializeObject<List<Vehicle>>(json);
+            }
+            VehicleListView.ItemsSource = items;
+            VehicleListView.Items.Refresh();
+        }
+
         private void AddVehicle_Clicked(object sender, RoutedEventArgs e)
         {
             AddVehicle addVehicle = new AddVehicle();
             addVehicle.ShowDialog();
+        }
+
+        private void LoadFile_Clicked(object sender, RoutedEventArgs e)
+        {
+            LoadVehicle();
         }
     }
 }

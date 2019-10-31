@@ -1,0 +1,20 @@
+[
+  {
+    "RegistrationID": 1828920,
+    "CarManufacture": "BMW",
+    "CarModel": "Z5",
+    "CarYear": 2019,
+    "FuelType": "Petrol",
+    "TankCapacity": 7.5,
+    "VehicleOdometer": 10020
+  },
+  {
+    "RegistrationID": 2829121,
+    "CarManufacture": "Toyota",
+    "CarModel": "Innova",
+    "CarYear": 2014,
+    "FuelType": "Petrol",
+    "TankCapacity": 20,
+    "VehicleOdometer": 20001
+  }
+]

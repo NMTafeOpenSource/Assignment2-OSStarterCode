@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,9 +10,14 @@ namespace Assignment2_TDD_Fleet
 {
     public class Vehicle
     {
-        private string manufacturer;
-        private string model;
-        private int makeYear;
+        public List<Vehicle> vehicles;
+        public int RegistrationID { get; set; }
+        public string CarManufacture { get; set; }
+        public string CarModel { get; set; }
+        public int CarYear { get; set; }
+        public string FuelType { get; set; }
+        public double TankCapacity { get; set; }
+        public int VehicleOdometer { get; set; }
         // TODO add Registration Number 
         // TODO add variable for OdometerReading (in KM), 
         // TODO add variable for TankCapacity (in litres)
@@ -24,11 +31,17 @@ namespace Assignment2_TDD_Fleet
          * @param model
          * @param makeYear
          */
-        public Vehicle(string manufacturer, string model, int makeYear)
+        public Vehicle()
         {
-            this.manufacturer = manufacturer;
-            this.model = model;
-            this.makeYear = makeYear;
+
+        }
+
+        public Vehicle(string manufacture, string model, int makeYear)
+        {
+            vehicles = (List<Vehicle>)JsonConvert.DeserializeObject(File.ReadAllText("Companies.json"), typeof(List<Vehicle>));
+            this.CarManufacture = manufacture;
+            this.CarModel = model;
+            this.CarYear = makeYear;
             fuelPurchase = new FuelPurchase();
         }
 
@@ -39,7 +52,7 @@ namespace Assignment2_TDD_Fleet
          */
         public void printDetails()
         {
-            Console.WriteLine("Vehicle: " + makeYear + " " + manufacturer + " " + model);
+            Console.WriteLine("Vehicle: " + CarYear + " " + CarManufacture + " " + CarModel);
             // TODO Display additional information about this vehicle
         }
 
