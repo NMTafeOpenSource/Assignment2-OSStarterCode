@@ -13,8 +13,6 @@
               Width="790">
             <MenuItem x:Name="File"
                       Header="File"/>
-            <MenuItem x:Name="RentCar"
-                      Header="RentCar"/>
             <MenuItem x:Name="Vehicle" 
                       Header="Vehicle">
                 <MenuItem x:Name="AddVehicle"
@@ -22,6 +20,12 @@
                 <MenuItem x:Name="EditVehicle"
                           Header="Edit Vehicle"/>
             </MenuItem>
+            <MenuItem x:Name="Services"
+                      Header="Services"/>
+            
+            <MenuItem x:Name="Journey"
+                      Header="Journey"/>
+            
             <Separator></Separator>
             <MenuItem x:Name="About" 
                       Header="About"/>
