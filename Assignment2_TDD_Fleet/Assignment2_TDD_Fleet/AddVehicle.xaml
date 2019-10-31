@@ -145,7 +145,7 @@
                 Margin="15,15,0,0" 
                 Grid.Row="7"
                 VerticalAlignment="Top"
-                Width="75"/>
+                Width="75" Click="Button_Click"/>
 
         <Button Content="Cancel"
                 Grid.Column="1"
@@ -153,7 +153,7 @@
                 Margin="0,15,15,0" 
                 Grid.Row="7"
                 VerticalAlignment="Top"
-                Width="75"/>
+                Width="75" Click="Button_Click_1"/>
 
     </Grid>
 </Window>

@@ -16,6 +16,9 @@ namespace Assignment2_TDD_Fleet
     public partial class CarList : Window
     {
         public bool vehicleListChanged;
+        public static List<Vehicle> vehicles;
+        public Vehicle vehicle;
+        
 
         public CarList()
         {
@@ -23,6 +26,8 @@ namespace Assignment2_TDD_Fleet
             InitializeComponent();
             ScanStatusKeysInBackground();
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(VehicleListView.ItemsSource);
+            vehicles = new List<Vehicle>();
+            LoadVehicle();
         }
 
         public void CheckKeyStatus()
@@ -82,13 +87,12 @@ namespace Assignment2_TDD_Fleet
 
         public void LoadVehicle()
         {
-            List<Vehicle> items;
             using (StreamReader r = new StreamReader("../../Vehicles.json"))
             {
                 string json = r.ReadToEnd();
-                items = JsonConvert.DeserializeObject<List<Vehicle>>(json);
+                vehicles = JsonConvert.DeserializeObject<List<Vehicle>>(json);
             }
-            VehicleListView.ItemsSource = items;
+            VehicleListView.ItemsSource = vehicles;
             VehicleListView.Items.Refresh();
         }
 
@@ -96,7 +100,11 @@ namespace Assignment2_TDD_Fleet
         {
             AddVehicle addVehicle = new AddVehicle();
             addVehicle.ShowDialog();
+            VehicleListView.ItemsSource = vehicles;
+            VehicleListView.Items.Refresh();
         }
+
+        
 
         private void LoadFile_Clicked(object sender, RoutedEventArgs e)
         {

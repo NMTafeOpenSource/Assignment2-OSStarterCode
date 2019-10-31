@@ -19,9 +19,59 @@ namespace Assignment2_TDD_Fleet
     /// </summary>
     public partial class AddVehicle : Window
     {
+        public Vehicle vehicles;
+        public static Vehicle vehicle;
+        public static bool newVehicle = true;
+
+        public AddVehicle(CarList car, Vehicle vehicle, bool newVehicle)
+        {
+            InitializeComponent();
+            this.vehicles = vehicle;
+            AddVehicle.newVehicle = newVehicle;
+          
+        }
+
         public AddVehicle()
         {
             InitializeComponent();
+            vehicles = new Vehicle();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            vehicles.vehicleListChanged = true;
+            if (newVehicle)
+            {
+                Vehicle vehicle = new Vehicle();
+                vehicle.RegistrationID = int.Parse(TextBoxRegisId.Text);
+                vehicle.CarManufacture = TextBoxManufacture.Text;
+                vehicle.CarModel = TextBoxModel.Text;
+                vehicle.CarYear = int.Parse(TextBoxYear.Text);
+                vehicle.FuelType = TextBoxFuelType.Text;
+                vehicle.TankCapacity = int.Parse(TextBoxFuelCapacity.Text);
+                vehicle.VehicleOdometer = int.Parse(TextBoxOdometer.Text);
+
+                CarList.vehicles.Add(vehicle);
+                
+            }
+            else
+            {
+                vehicle.RegistrationID = int.Parse(TextBoxRegisId.Text);
+                vehicle.CarManufacture = TextBoxManufacture.Text;
+                vehicle.CarModel = TextBoxModel.Text;
+                vehicle.CarYear = int.Parse(TextBoxYear.Text);
+                vehicle.FuelType = TextBoxFuelType.Text;
+                vehicle.TankCapacity = int.Parse(TextBoxFuelCapacity.Text);
+                vehicle.VehicleOdometer = int.Parse(TextBoxOdometer.Text);
+
+            }
+
+            Close();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }
