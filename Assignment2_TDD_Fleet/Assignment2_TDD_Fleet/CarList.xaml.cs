@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Win32;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -19,7 +20,9 @@ namespace Assignment2_TDD_Fleet
         public bool vehicleListChanged;
         public static List<Vehicle> vehicles;
         public Vehicle vehicle;
-        
+        internal SaveFileDialog saveFileDialog = new SaveFileDialog();
+        internal OpenFileDialog openFileDialog = new OpenFileDialog();
+
 
         public CarList()
         {
@@ -110,7 +113,29 @@ namespace Assignment2_TDD_Fleet
 
         private void LoadFile_Clicked(object sender, RoutedEventArgs e)
         {
-            LoadVehicle();
+            /*openFileDialog.Filter = "JSON Files (*.json) | *.json";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                vehicles = (List<Vehicle>)JsonConvert.DeserializeObject(File.ReadAllText(openFileDialog.FileName), typeof(List<Vehicle>));
+                FileName.Text = openFileDialog.FileName;
+                // companyListChanged = false;
+            }*/
+        }
+
+        private void SaveFile_Clicked(object sender, RoutedEventArgs e)
+        {
+            saveFileDialog.Filter = "JSON Files (*.json) | *.json";
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                using (StreamWriter file = File.CreateText(saveFileDialog.FileName))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    serializer.Serialize(file, vehicle);
+                }
+                vehicleListChanged = false;
+            }
         }
     }
 }

@@ -49,21 +49,19 @@ namespace Assignment2_TDD_Fleet
             fuelPurchase = new FuelPurchase();
         }
 
-        public void SaveCompanies(List<Vehicle> vehicles)
+        public void SaveVehicles(List<Vehicle> vehicles)
         {
             // serialize JSON to a string and then write string to a file
             //File.WriteAllText(@companyFileName, JsonConvert.SerializeObject(CompanyList));
-            JsonSerializer serializer = new JsonSerializer();
+
             // serialize JSON directly to a file
-            using (StreamWriter sw = new StreamWriter(@"../../Vehicles.json"))
-            using (JsonWriter writer = new JsonTextWriter(sw))
+            using (StreamWriter file = File.CreateText("../../Vehicle.json"))
             {
-                serializer.Serialize(writer, vehicles);
-                // {"ExpiryDate":new Date(1230375600000),"Price":0}
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Serialize(file, vehicles);
             }
             vehicleListChanged = false;
         }
-        // TODO Add missing getter and setter methods
 
         /**
          * Prints details for {@link Vehicle}

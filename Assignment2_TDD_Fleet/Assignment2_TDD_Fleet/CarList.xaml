@@ -11,13 +11,13 @@
               HorizontalAlignment="Left"
               VerticalAlignment="Top"
               Width="790">
-            <MenuItem x:Name="File"
+            <MenuItem x:Name="MenuFile"
                       Header="File">
                 <MenuItem x:Name="LoadFile"
                           Header="Load" Click="LoadFile_Clicked"
                           />
                 <MenuItem x:Name="SaveFile"
-                          Header="Save"/>
+                          Header="Save" Click="SaveFile_Clicked" />
                 
             </MenuItem>
             <MenuItem x:Name="Vehicle" 

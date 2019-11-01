@@ -64,7 +64,7 @@ namespace Assignment2_TDD_Fleet
                 vehicle.VehicleOdometer = int.Parse(TextBoxOdometer.Text);
 
             }
-            //vehicle.SaveCompanies();
+            //vehicles.SaveVehicles(vehicle.vehicles);
             Close();
         }
 
