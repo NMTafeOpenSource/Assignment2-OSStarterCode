@@ -15,6 +15,7 @@ namespace Assignment2_TDD_Fleet
     /// </summary>
     public partial class CarList : Window
     {
+        internal ListView vehicleListView;
         public bool vehicleListChanged;
         public static List<Vehicle> vehicles;
         public Vehicle vehicle;
@@ -25,6 +26,7 @@ namespace Assignment2_TDD_Fleet
             //LoadVehicle();
             InitializeComponent();
             ScanStatusKeysInBackground();
+            vehicleListView = VehicleListView;
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(VehicleListView.ItemsSource);
             vehicles = new List<Vehicle>();
             LoadVehicle();
@@ -96,6 +98,8 @@ namespace Assignment2_TDD_Fleet
             VehicleListView.Items.Refresh();
         }
 
+        
+
         private void AddVehicle_Clicked(object sender, RoutedEventArgs e)
         {
             AddVehicle addVehicle = new AddVehicle();
@@ -103,8 +107,6 @@ namespace Assignment2_TDD_Fleet
             VehicleListView.ItemsSource = vehicles;
             VehicleListView.Items.Refresh();
         }
-
-        
 
         private void LoadFile_Clicked(object sender, RoutedEventArgs e)
         {

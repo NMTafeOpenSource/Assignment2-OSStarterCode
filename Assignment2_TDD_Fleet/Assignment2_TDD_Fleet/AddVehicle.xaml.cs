@@ -19,6 +19,7 @@ namespace Assignment2_TDD_Fleet
     /// </summary>
     public partial class AddVehicle : Window
     {
+        public CarList carList;
         public Vehicle vehicles;
         public static Vehicle vehicle;
         public static bool newVehicle = true;
@@ -26,9 +27,8 @@ namespace Assignment2_TDD_Fleet
         public AddVehicle(CarList car, Vehicle vehicle, bool newVehicle)
         {
             InitializeComponent();
-            this.vehicles = vehicle;
+            vehicles = vehicle;
             AddVehicle.newVehicle = newVehicle;
-          
         }
 
         public AddVehicle()
@@ -52,7 +52,6 @@ namespace Assignment2_TDD_Fleet
                 vehicle.VehicleOdometer = int.Parse(TextBoxOdometer.Text);
 
                 CarList.vehicles.Add(vehicle);
-                
             }
             else
             {
@@ -65,7 +64,7 @@ namespace Assignment2_TDD_Fleet
                 vehicle.VehicleOdometer = int.Parse(TextBoxOdometer.Text);
 
             }
-
+            //vehicle.SaveCompanies();
             Close();
         }
 

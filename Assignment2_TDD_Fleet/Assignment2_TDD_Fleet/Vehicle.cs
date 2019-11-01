@@ -6,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace Assignment2_TDD_Fleet
 {
     public class Vehicle
     {
-        internal ListView vehicleListView;
         public List<Vehicle> vehicles;
         public int RegistrationID { get; set; }
         public string CarManufacture { get; set; }
@@ -20,8 +20,9 @@ namespace Assignment2_TDD_Fleet
         public string FuelType { get; set; }
         public double TankCapacity { get; set; }
         public int VehicleOdometer { get; set; }
-        string vehiclesFileName = "Vehicles.json";
-        
+        string vehiclesFileName = "../../Vehicles.json";
+
+
         public bool vehicleListChanged = false; // this is updated if you edit/add/delete the vehicles list
 
         private FuelPurchase fuelPurchase;
@@ -35,32 +36,33 @@ namespace Assignment2_TDD_Fleet
          */
         public Vehicle()
         {
-
+            
         }
 
-        public void SaveCompanies(List<Vehicle> vehicles)
-        {
-            // serialize JSON to a string and then write string to a file
-            //File.WriteAllText(@companyFileName, JsonConvert.SerializeObject(CompanyList));
-
-            // serialize JSON directly to a file
-            using (StreamWriter file = File.CreateText(vehiclesFileName))
-            {
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.Serialize(file, vehicles);
-            }
-            vehicleListChanged = false;
-        }
 
         public Vehicle(string manufacture, string model, int makeYear)
         {
-            vehicles = (List<Vehicle>)JsonConvert.DeserializeObject(File.ReadAllText("Vehicles.json"), typeof(List<Vehicle>));
+            vehicles = (List<Vehicle>)JsonConvert.DeserializeObject(File.ReadAllText("../../Vehicles.json"), typeof(List<Vehicle>));
             this.CarManufacture = manufacture;
             this.CarModel = model;
             this.CarYear = makeYear;
             fuelPurchase = new FuelPurchase();
         }
 
+        public void SaveCompanies(List<Vehicle> vehicles)
+        {
+            // serialize JSON to a string and then write string to a file
+            //File.WriteAllText(@companyFileName, JsonConvert.SerializeObject(CompanyList));
+            JsonSerializer serializer = new JsonSerializer();
+            // serialize JSON directly to a file
+            using (StreamWriter sw = new StreamWriter(@"../../Vehicles.json"))
+            using (JsonWriter writer = new JsonTextWriter(sw))
+            {
+                serializer.Serialize(writer, vehicles);
+                // {"ExpiryDate":new Date(1230375600000),"Price":0}
+            }
+            vehicleListChanged = false;
+        }
         // TODO Add missing getter and setter methods
 
         /**
