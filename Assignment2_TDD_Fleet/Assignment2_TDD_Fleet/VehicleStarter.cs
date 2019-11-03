@@ -14,7 +14,7 @@ namespace Assignment2_TDD_Fleet
          */
         public static void main(string[] args)
         {
-            Vehicle v = new Vehicle("Ford", "T812", 2014);
+            Vehicle v = new Vehicle("Ford", "T812", "2014");
 
             // Vehicle sample distance
             v.addFuel(new Random().NextDouble() * 10, 1.3);

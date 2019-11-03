@@ -24,17 +24,26 @@ namespace Assignment2_TDD_Fleet
         public static Vehicle vehicle;
         public static bool newVehicle = true;
 
+        public AddVehicle()
+        {
+            InitializeComponent();
+            vehicles = new Vehicle();
+        }
+
         public AddVehicle(CarList car, Vehicle vehicle, bool newVehicle)
         {
             InitializeComponent();
             vehicles = vehicle;
             AddVehicle.newVehicle = newVehicle;
-        }
+            carList = car;
 
-        public AddVehicle()
-        {
-            InitializeComponent();
-            vehicles = new Vehicle();
+            TextBoxRegisId.Text = vehicles.RegistrationID;
+            TextBoxManufacture.Text = vehicles.CarManufacture;
+            TextBoxModel.Text = vehicles.CarModel;
+            TextBoxYear.Text = vehicles.CarYear;
+            TextBoxFuelType.Text = vehicles.FuelType;
+            TextBoxFuelCapacity.Text = vehicles.TankCapacity;
+            TextBoxOdometer.Text = vehicles.VehicleOdometer;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -43,28 +52,26 @@ namespace Assignment2_TDD_Fleet
             if (newVehicle)
             {
                 Vehicle vehicle = new Vehicle();
-                vehicle.RegistrationID = int.Parse(TextBoxRegisId.Text);
+                vehicle.RegistrationID = TextBoxRegisId.Text;
                 vehicle.CarManufacture = TextBoxManufacture.Text;
                 vehicle.CarModel = TextBoxModel.Text;
-                vehicle.CarYear = int.Parse(TextBoxYear.Text);
+                vehicle.CarYear = TextBoxYear.Text;
                 vehicle.FuelType = TextBoxFuelType.Text;
-                vehicle.TankCapacity = int.Parse(TextBoxFuelCapacity.Text);
-                vehicle.VehicleOdometer = int.Parse(TextBoxOdometer.Text);
+                vehicle.TankCapacity = TextBoxFuelCapacity.Text;
+                vehicle.VehicleOdometer = TextBoxOdometer.Text;
 
                 CarList.vehicles.Add(vehicle);
             }
             else
             {
-                vehicle.RegistrationID = int.Parse(TextBoxRegisId.Text);
-                vehicle.CarManufacture = TextBoxManufacture.Text;
-                vehicle.CarModel = TextBoxModel.Text;
-                vehicle.CarYear = int.Parse(TextBoxYear.Text);
-                vehicle.FuelType = TextBoxFuelType.Text;
-                vehicle.TankCapacity = int.Parse(TextBoxFuelCapacity.Text);
-                vehicle.VehicleOdometer = int.Parse(TextBoxOdometer.Text);
-
+                vehicles.RegistrationID = TextBoxRegisId.Text;
+                vehicles.CarManufacture = TextBoxManufacture.Text;
+                vehicles.CarModel = TextBoxModel.Text;
+                vehicles.CarYear = TextBoxYear.Text;
+                vehicles.FuelType = TextBoxFuelType.Text;
+                vehicles.TankCapacity = TextBoxFuelCapacity.Text;
+                vehicles.VehicleOdometer = TextBoxOdometer.Text;
             }
-            //vehicles.SaveVehicles(vehicle.vehicles);
             Close();
         }
 

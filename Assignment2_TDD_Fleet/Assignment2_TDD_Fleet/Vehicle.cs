@@ -12,15 +12,13 @@ namespace Assignment2_TDD_Fleet
 {
     public class Vehicle
     {
-        public List<Vehicle> vehicles;
-        public int RegistrationID { get; set; }
+        public string RegistrationID { get; set; }
         public string CarManufacture { get; set; }
         public string CarModel { get; set; }
-        public int CarYear { get; set; }
+        public string CarYear { get; set; }
         public string FuelType { get; set; }
-        public double TankCapacity { get; set; }
-        public int VehicleOdometer { get; set; }
-        string vehiclesFileName = "../../Vehicles.json";
+        public string TankCapacity { get; set; }
+        public string VehicleOdometer { get; set; }
 
 
         public bool vehicleListChanged = false; // this is updated if you edit/add/delete the vehicles list
@@ -40,27 +38,12 @@ namespace Assignment2_TDD_Fleet
         }
 
 
-        public Vehicle(string manufacture, string model, int makeYear)
+        public Vehicle(string manufacture, string model, string makeYear)
         {
-            vehicles = (List<Vehicle>)JsonConvert.DeserializeObject(File.ReadAllText("../../Vehicles.json"), typeof(List<Vehicle>));
             this.CarManufacture = manufacture;
             this.CarModel = model;
             this.CarYear = makeYear;
             fuelPurchase = new FuelPurchase();
-        }
-
-        public void SaveVehicles(List<Vehicle> vehicles)
-        {
-            // serialize JSON to a string and then write string to a file
-            //File.WriteAllText(@companyFileName, JsonConvert.SerializeObject(CompanyList));
-
-            // serialize JSON directly to a file
-            using (StreamWriter file = File.CreateText("../../Vehicle.json"))
-            {
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.Serialize(file, vehicles);
-            }
-            vehicleListChanged = false;
         }
 
         /**

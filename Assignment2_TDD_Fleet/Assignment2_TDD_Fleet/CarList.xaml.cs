@@ -26,10 +26,10 @@ namespace Assignment2_TDD_Fleet
 
         public CarList()
         {
-            //LoadVehicle();
             InitializeComponent();
             ScanStatusKeysInBackground();
             vehicleListView = VehicleListView;
+            VehicleListView.ItemsSource = CarList.vehicles;
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(VehicleListView.ItemsSource);
             vehicles = new List<Vehicle>();
             LoadVehicle();
@@ -123,6 +123,20 @@ namespace Assignment2_TDD_Fleet
             }*/
         }
 
+        public void SaveVehicles(CarList vehicles)
+        {
+            // serialize JSON to a string and then write string to a file
+            //File.WriteAllText(@companyFileName, JsonConvert.SerializeObject(CompanyList));
+
+            // serialize JSON directly to a file
+            using (StreamWriter file = File.CreateText("../../Vehicle.json"))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Serialize(file, vehicles);
+            }
+            vehicleListChanged = false;
+        }
+
         private void SaveFile_Clicked(object sender, RoutedEventArgs e)
         {
             saveFileDialog.Filter = "JSON Files (*.json) | *.json";
@@ -136,6 +150,27 @@ namespace Assignment2_TDD_Fleet
                 }
                 vehicleListChanged = false;
             }
+        }
+
+        private void DeleteButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            Vehicle detailsForACompany = button.DataContext as Vehicle;
+            CarList.vehicles.Remove(detailsForACompany);
+            //this.SaveCompanies(MainWindow.companies);
+            CollectionViewSource.GetDefaultView(vehicleListView.ItemsSource).Refresh();
+            vehicleListChanged = true;
+        }
+
+        private void ButtonEdit_Clicked(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            Vehicle vehicleItem = button.DataContext as Vehicle;
+            AddVehicle vehicleAdd = new AddVehicle(this, vehicleItem, false);
+            vehicleAdd.carList = this;
+            vehicleAdd.ShowDialog();
+            vehicleListView.ItemsSource = vehicles;
+            vehicleListView.Items.Refresh();
         }
     }
 }
