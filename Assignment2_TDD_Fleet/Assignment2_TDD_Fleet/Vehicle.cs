@@ -12,6 +12,7 @@ namespace Assignment2_TDD_Fleet
 {
     public class Vehicle
     {
+        public int Id { get; set; }
         public string RegistrationID { get; set; }
         public string CarManufacture { get; set; }
         public string CarModel { get; set; }
@@ -21,49 +22,24 @@ namespace Assignment2_TDD_Fleet
         public string VehicleOdometer { get; set; }
 
 
-        public bool vehicleListChanged = false; // this is updated if you edit/add/delete the vehicles list
-
-        private FuelPurchase fuelPurchase;
-
-        /**
-         * Class constructor specifying name of make (manufacturer), model and year
-         * of make.
-         * @param manufacturer
-         * @param model
-         * @param makeYear
-         */
         public Vehicle()
         {
-            
+
         }
 
-
-        public Vehicle(string manufacture, string model, string makeYear)
+        public bool vehicleListChanged = false; // this is updated if you edit/add/delete the vehicles list
+        public void SaveVehicles(List<Vehicle> vehicles)
         {
-            this.CarManufacture = manufacture;
-            this.CarModel = model;
-            this.CarYear = makeYear;
-            fuelPurchase = new FuelPurchase();
+            // serialize JSON to a string and then write string to a file
+            //File.WriteAllText(@companyFileName, JsonConvert.SerializeObject(CompanyList));
+
+            // serialize JSON directly to a file
+            using (StreamWriter file = File.CreateText("../../Vehicle.json"))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Serialize(file, vehicles);
+            }
+            vehicleListChanged = false;
         }
-
-        /**
-         * Prints details for {@link Vehicle}
-         */
-        public void printDetails()
-        {
-            Console.WriteLine("Vehicle: " + CarYear + " " + CarManufacture + " " + CarModel);
-            // TODO Display additional information about this vehicle
-        }
-
-
-        // TODO Create an addKilometers method which takes a parameter for distance travelled 
-        // and adds it to the odometer reading. 
-
-        // adds fuel to the car
-        public void addFuel(double litres, double price)
-        {
-            fuelPurchase.purchaseFuel(litres, price);
-        }
-
     }
 }

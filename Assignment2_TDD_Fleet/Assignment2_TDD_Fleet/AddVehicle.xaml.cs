@@ -20,7 +20,7 @@ namespace Assignment2_TDD_Fleet
     public partial class AddVehicle : Window
     {
         public CarList carList;
-        public Vehicle vehicles;
+        public static Vehicle vehicles;
         public static Vehicle vehicle;
         public static bool newVehicle = true;
 
@@ -72,6 +72,7 @@ namespace Assignment2_TDD_Fleet
                 vehicles.TankCapacity = TextBoxFuelCapacity.Text;
                 vehicles.VehicleOdometer = TextBoxOdometer.Text;
             }
+            vehicles.SaveVehicles(CarList.vehicles);
             Close();
         }
 

@@ -16,9 +16,10 @@ namespace Assignment2_TDD_Fleet
     /// </summary>
     public partial class CarList : Window
     {
+        public static List<Vehicle> vehicles;
         internal ListView vehicleListView;
         public bool vehicleListChanged;
-        public static List<Vehicle> vehicles;
+        
         public Vehicle vehicle;
         internal SaveFileDialog saveFileDialog = new SaveFileDialog();
         internal OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -29,7 +30,7 @@ namespace Assignment2_TDD_Fleet
             InitializeComponent();
             ScanStatusKeysInBackground();
             vehicleListView = VehicleListView;
-            VehicleListView.ItemsSource = CarList.vehicles;
+            VehicleListView.ItemsSource = vehicles;
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(VehicleListView.ItemsSource);
             vehicles = new List<Vehicle>();
             LoadVehicle();
@@ -101,8 +102,6 @@ namespace Assignment2_TDD_Fleet
             VehicleListView.Items.Refresh();
         }
 
-        
-
         private void AddVehicle_Clicked(object sender, RoutedEventArgs e)
         {
             AddVehicle addVehicle = new AddVehicle();
@@ -123,20 +122,6 @@ namespace Assignment2_TDD_Fleet
             }*/
         }
 
-        public void SaveVehicles(CarList vehicles)
-        {
-            // serialize JSON to a string and then write string to a file
-            //File.WriteAllText(@companyFileName, JsonConvert.SerializeObject(CompanyList));
-
-            // serialize JSON directly to a file
-            using (StreamWriter file = File.CreateText("../../Vehicle.json"))
-            {
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.Serialize(file, vehicles);
-            }
-            vehicleListChanged = false;
-        }
-
         private void SaveFile_Clicked(object sender, RoutedEventArgs e)
         {
             saveFileDialog.Filter = "JSON Files (*.json) | *.json";
@@ -146,7 +131,7 @@ namespace Assignment2_TDD_Fleet
                 using (StreamWriter file = File.CreateText(saveFileDialog.FileName))
                 {
                     JsonSerializer serializer = new JsonSerializer();
-                    serializer.Serialize(file, vehicle);
+                    serializer.Serialize(file, vehicles);
                 }
                 vehicleListChanged = false;
             }
@@ -156,7 +141,7 @@ namespace Assignment2_TDD_Fleet
         {
             Button button = sender as Button;
             Vehicle detailsForACompany = button.DataContext as Vehicle;
-            CarList.vehicles.Remove(detailsForACompany);
+            vehicles.Remove(detailsForACompany);
             //this.SaveCompanies(MainWindow.companies);
             CollectionViewSource.GetDefaultView(vehicleListView.ItemsSource).Refresh();
             vehicleListChanged = true;

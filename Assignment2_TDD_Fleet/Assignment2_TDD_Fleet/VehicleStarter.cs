@@ -11,7 +11,7 @@ namespace Assignment2_TDD_Fleet
 
         /** Main entry point to the program
          * @param args the command line arguments
-         */
+         *//*
         public static void main(string[] args)
         {
             Vehicle v = new Vehicle("Ford", "T812", "2014");
@@ -22,6 +22,6 @@ namespace Assignment2_TDD_Fleet
             v.printDetails();
             Console.WriteLine("\n\n");
         }
-
+        */
     }
 }

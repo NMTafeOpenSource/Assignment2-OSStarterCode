@@ -1,5 +1,6 @@
 [
   {
+    "Id": 1,
     "RegistrationID": "1828920",
     "CarManufacture": "BMW",
     "CarModel": "Z5",
@@ -9,6 +10,7 @@
     "VehicleOdometer": "10020"
   },
   {
+    "Id": 2,
     "RegistrationID": "2829121",
     "CarManufacture": "Toyota",
     "CarModel": "Innova",
