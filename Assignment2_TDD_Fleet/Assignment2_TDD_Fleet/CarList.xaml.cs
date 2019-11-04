@@ -19,7 +19,6 @@ namespace Assignment2_TDD_Fleet
         public static List<Vehicle> vehicles;
         internal ListView vehicleListView;
         public bool vehicleListChanged;
-        
         public Vehicle vehicle;
         internal SaveFileDialog saveFileDialog = new SaveFileDialog();
         internal OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -112,14 +111,16 @@ namespace Assignment2_TDD_Fleet
 
         private void LoadFile_Clicked(object sender, RoutedEventArgs e)
         {
-            /*openFileDialog.Filter = "JSON Files (*.json) | *.json";
+            openFileDialog.Filter = "JSON Files (*.json) | *.json";
 
             if (openFileDialog.ShowDialog() == true)
             {
                 vehicles = (List<Vehicle>)JsonConvert.DeserializeObject(File.ReadAllText(openFileDialog.FileName), typeof(List<Vehicle>));
-                FileName.Text = openFileDialog.FileName;
+                //FileNameLabel.Text = openFileDialog.FileName;
                 // companyListChanged = false;
-            }*/
+            }
+            VehicleListView.ItemsSource = vehicles;
+            VehicleListView.Items.Refresh();
         }
 
         private void SaveFile_Clicked(object sender, RoutedEventArgs e)
