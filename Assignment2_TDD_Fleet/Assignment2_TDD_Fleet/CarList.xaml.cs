@@ -20,6 +20,7 @@ namespace Assignment2_TDD_Fleet
         internal ListView vehicleListView;
         public bool vehicleListChanged;
         public Vehicle vehicle;
+        string vehiclesFileName = "jsontestshit.json";
         internal SaveFileDialog saveFileDialog = new SaveFileDialog();
         internal OpenFileDialog openFileDialog = new OpenFileDialog();
 
@@ -92,13 +93,19 @@ namespace Assignment2_TDD_Fleet
 
         public void LoadVehicle()
         {
-            using (StreamReader r = new StreamReader("../../Vehicles.json"))
+            /*using (StreamReader r = new StreamReader("../../Vehicles.json"))
             {
                 string json = r.ReadToEnd();
                 vehicles = JsonConvert.DeserializeObject<List<Vehicle>>(json);
             }
             VehicleListView.ItemsSource = vehicles;
-            VehicleListView.Items.Refresh();
+            VehicleListView.Items.Refresh();*/
+
+            vehicles.Clear();
+            // deserialize JSON directly from a file
+            vehicles = (List<Vehicle>)JsonConvert.DeserializeObject(File.ReadAllText(vehiclesFileName), typeof(List<Vehicle>));
+            vehicleListView.ItemsSource = vehicles;
+            vehicleListView.Items.Refresh();
         }
 
         private void AddVehicle_Clicked(object sender, RoutedEventArgs e)
