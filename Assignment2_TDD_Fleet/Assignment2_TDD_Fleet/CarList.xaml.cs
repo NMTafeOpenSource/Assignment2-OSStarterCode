@@ -95,14 +95,6 @@ namespace Assignment2_TDD_Fleet
 
         public void LoadVehicle()
         {
-            /*using (StreamReader r = new StreamReader("../../Vehicles.json"))
-            {
-                string json = r.ReadToEnd();
-                vehicles = JsonConvert.DeserializeObject<List<Vehicle>>(json);
-            }
-            VehicleListView.ItemsSource = vehicles;
-            VehicleListView.Items.Refresh();*/
-
             vehicles.Clear();
             // deserialize JSON directly from a file
             vehicles = (List<Vehicle>)JsonConvert.DeserializeObject(File.ReadAllText(vehiclesFileName), typeof(List<Vehicle>));
@@ -174,6 +166,12 @@ namespace Assignment2_TDD_Fleet
             List<Vehicle> matches = CarList.vehicles.FindAll(vehicles
                 => Regex.Matches(vehicles.CarManufacture.ToLower(), textSearch.ToLower()).Count > 0).ToList();
             VehicleListView.ItemsSource = matches;
+        }
+
+        private void buttonClear_Click(object sender, RoutedEventArgs e)
+        {
+            FilterTextBox.Text = "";
+            VehicleListView.ItemsSource = vehicles;
         }
     }
 }
