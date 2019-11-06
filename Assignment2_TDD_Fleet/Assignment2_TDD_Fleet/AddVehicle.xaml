@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assignment2_TDD_Fleet"
         mc:Ignorable="d"
-        Title="AddVehicle" Height="450" Width="500">
+        Title="VehicleForm" Height="450" Width="500">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

@@ -21,7 +21,6 @@ namespace Assignment2_TDD_Fleet
         public string TankCapacity { get; set; }
         public string VehicleOdometer { get; set; }
 
-
         public Vehicle()
         {
 
@@ -34,7 +33,7 @@ namespace Assignment2_TDD_Fleet
             //File.WriteAllText(@companyFileName, JsonConvert.SerializeObject(CompanyList));
 
             // serialize JSON directly to a file
-            using (StreamWriter file = File.CreateText("../../Vehicle.json"))
+            using (StreamWriter file = File.CreateText("jsontestshit.json"))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Serialize(file, vehicles);

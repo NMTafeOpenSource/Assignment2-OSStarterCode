@@ -2,6 +2,8 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -164,6 +166,14 @@ namespace Assignment2_TDD_Fleet
             vehicleAdd.ShowDialog();
             vehicleListView.ItemsSource = vehicles;
             vehicleListView.Items.Refresh();
+        }
+
+        private void Filter_Text_Changed(object sender, TextChangedEventArgs e)
+        {
+            string textSearch = FilterTextBox.Text;
+            List<Vehicle> matches = CarList.vehicles.FindAll(vehicles
+                => Regex.Matches(vehicles.CarManufacture.ToLower(), textSearch.ToLower()).Count > 0).ToList();
+            VehicleListView.ItemsSource = matches;
         }
     }
 }

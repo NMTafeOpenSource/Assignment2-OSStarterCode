@@ -210,7 +210,8 @@
                      Text=""
                      Margin="54,13,0,0"
                      Height="23"
-                     Width="120"/>
+                     Width="120" TextChanged="Filter_Text_Changed"
+                     />
         </Grid>
     </DockPanel>
 
