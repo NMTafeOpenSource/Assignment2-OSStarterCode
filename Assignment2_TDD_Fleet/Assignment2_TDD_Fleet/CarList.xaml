@@ -173,8 +173,9 @@
                                         <Button x:Name="btnRentVehicle"
                                                 Grid.Column="2"
                                                 Height="24" Width="45"
-                                                Content="View"
-                                                Background="Green" 
+                                                Content="Book"
+                                                Background="BlueViolet" Click="BtnRentVehicle_Click"
+                                                
                                                 >
                                         </Button>
 

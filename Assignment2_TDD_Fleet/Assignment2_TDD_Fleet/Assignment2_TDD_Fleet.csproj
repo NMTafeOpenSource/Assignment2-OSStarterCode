@@ -61,6 +61,9 @@
     <Compile Include="AddVehicle.xaml.cs">
       <DependentUpon>AddVehicle.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Bookings.xaml.cs">
+      <DependentUpon>Bookings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CarManagement.cs" />
     <Compile Include="FuelPurchase.cs" />
     <Compile Include="Journey.cs" />
@@ -68,6 +71,10 @@
     <Compile Include="Vehicle.cs" />
     <Compile Include="VehicleStarter.cs" />
     <Page Include="AddVehicle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Bookings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

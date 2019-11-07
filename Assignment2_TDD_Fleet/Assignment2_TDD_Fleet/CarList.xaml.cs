@@ -143,8 +143,8 @@ namespace Assignment2_TDD_Fleet
         private void DeleteButton_Clicked(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
-            Vehicle detailsForACompany = button.DataContext as Vehicle;
-            vehicles.Remove(detailsForACompany);
+            Vehicle detailsForAVehicle = button.DataContext as Vehicle;
+            vehicles.Remove(detailsForAVehicle);
             //this.SaveCompanies(MainWindow.companies);
             CollectionViewSource.GetDefaultView(vehicleListView.ItemsSource).Refresh();
             vehicleListChanged = true;
@@ -173,6 +173,14 @@ namespace Assignment2_TDD_Fleet
         {
             FilterTextBox.Text = "";
             VehicleListView.ItemsSource = vehicles;
+        }
+
+        private void BtnRentVehicle_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            Vehicle vehicleItem = button.DataContext as Vehicle;
+            Bookings bookings = new Bookings(vehicleItem.VehicleOdometer, vehicleItem.CarModel, vehicleItem.CarManufacture);
+            bookings.ShowDialog();
         }
     }
 }
