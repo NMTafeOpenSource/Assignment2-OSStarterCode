@@ -28,7 +28,10 @@
             </MenuItem>
             <MenuItem x:Name="Services"
                       Header="Services"/>
-            
+
+            <MenuItem x:Name="BookingListMenu"
+                      Header="Booking List" Click="BookingList_Clicked" />
+
             <MenuItem x:Name="Journey"
                       Header="Journey"/>
             

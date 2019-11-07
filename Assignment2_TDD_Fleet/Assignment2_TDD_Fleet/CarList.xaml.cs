@@ -19,7 +19,12 @@ namespace Assignment2_TDD_Fleet
     public partial class CarList : Window
     {
         public static List<Vehicle> vehicles;
+        public static List<Booking> bookings;
         internal ListView vehicleListView;
+        internal ListView bookingListView;
+        public Booking booking;
+        string bookingFileName = "Bookings.json";
+        public BookingList bookingList;
         public bool vehicleListChanged;
         public Vehicle vehicle;
         string vehiclesFileName = "jsontestshit.json";
@@ -35,8 +40,10 @@ namespace Assignment2_TDD_Fleet
             VehicleListView.ItemsSource = vehicles;
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(VehicleListView.ItemsSource);
             vehicles = new List<Vehicle>();
+            bookings = new List<Booking>();
             LoadVehicle();
         }
+
 
         public void CheckKeyStatus()
         {
@@ -181,6 +188,12 @@ namespace Assignment2_TDD_Fleet
             Vehicle vehicleItem = button.DataContext as Vehicle;
             Bookings bookings = new Bookings(vehicleItem.VehicleOdometer, vehicleItem.CarModel, vehicleItem.CarManufacture);
             bookings.ShowDialog();
+        }
+
+        private void BookingList_Clicked(object sender, RoutedEventArgs e)
+        {
+            BookingList bookingList = new BookingList();
+            bookingList.ShowDialog();
         }
     }
 }

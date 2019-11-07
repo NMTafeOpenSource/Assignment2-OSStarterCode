@@ -1,0 +1,96 @@
+﻿<Window x:Class="Assignment2_TDD_Fleet.BookingList"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Assignment2_TDD_Fleet"
+        mc:Ignorable="d"
+        Title="BookingList" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40*"
+                               MinHeight="40"/>
+            <RowDefinition Height="250*"
+                               MinHeight="250"/>
+            <RowDefinition Height="10*"
+                               MinHeight="10"/>
+        </Grid.RowDefinitions>
+
+        <ListView  x:Name="BookingsListView"
+                   HorizontalAlignment="Center"
+                   Grid.Row="1"
+                   Height="auto"
+                   MinWidth="400"
+                   Width="790">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding CustomerName}"
+                                    Width="120"
+                                    Header="Customer"
+                                    >
+                    </GridViewColumn>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding SelectedVehicle}"
+                                    Width="130"
+                                    Header="Vehicle"
+                                    >
+                    </GridViewColumn>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding StartOdometer}"
+                                    Width="130"
+                                    Header="Start Odometer"
+                                    >
+                    </GridViewColumn>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding StartRentDate}"
+                                    Width="150"
+                                    Header="Start Date"
+                                    >
+                    </GridViewColumn>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding EndRentDate}"
+                                    Width="150"
+                                    Header="End Date"
+                                    >
+                    </GridViewColumn>
+
+                    <GridViewColumn 
+                            Header="Actions" Width="110">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="4"></ColumnDefinition>
+                                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Button x:Name="btnFinishedRent"
+                                                Grid.Column="0"
+                                                Height="24" Width="45"
+                                                Content="OK"
+                                                Background="Yellow"
+                                                >
+                                    </Button>
+
+                                    <Button x:Name="btnCancelBooking"
+                                                Grid.Column="2"
+                                                Height="24" Width="45"
+                                                Content="X"
+                                                Background="Red"
+                                                >
+                                    </Button>
+
+                                </Grid>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>
