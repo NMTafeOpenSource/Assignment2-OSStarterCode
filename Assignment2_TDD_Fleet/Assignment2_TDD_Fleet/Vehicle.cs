@@ -13,13 +13,13 @@ namespace Assignment2_TDD_Fleet
     public class Vehicle
     {
         public int Id { get; set; }
-        public string RegistrationID { get; set; }
+        public int RegistrationID { get; set; }
         public string CarManufacture { get; set; }
         public string CarModel { get; set; }
-        public string CarYear { get; set; }
+        public int CarYear { get; set; }
         public string FuelType { get; set; }
-        public string TankCapacity { get; set; }
-        public string VehicleOdometer { get; set; }
+        public double TankCapacity { get; set; }
+        public int VehicleOdometer { get; set; }
 
         public Vehicle()
         {

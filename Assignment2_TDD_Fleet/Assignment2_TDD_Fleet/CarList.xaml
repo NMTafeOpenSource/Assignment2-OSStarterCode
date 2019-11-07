@@ -123,7 +123,7 @@
 
                         <GridViewColumn DisplayMemberBinding="{Binding CarModel}"
                                         Width="100"
-                                        Header="CarModel"
+                                        Header="Car Model"
                                         >
                         </GridViewColumn>
 
@@ -161,15 +161,16 @@
                                             <ColumnDefinition Width="auto"></ColumnDefinition>
                                         </Grid.ColumnDefinitions>
 
-                                        <Button x:Name="btnEditCompany"
+                                        <Button x:Name="btnEditVehicle"
                                                 Grid.Column="0"
                                                 Height="24" Width="45"
                                                 Content="Edit"
-                                                Background="Yellow" Click="ButtonEdit_Clicked"
+                                                Background="Yellow"
+                                                Click="ButtonEdit_Clicked"
                                                 >
                                         </Button>
 
-                                        <Button x:Name="btnViewCompany"
+                                        <Button x:Name="btnRentVehicle"
                                                 Grid.Column="2"
                                                 Height="24" Width="45"
                                                 Content="View"
@@ -177,11 +178,12 @@
                                                 >
                                         </Button>
 
-                                        <Button x:Name="btnDeleteCompany"
+                                        <Button x:Name="btnDeleteVehicle"
                                                 Grid.Column="4"
                                                 Height="24" Width="45"
                                                 Content="Delete"
-                                                Background="IndianRed" Click="DeleteButton_Clicked"
+                                                Background="IndianRed"
+                                                Click="DeleteButton_Clicked"
                                                 >
                                         </Button>
 

@@ -104,7 +104,8 @@ namespace Assignment2_TDD_Fleet
 
         private void AddVehicle_Clicked(object sender, RoutedEventArgs e)
         {
-            AddVehicle addVehicle = new AddVehicle();
+            int newId = vehicles.Max(x => x.Id) + 1;
+            AddVehicle addVehicle = new AddVehicle(newId);
             addVehicle.ShowDialog();
             VehicleListView.ItemsSource = vehicles;
             VehicleListView.Items.Refresh();
