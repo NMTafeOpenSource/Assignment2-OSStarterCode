@@ -22,6 +22,7 @@ namespace Assignment2_TDD_Fleet
 
         }
 
+        public bool bookingListChanged = false;
         public void SaveBookings(List<Booking> bookings)
         {
             // serialize JSON to a string and then write string to a file
@@ -33,7 +34,7 @@ namespace Assignment2_TDD_Fleet
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Serialize(file, bookings);
             }
-            //vehicleListChanged = false;
+            bookingListChanged = false;
         }
     }
 }

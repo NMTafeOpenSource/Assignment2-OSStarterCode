@@ -21,9 +21,7 @@ namespace Assignment2_TDD_Fleet
         public static List<Vehicle> vehicles;
         public static List<Booking> bookings;
         internal ListView vehicleListView;
-        internal ListView bookingListView;
         public Booking booking;
-        string bookingFileName = "Bookings.json";
         public BookingList bookingList;
         public bool vehicleListChanged;
         public Vehicle vehicle;

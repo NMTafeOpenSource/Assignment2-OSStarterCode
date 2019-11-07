@@ -23,6 +23,7 @@ namespace Assignment2_TDD_Fleet
     {
         public static List<Booking> bookings;
         internal ListView bookingListView;
+        public bool bookingListChanged;
         public Booking booking;
         string bookingFileName = "Bookings.json";
 
@@ -38,7 +39,7 @@ namespace Assignment2_TDD_Fleet
 
         public void LoadBooking()
         {
-            bookings.Clear();
+            //bookings.Clear();
             // deserialize JSON directly from a file
             bookings = (List<Booking>)JsonConvert.DeserializeObject(File.ReadAllText(bookingFileName), typeof(List<Booking>));
             BookingsListView.ItemsSource = bookings;

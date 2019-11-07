@@ -19,7 +19,7 @@ namespace Assignment2_TDD_Fleet
     /// </summary>
     public partial class Bookings : Window
     {
-
+        public BookingList bookingList;
         public static Booking bookings; 
         public static Vehicle vehicles;
         public static bool newBooking = true;
@@ -53,6 +53,7 @@ namespace Assignment2_TDD_Fleet
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+           bookings.bookingListChanged = true;
            if (newBooking)
            {
                 Booking booking = new Booking();
@@ -61,12 +62,19 @@ namespace Assignment2_TDD_Fleet
                 booking.SelectedVehicle = SelectedVehicleTextBox.Text;
                 booking.StartRentDate = DateTime.Parse(BookingStartDatePicker.Text);
                 booking.EndRentDate = DateTime.Parse(BookingEndDatePicker.Text);
+
+                CarList.bookings.Add(booking);
+                //bookingList.bookingListView.Items.Refresh();
            }
            else
            {
-                Console.WriteLine("edited");
+                bookings.CustomerName = CustomerNameTextBox.Text;
+                bookings.StartOdometer = int.Parse(BookingStartOdometerTextBox.Text);
+                bookings.SelectedVehicle = SelectedVehicleTextBox.Text;
+                bookings.StartRentDate = DateTime.Parse(BookingStartDatePicker.Text);
+                bookings.EndRentDate = DateTime.Parse(BookingEndDatePicker.Text);
            }
-           //bookings.SaveBookings(CarList.bookings);
+           bookings.SaveBookings(CarList.bookings);
            Close();
         }
     }
