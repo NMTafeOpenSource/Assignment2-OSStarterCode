@@ -26,6 +26,7 @@ namespace Assignment2_TDD_Fleet
         public bool vehicleListChanged;
         public Vehicle vehicle;
         string vehiclesFileName = "jsontestshit.json";
+        string bookingFileName = "Bookings.json";
         internal SaveFileDialog saveFileDialog = new SaveFileDialog();
         internal OpenFileDialog openFileDialog = new OpenFileDialog();
 
@@ -39,6 +40,7 @@ namespace Assignment2_TDD_Fleet
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(VehicleListView.ItemsSource);
             vehicles = new List<Vehicle>();
             bookings = new List<Booking>();
+            LoadBooking();
             LoadVehicle();
         }
 
@@ -188,9 +190,18 @@ namespace Assignment2_TDD_Fleet
             bookings.ShowDialog();
         }
 
+        public void LoadBooking()
+        {
+            bookings = (List<Booking>)JsonConvert.DeserializeObject(File.ReadAllText(bookingFileName), typeof(List<Booking>));
+        }
+
         private void BookingList_Clicked(object sender, RoutedEventArgs e)
         {
-            BookingList bookingList = new BookingList();
+            bookingList = new BookingList();
+            bookingList.Owner = this;
+            //CarList.bookings = CarList.bookings.Concat(bookingList.bookingsFromJSONFile).ToList();
+            bookingList.bookings = CarList.bookings;
+            bookingList.BookingsListView.ItemsSource = CarList.bookings;
             bookingList.ShowDialog();
         }
     }

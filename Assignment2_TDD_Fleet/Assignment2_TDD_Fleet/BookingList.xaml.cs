@@ -21,30 +21,19 @@ namespace Assignment2_TDD_Fleet
     /// </summary>
     public partial class BookingList : Window
     {
-        public static List<Booking> bookings;
-        internal ListView bookingListView;
+        public CarList carList;
+        public List<Booking> bookings;
+        public List<Booking> bookingsFromJSONFile;
+        public ListView bookingListView;
         public bool bookingListChanged;
-        public Booking booking;
-        string bookingFileName = "Bookings.json";
 
         public BookingList()
         {
             InitializeComponent();
             bookingListView = BookingsListView;
-            BookingsListView.ItemsSource = bookings;
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(BookingsListView.ItemsSource);
-            bookings = new List<Booking>();
-            LoadBooking();
+            // BookingsListView.ItemsSource = bookings;
+            // CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(BookingsListView.ItemsSource);
+            // bookings = new List<Booking>();
         }
-
-        public void LoadBooking()
-        {
-            //bookings.Clear();
-            // deserialize JSON directly from a file
-            bookings = (List<Booking>)JsonConvert.DeserializeObject(File.ReadAllText(bookingFileName), typeof(List<Booking>));
-            BookingsListView.ItemsSource = bookings;
-            BookingsListView.Items.Refresh();
-        }
-
     }
 }
