@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assignment2_TDD_Fleet"
         mc:Ignorable="d"
-        Title="CarList" Height="450" Width="800">
+        Title="CarList" Height="450" Width="840">
     <DockPanel>
         <Menu DockPanel.Dock="Top"
               HorizontalAlignment="Left"
               VerticalAlignment="Top"
-              Width="790">
+              Width="830">
             <MenuItem x:Name="MenuFile"
                       Header="File">
                 <MenuItem x:Name="LoadFile"
@@ -18,7 +18,7 @@
                           />
                 <MenuItem x:Name="SaveFile"
                           Header="Save" Click="SaveFile_Clicked" />
-                
+
             </MenuItem>
             <MenuItem x:Name="Vehicle" 
                       Header="Vehicle">
@@ -34,7 +34,7 @@
 
             <MenuItem x:Name="Journey"
                       Header="Journey"/>
-            
+
             <Separator></Separator>
             <MenuItem x:Name="About" 
                       Header="About"/>
@@ -95,6 +95,10 @@
         </StatusBar>
 
         <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="331*"/>
+                <ColumnDefinition Width="563*"/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="40*"
                                MinHeight="40"/>
@@ -106,10 +110,9 @@
 
             <ListView x:Name="VehicleListView"
                       HorizontalAlignment="Center"
-                      Grid.Row="1"
                       Height="auto"
                       MinWidth="400"
-                      Width="790">
+                      Width="830" Grid.ColumnSpan="2" Margin="2,50,1.6,0.2" Grid.RowSpan="2">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn DisplayMemberBinding="{Binding RegistrationID}"
@@ -216,7 +219,7 @@
                      Height="23"
                      Width="120" 
                      TextChanged="Filter_Text_Changed"/>
-            
+
             <Button x:Name="buttonClear"
                     Content="Clear" 
                     HorizontalAlignment="Left"

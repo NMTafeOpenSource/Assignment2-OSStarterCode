@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assignment2_TDD_Fleet"
         mc:Ignorable="d"
-        Title="BookingList" Height="450" Width="800">
+        Title="BookingList" Height="450" Width="990">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"
@@ -21,41 +21,43 @@
                    Grid.Row="1"
                    Height="auto"
                    MinWidth="400"
-                   Width="790">
+                   Width="980"
+                   SelectionMode="Single" SelectionChanged="BookingsListView_SelectionChanged"
+                  >
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding CustomerName}"
-                                    Width="120"
-                                    Header="Customer"
-                                    >
-                    </GridViewColumn>
-
-                    <GridViewColumn DisplayMemberBinding="{Binding SelectedVehicle}"
-                                    Width="130"
-                                    Header="Vehicle"
-                                    >
-                    </GridViewColumn>
-
-                    <GridViewColumn DisplayMemberBinding="{Binding StartOdometer}"
-                                    Width="130"
-                                    Header="Start Odometer"
-                                    >
-                    </GridViewColumn>
-
-                    <GridViewColumn DisplayMemberBinding="{Binding StartRentDate}"
-                                    Width="150"
-                                    Header="Start Date"
-                                    >
-                    </GridViewColumn>
-
-                    <GridViewColumn DisplayMemberBinding="{Binding EndRentDate}"
-                                    Width="150"
-                                    Header="End Date"
-                                    >
-                    </GridViewColumn>
-
-                    <GridViewColumn 
-                            Header="Actions" Width="110">
+                    <GridView.ColumnHeaderTemplate>
+                <DataTemplate>
+                            <Border BorderBrush="AliceBlue" BorderThickness="2" CornerRadius="5">
+                                <TextBlock Text="{Binding}" Width="auto"/>
+                            </Border>
+                </DataTemplate>
+                    </GridView.ColumnHeaderTemplate>
+                    <GridViewColumn Header="Customer Name"
+                                    Width="auto" 
+                                    DisplayMemberBinding="{Binding Path=CustomerName}"/>
+                    
+                    <GridViewColumn Header="Selected Vehicle"
+                                    Width="auto" 
+                                    DisplayMemberBinding="{Binding Path=SelectedVehicle}"/>
+                    
+                    <GridViewColumn Header="Rental Type"
+                                    Width="auto"
+                                    DisplayMemberBinding="{Binding Path=RentalType}"/>
+                    
+                    <GridViewColumn Header="Start Odometer"
+                                    Width="auto"
+                                    DisplayMemberBinding="{Binding Path=StartOdometer}"/>
+                    
+                    <GridViewColumn Header="Start Rent Date" 
+                                    Width="auto"
+                                    DisplayMemberBinding="{Binding Path=StartRentDate}"/>
+                    
+                    <GridViewColumn Header="End Rent Date" 
+                                    Width="auto" 
+                                    DisplayMemberBinding="{Binding Path=EndRentDate}"/>
+                    
+                    <GridViewColumn Header="Action" Width="auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
@@ -66,31 +68,62 @@
                                         <ColumnDefinition Width="auto"></ColumnDefinition>
                                         <ColumnDefinition Width="4"></ColumnDefinition>
                                         <ColumnDefinition Width="auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="4"></ColumnDefinition>
+                                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="4"></ColumnDefinition>
+                                        <ColumnDefinition Width="auto"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
-
-                                    <Button x:Name="btnFinishedRent"
+                                    <Button x:Name="ButtonForJourneys"                                                
                                                 Grid.Column="0"
-                                                Height="24" Width="45"
-                                                Content="OK"
-                                                Background="Yellow"
+                                                Height="24" Width="auto"
+                                                Content="Add Journeys"
+                                                Foreground="White"
+                                                Background="Blue"
+                                                Click="ButtonForJourneys_Click"
                                                 >
                                     </Button>
 
-                                    <Button x:Name="btnCancelBooking"
+                                    <Button x:Name="ButtonFuelPurchases"
                                                 Grid.Column="2"
                                                 Height="24" Width="45"
-                                                Content="X"
-                                                Background="Red"
+                                                Content="Fuel"
+                                                Background="Green"
                                                 >
                                     </Button>
-
+                                    <Button     x:Name="ButtonViewJourneys"
+                                                Grid.Column="4"
+                                                Height="24" Width="Auto"
+                                                Content="View Journeys"
+                                                Background="Silver" 
+                                                Click="ButtonViewJourneys_Clicked"
+                                                CommandParameter="{Binding}"
+                                                >
+                                    </Button>
+                                    <Button x:Name="ButtonForEndBooking"                                                
+                                                Grid.Column="6"
+                                                Height="24" Width="auto"
+                                                Content="End Booking"
+                                                Foreground="White"
+                                                Background="Blue" 
+                                                >
+                                    </Button>
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-
                 </GridView>
             </ListView.View>
         </ListView>
+        
+        <TextBox x:Name="FilterTextBoxBookingList"
+                 HorizontalAlignment="Left"
+                 Height="23"
+                 Margin="10,17,0,0"
+                 TextWrapping="Wrap"
+                 Text="" 
+                 VerticalAlignment="Top"
+                 Width="176"
+                 TextChanged="FilterBoxBookingList_TextChanged"
+                 />
     </Grid>
 </Window>

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -10,8 +11,10 @@ namespace Assignment2_TDD_Fleet
 {
     public class Booking
     {
+        public Guid id { get; set; }
         public string CustomerName { get; set; }
         public string SelectedVehicle { get; set; }
+        public string RentalType { get; set; }
         public int StartOdometer { get; set; }
         public DateTime StartRentDate { get; set; }
         public DateTime EndRentDate { get; set; }

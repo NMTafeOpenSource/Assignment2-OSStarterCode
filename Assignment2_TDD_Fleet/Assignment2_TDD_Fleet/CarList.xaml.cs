@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace Assignment2_TDD_Fleet
     {
         public static List<Vehicle> vehicles;
         public static List<Booking> bookings;
+        public static List<Journey> journeys;
         internal ListView vehicleListView;
         public Booking booking;
         public BookingList bookingList;
@@ -27,6 +29,7 @@ namespace Assignment2_TDD_Fleet
         public Vehicle vehicle;
         string vehiclesFileName = "jsontestshit.json";
         string bookingFileName = "Bookings.json";
+        string journeysFileName = "Journey.json";
         internal SaveFileDialog saveFileDialog = new SaveFileDialog();
         internal OpenFileDialog openFileDialog = new OpenFileDialog();
 
@@ -40,6 +43,8 @@ namespace Assignment2_TDD_Fleet
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(VehicleListView.ItemsSource);
             vehicles = new List<Vehicle>();
             bookings = new List<Booking>();
+            journeys = new List<Journey>();
+            LoadJourneys();
             LoadBooking();
             LoadVehicle();
         }
@@ -111,8 +116,10 @@ namespace Assignment2_TDD_Fleet
 
         private void AddVehicle_Clicked(object sender, RoutedEventArgs e)
         {
-            int newId = vehicles.Max(x => x.Id) + 1;
-            AddVehicle addVehicle = new AddVehicle(newId);
+            Guid id = Guid.NewGuid();
+            //int newId = vehicles.Max(x => x.Id) + 1;
+            //Journey journeyItems = DataContext as Journey;
+            AddVehicle addVehicle = new AddVehicle(id);
             addVehicle.ShowDialog();
             VehicleListView.ItemsSource = vehicles;
             VehicleListView.Items.Refresh();
@@ -184,9 +191,10 @@ namespace Assignment2_TDD_Fleet
 
         private void BtnRentVehicle_Click(object sender, RoutedEventArgs e)
         {
+            Guid Id = Guid.NewGuid();
             Button button = sender as Button;
             Vehicle vehicleItem = button.DataContext as Vehicle;
-            Bookings bookings = new Bookings(vehicleItem.VehicleOdometer, vehicleItem.CarModel, vehicleItem.CarManufacture);
+            Bookings bookings = new Bookings(vehicleItem.VehicleOdometer, vehicleItem.CarModel, vehicleItem.CarManufacture,Id);
             bookings.ShowDialog();
         }
 
@@ -203,6 +211,11 @@ namespace Assignment2_TDD_Fleet
             bookingList.bookings = CarList.bookings;
             bookingList.BookingsListView.ItemsSource = CarList.bookings;
             bookingList.ShowDialog();
+        }
+
+        public void LoadJourneys()
+        {
+            journeys = (List<Journey>)JsonConvert.DeserializeObject(File.ReadAllText(journeysFileName), typeof(List<Journey>));
         }
     }
 }

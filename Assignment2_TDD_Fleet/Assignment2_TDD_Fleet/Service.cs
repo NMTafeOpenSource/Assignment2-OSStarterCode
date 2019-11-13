@@ -11,7 +11,6 @@ namespace Assignment2_TDD_Fleet
 
         // Constant to indicate that the vehicle needs to be serviced every 10,000km
         public static int SERVICE_KILOMETER_LIMIT = 10000;
-
         private int lastServiceOdometerKm = 0;
         private int serviceCount = 0;
         // TODO add lastServiceDate
@@ -45,10 +44,10 @@ namespace Assignment2_TDD_Fleet
          * 
          * @return the number of services needed per SERVICE_KILOMETER_LIMIT
          */
-        /*public int getTotalScheduledServices()
-        {
-            return (int)Math.Floor(lastServiceOdometerKm / SERVICE_KILOMETER_LIMIT);
-        }*/
+        //public int getTotalScheduledServices()
+        //{
+        //    return (int)Math.Floor(lastServiceOdometerKm / SERVICE_KILOMETER_LIMIT);
+        //}
 
     }
 }

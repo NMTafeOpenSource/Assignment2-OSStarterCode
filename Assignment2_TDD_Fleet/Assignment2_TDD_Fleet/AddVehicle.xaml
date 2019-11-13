@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Assignment2_TDD_Fleet"
         mc:Ignorable="d"
         Title="VehicleForm" Height="450" Width="500">
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

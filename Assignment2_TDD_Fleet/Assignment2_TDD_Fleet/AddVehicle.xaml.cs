@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 namespace Assignment2_TDD_Fleet
 {
@@ -8,17 +9,20 @@ namespace Assignment2_TDD_Fleet
     public partial class AddVehicle : Window
     {
         public CarList carList;
+        public Booking booking;
         public static Vehicle vehicles;
         public static Vehicle vehicle;
         public static bool newVehicle = true;
-        public int id;
+        //public int id;
+        public Guid id;
+        public int odometer;
 
-        public AddVehicle(int newId)
-        {
-            id = newId;
-            InitializeComponent();
-            vehicles = new Vehicle();
-        }
+        //public AddVehicle(int newId)
+        //{
+        //    //id = newId;
+        //    InitializeComponent();
+        //    vehicles = new Vehicle();
+        //}
 
         public AddVehicle(CarList car, Vehicle vehicle, bool newVehicle)
         {
@@ -36,6 +40,14 @@ namespace Assignment2_TDD_Fleet
             TextBoxOdometer.Text = vehicles.VehicleOdometer.ToString();
         }
 
+        public AddVehicle(Guid id)
+        {
+            this.id = id;
+            //this.odometer = EndOdometer;
+            InitializeComponent();
+            vehicles = new Vehicle();
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             vehicles.vehicleListChanged = true;
@@ -43,7 +55,7 @@ namespace Assignment2_TDD_Fleet
             {
                 Vehicle vehicle = new Vehicle();
                 vehicle.Id = id;
-                vehicle.RegistrationID = int.Parse(TextBoxRegisId.Text);
+                vehicle.RegistrationID = TextBoxRegisId.Text;
                 vehicle.CarManufacture = TextBoxManufacture.Text;
                 vehicle.CarModel = TextBoxModel.Text;
                 vehicle.CarYear = int.Parse(TextBoxYear.Text);
@@ -55,7 +67,7 @@ namespace Assignment2_TDD_Fleet
             }
             else
             {
-                vehicles.RegistrationID = int.Parse(TextBoxRegisId.Text);
+                vehicles.RegistrationID = TextBoxRegisId.Text;
                 vehicles.CarManufacture = TextBoxManufacture.Text;
                 vehicles.CarModel = TextBoxModel.Text;
                 vehicles.CarYear = int.Parse(TextBoxYear.Text);

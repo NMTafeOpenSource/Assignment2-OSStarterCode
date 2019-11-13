@@ -58,6 +58,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddJourney.xaml.cs">
+      <DependentUpon>AddJourney.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddVehicle.xaml.cs">
       <DependentUpon>AddVehicle.xaml</DependentUpon>
     </Compile>
@@ -68,12 +71,21 @@
     <Compile Include="Bookings.xaml.cs">
       <DependentUpon>Bookings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CarManagement.cs" />
     <Compile Include="FuelPurchase.cs" />
     <Compile Include="Journey.cs" />
+    <Compile Include="JourneyHistory.xaml.cs">
+      <DependentUpon>JourneyHistory.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Service.cs" />
     <Compile Include="Vehicle.cs" />
     <Compile Include="VehicleStarter.cs" />
+    <Compile Include="ViewJourneys.xaml.cs">
+      <DependentUpon>ViewJourneys.xaml</DependentUpon>
+    </Compile>
+    <Page Include="AddJourney.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AddVehicle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -98,6 +110,14 @@
       <DependentUpon>CarList.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="JourneyHistory.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewJourneys.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
