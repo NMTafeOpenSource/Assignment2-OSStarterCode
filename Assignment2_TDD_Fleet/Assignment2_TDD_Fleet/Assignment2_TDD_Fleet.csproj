@@ -78,6 +78,9 @@
     </Compile>
     <Compile Include="Service.cs" />
     <Compile Include="Vehicle.cs" />
+    <Compile Include="VehicleHistory.xaml.cs">
+      <DependentUpon>VehicleHistory.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VehicleStarter.cs" />
     <Compile Include="ViewJourneys.xaml.cs">
       <DependentUpon>ViewJourneys.xaml</DependentUpon>
@@ -111,6 +114,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="JourneyHistory.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VehicleHistory.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -25,6 +25,7 @@ namespace Assignment2_TDD_Fleet
         internal ListView vehicleListView;
         public Booking booking;
         public ViewJourneys viewJourneys;
+        public VehicleHistory vehicleHistory;
         public BookingList bookingList;
         public bool vehicleListChanged;
         public Vehicle vehicle;
@@ -223,11 +224,13 @@ namespace Assignment2_TDD_Fleet
         {
             Button selectedButton = (Button)sender;
             Vehicle v = selectedButton.CommandParameter as Vehicle;
-            viewJourneys = new ViewJourneys();
-            viewJourneys.Owner = this;
-            viewJourneys.journeys = journeys.Where(x => x.BookingID == v.Id).ToList();
-            viewJourneys.JourneysListView.ItemsSource = viewJourneys.journeys;
-            viewJourneys.ShowDialog();
+            vehicleHistory = new VehicleHistory(v.RegistrationID, v.CarManufacture, v.CarModel, v.CarYear, v.FuelType, v.TankCapacity, v.VehicleOdometer);
+            vehicleHistory.Owner = this;
+            vehicleHistory.journeys = journeys.Where(x => x.BookingID == v.Id).ToList();
+            vehicleHistory.JourneysListViewForHistory.ItemsSource = vehicleHistory.journeys;
+            vehicleHistory.bookings = bookings.Where(y => y.id == v.Id).ToList();
+            vehicleHistory.BookingsListViewForHistory.ItemsSource = vehicleHistory.bookings;
+            vehicleHistory.ShowDialog();
         }
     }
 }
