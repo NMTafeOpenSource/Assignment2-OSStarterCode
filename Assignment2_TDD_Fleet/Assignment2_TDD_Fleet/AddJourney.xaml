@@ -77,10 +77,9 @@
                  Margin="10,22,0,0" 
                  TextWrapping="Wrap" 
                  Text=""
-                 IsReadOnly="True"
                  VerticalAlignment="Top"
                  Width="236"
-                 Background="#FFE6E5E5"/>
+                 />
 
         <Label x:Name="EndedOdometerJourney"
                Grid.Row="3"

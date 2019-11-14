@@ -24,6 +24,7 @@ namespace Assignment2_TDD_Fleet
         public static List<Journey> journeys;
         internal ListView vehicleListView;
         public Booking booking;
+        public ViewJourneys viewJourneys;
         public BookingList bookingList;
         public bool vehicleListChanged;
         public Vehicle vehicle;
@@ -191,10 +192,10 @@ namespace Assignment2_TDD_Fleet
 
         private void BtnRentVehicle_Click(object sender, RoutedEventArgs e)
         {
-            Guid Id = Guid.NewGuid();
+            //Guid Id = Guid.NewGuid();
             Button button = sender as Button;
             Vehicle vehicleItem = button.DataContext as Vehicle;
-            Bookings bookings = new Bookings(vehicleItem.VehicleOdometer, vehicleItem.CarModel, vehicleItem.CarManufacture,Id);
+            Bookings bookings = new Bookings(vehicleItem.VehicleOdometer, vehicleItem.CarModel, vehicleItem.CarManufacture, vehicleItem.Id);
             bookings.ShowDialog();
         }
 
@@ -216,6 +217,17 @@ namespace Assignment2_TDD_Fleet
         public void LoadJourneys()
         {
             journeys = (List<Journey>)JsonConvert.DeserializeObject(File.ReadAllText(journeysFileName), typeof(List<Journey>));
+        }
+
+        private void ViewButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            Button selectedButton = (Button)sender;
+            Vehicle v = selectedButton.CommandParameter as Vehicle;
+            viewJourneys = new ViewJourneys();
+            viewJourneys.Owner = this;
+            viewJourneys.journeys = journeys.Where(x => x.BookingID == v.Id).ToList();
+            viewJourneys.JourneysListView.ItemsSource = viewJourneys.journeys;
+            viewJourneys.ShowDialog();
         }
     }
 }

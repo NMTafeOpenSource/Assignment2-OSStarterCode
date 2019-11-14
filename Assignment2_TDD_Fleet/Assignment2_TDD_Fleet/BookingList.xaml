@@ -105,7 +105,7 @@
                                                 Content="End Booking"
                                                 Foreground="White"
                                                 Background="Blue" 
-                                                >
+                                                Click="EndBookingButton_Clicked">
                                     </Button>
                                 </Grid>
                             </DataTemplate>

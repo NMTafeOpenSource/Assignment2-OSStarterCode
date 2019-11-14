@@ -16,6 +16,7 @@ namespace Assignment2_TDD_Fleet
         public string SelectedVehicle { get; set; }
         public string RentalType { get; set; }
         public int StartOdometer { get; set; }
+        public int EndOdometer { get; set; }
         public DateTime StartRentDate { get; set; }
         public DateTime EndRentDate { get; set; }
         public double RentPrice { get; set; }
@@ -25,7 +26,9 @@ namespace Assignment2_TDD_Fleet
 
         }
 
+        [JsonIgnore]
         public bool bookingListChanged = false;
+
         public void SaveBookings(List<Booking> bookings)
         {
             // serialize JSON to a string and then write string to a file

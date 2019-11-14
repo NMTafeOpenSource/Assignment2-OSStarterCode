@@ -25,6 +25,7 @@ namespace Assignment2_TDD_Fleet
         public static bool newJourney = true;
         //public Guid id;
         public Guid BookingID;
+        //public Guid vehicleID;
 
         public AddJourney()
         {
@@ -42,6 +43,7 @@ namespace Assignment2_TDD_Fleet
         public AddJourney(DateTime startRentDate, DateTime endRentDate, int startOdometer, Guid id) : this(startRentDate, endRentDate, startOdometer)
         {
             this.BookingID = id;
+            //this.vehicleID = id;
             InitializeComponent();
             journeys = new Journey();
         }
@@ -53,6 +55,7 @@ namespace Assignment2_TDD_Fleet
                 Journey journey = new Journey();
                 journey.id = Guid.NewGuid();
                 journey.BookingID = BookingID;
+                //journey.vehicleID = vehicleID;
                 journey.JourneyStartAt = DateTime.Parse(JourneyStartAtDate.Text);
                 journey.JourneyEndedAt = DateTime.Parse(JourneyEndedAtDate.Text);
                 journey.StartOdometer = int.Parse(StartOdometerJourneyTextBox.Text);

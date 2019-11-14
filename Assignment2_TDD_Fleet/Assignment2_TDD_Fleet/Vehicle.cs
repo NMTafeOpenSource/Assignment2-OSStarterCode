@@ -26,6 +26,7 @@ namespace Assignment2_TDD_Fleet
 
         }
 
+        [JsonIgnore]
         public bool vehicleListChanged = false; // this is updated if you edit/add/delete the vehicles list
         public void SaveVehicles(List<Vehicle> vehicles)
         {

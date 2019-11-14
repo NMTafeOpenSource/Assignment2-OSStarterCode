@@ -13,9 +13,8 @@ namespace Assignment2_TDD_Fleet
         public static Vehicle vehicles;
         public static Vehicle vehicle;
         public static bool newVehicle = true;
-        //public int id;
         public Guid id;
-        public int odometer;
+        //public int odometer;
 
         //public AddVehicle(int newId)
         //{

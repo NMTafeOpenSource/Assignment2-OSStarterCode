@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assignment2_TDD_Fleet"
         mc:Ignorable="d"
-        Title="CarList" Height="450" Width="840">
+        Title="CarList" Height="450" Width="860">
     <DockPanel>
         <Menu DockPanel.Dock="Top"
               HorizontalAlignment="Left"
               VerticalAlignment="Top"
-              Width="830">
+              Width="850">
             <MenuItem x:Name="MenuFile"
                       Header="File">
                 <MenuItem x:Name="LoadFile"
@@ -112,47 +112,42 @@
                       HorizontalAlignment="Center"
                       Height="auto"
                       MinWidth="400"
-                      Width="830" Grid.ColumnSpan="2" Margin="2,50,1.6,0.2" Grid.RowSpan="2">
+                      Width="850" Grid.ColumnSpan="2" Margin="2,50,1.6,0.2" Grid.RowSpan="2">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding RegistrationID}"
-                                        Width="100"
-                                        Header="Registration ID"
-                                        >
-                        </GridViewColumn>
+                        <GridView.ColumnHeaderTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="AliceBlue" BorderThickness="2" CornerRadius="5">
+                                    <TextBlock Text="{Binding}" Width="auto"/>
+                                </Border>
+                            </DataTemplate>
+                        </GridView.ColumnHeaderTemplate>
+                        <GridViewColumn Header="Registration ID"
+                                    Width="100" 
+                                    DisplayMemberBinding="{Binding Path=RegistrationID}"/>
 
-                        <GridViewColumn DisplayMemberBinding="{Binding CarManufacture}"
-                                        Width="100"
-                                        Header="Manufacture"
-                                        >
-                        </GridViewColumn>
+                        <GridViewColumn Header="Manufacture"
+                                    Width="100" 
+                                    DisplayMemberBinding="{Binding Path=CarManufacture}"/>
 
-                        <GridViewColumn DisplayMemberBinding="{Binding CarModel}"
-                                        Width="100"
-                                        Header="Car Model"
-                                        >
-                        </GridViewColumn>
+                        <GridViewColumn Header="Car Model"
+                                    Width="100"
+                                    DisplayMemberBinding="{Binding Path=CarModel}"/>
 
-                        <GridViewColumn DisplayMemberBinding="{Binding CarYear}"
-                                        Width="100"
-                                        Header="Year"
-                                        >
-                        </GridViewColumn>
+                        <GridViewColumn Header="Year"
+                                    Width="100"
+                                    DisplayMemberBinding="{Binding Path=CarYear}"/>
 
-                        <GridViewColumn DisplayMemberBinding="{Binding VehicleOdometer}"
-                                        Width="100"
-                                        Header="Odometer"
-                                        >
-                        </GridViewColumn>
+                        <GridViewColumn Header="Tank Capacity" 
+                                    Width="100"
+                                    DisplayMemberBinding="{Binding Path=TankCapacity}"/>
 
-                        <GridViewColumn DisplayMemberBinding="{Binding TankCapacity}"
-                                        Width="120"
-                                        Header="Capacity (Litres)"
-                                        >
-                        </GridViewColumn>
+                        <GridViewColumn Header="Vehicle Odometer" 
+                                    Width="120" 
+                                    DisplayMemberBinding="{Binding Path=VehicleOdometer}"/>
 
                         <GridViewColumn 
-                            Header="Actions" Width="165">
+                            Header="Actions" Width="auto">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <Grid>
@@ -160,6 +155,8 @@
                                             <RowDefinition Height="auto"></RowDefinition>
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                                            <ColumnDefinition Width="4"></ColumnDefinition>
                                             <ColumnDefinition Width="auto"></ColumnDefinition>
                                             <ColumnDefinition Width="4"></ColumnDefinition>
                                             <ColumnDefinition Width="auto"></ColumnDefinition>
@@ -194,10 +191,21 @@
                                                 >
                                         </Button>
 
+                                        <Button x:Name="ButtonViewJourneysForSelectedVehicle"
+                                                Grid.Column="6"
+                                                Height="24" Width="Auto"
+                                                Content="History"
+                                                Background="Silver" 
+                                                Click="ViewButton_Clicked"
+                                                CommandParameter="{Binding}" 
+                                                >
+                                        </Button>
+
                                     </Grid>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
+
 
 
                     </GridView>

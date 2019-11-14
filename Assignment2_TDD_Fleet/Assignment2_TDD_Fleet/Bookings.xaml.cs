@@ -25,7 +25,8 @@ namespace Assignment2_TDD_Fleet
         public static bool newBooking = true;
         public CarList carList;
         public Guid Id;
-        //private Vehicle vehicleItem;
+        public Guid vehicleID;
+        public int vehicleOdometer;
 
         public Bookings()
         {
@@ -56,12 +57,6 @@ namespace Assignment2_TDD_Fleet
             Close();
         }
 
-        //public Bookings(Guid id)
-        //{
-        //    this.Id = id;
-        //    InitializeComponent();
-        //    bookings = new Booking();
-        //}
 
         public Bookings(int CarOdometer, string CarModel, string CarManufacture, Guid id) : this(CarOdometer, CarModel, CarManufacture)
         {
@@ -71,21 +66,23 @@ namespace Assignment2_TDD_Fleet
             vehicles = new Vehicle();
         }
 
-        //public Bookings(BookingList bookingList, Vehicle vehicle, Booking booking ,bool newBooking)
-        //{
-        //    InitializeComponent();
-        //    this.bookingList = bookingList;
-        //    Bookings.newBooking = newBooking;
-        //    vehicles = vehicle;
-        //    bookings = booking;
+        public Bookings(BookingList bookingList, Guid id, Booking booking, bool newBooking)
+        {
+            InitializeComponent();
+            bookings = new Booking();
+            this.bookingList = bookingList;
+            Bookings.newBooking = newBooking;
+            vehicleID = id;
+            bookings = booking;
 
-        //    CustomerNameTextBox.Text = bookings.CustomerName;
-        //    BookingStartOdometerTextBox.Text = bookings.StartOdometer.ToString();
-        //    SelectedVehicleTextBox.Text = bookings.SelectedVehicle;
-        //    BookingStartDatePicker.Text = bookings.StartRentDate.ToString();
-        //    BookingEndDatePicker.Text = bookings.EndRentDate.ToString();
-        //    ComboBoxRentalType.Text = bookings.RentalType;
-        //}
+
+            CustomerNameTextBox.Text = bookings.CustomerName;
+            BookingStartOdometerTextBox.Text = bookings.StartOdometer.ToString();
+            SelectedVehicleTextBox.Text = bookings.SelectedVehicle;
+            BookingStartDatePicker.Text = bookings.StartRentDate.ToString();
+            BookingEndDatePicker.Text = bookings.EndRentDate.ToString();
+            ComboBoxRentalType.Text = bookings.RentalType;
+        }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
@@ -107,11 +104,12 @@ namespace Assignment2_TDD_Fleet
            {
                 bookings.CustomerName = CustomerNameTextBox.Text;
                 bookings.StartOdometer = int.Parse(BookingStartOdometerTextBox.Text);
-                //vehicles.VehicleOdometer = int.Parse(BookingEndOdometerTextBox.Text);
                 bookings.SelectedVehicle = SelectedVehicleTextBox.Text;
                 bookings.StartRentDate = DateTime.Parse(BookingStartDatePicker.Text);
                 bookings.EndRentDate = DateTime.Parse(BookingEndDatePicker.Text);
                 bookings.RentalType = ComboBoxRentalType.Text;
+                bookings.EndOdometer = int.Parse(BookingEndOdometerTextBox.Text);
+
            }
            bookings.SaveBookings(CarList.bookings);
            Close();
