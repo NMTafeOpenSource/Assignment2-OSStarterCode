@@ -193,10 +193,10 @@ namespace Assignment2_TDD_Fleet
 
         private void BtnRentVehicle_Click(object sender, RoutedEventArgs e)
         {
-            //Guid Id = Guid.NewGuid();
+            Guid NewId = Guid.NewGuid();
             Button button = sender as Button;
             Vehicle vehicleItem = button.DataContext as Vehicle;
-            Bookings bookings = new Bookings(vehicleItem.VehicleOdometer, vehicleItem.CarModel, vehicleItem.CarManufacture, vehicleItem.Id);
+            Bookings bookings = new Bookings(vehicleItem.VehicleOdometer, vehicleItem.CarModel, vehicleItem.CarManufacture, vehicleItem.Id, NewId);
             bookings.ShowDialog();
         }
 
@@ -209,7 +209,6 @@ namespace Assignment2_TDD_Fleet
         {
             bookingList = new BookingList();
             bookingList.Owner = this;
-            //CarList.bookings = CarList.bookings.Concat(bookingList.bookingsFromJSONFile).ToList();
             bookingList.bookings = CarList.bookings;
             bookingList.BookingsListView.ItemsSource = CarList.bookings;
             bookingList.ShowDialog();
@@ -226,9 +225,9 @@ namespace Assignment2_TDD_Fleet
             Vehicle v = selectedButton.CommandParameter as Vehicle;
             vehicleHistory = new VehicleHistory(v.RegistrationID, v.CarManufacture, v.CarModel, v.CarYear, v.FuelType, v.TankCapacity, v.VehicleOdometer);
             vehicleHistory.Owner = this;
-            vehicleHistory.journeys = journeys.Where(x => x.BookingID == v.Id).ToList();
+            vehicleHistory.journeys = journeys.Where(journey => journey.vehicleID == v.Id).ToList();
             vehicleHistory.JourneysListViewForHistory.ItemsSource = vehicleHistory.journeys;
-            vehicleHistory.bookings = bookings.Where(y => y.id == v.Id).ToList();
+            vehicleHistory.bookings = bookings.Where(booking => booking.Vehicleid == v.Id).ToList();
             vehicleHistory.BookingsListViewForHistory.ItemsSource = vehicleHistory.bookings;
             vehicleHistory.ShowDialog();
         }

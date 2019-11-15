@@ -57,7 +57,7 @@ namespace Assignment2_TDD_Fleet
             //Guid JourneyId = new Guid(); 
             Button button = sender as Button;
             Booking bookingItem = button.DataContext as Booking;
-            AddJourney addJourney = new AddJourney(bookingItem.StartRentDate, bookingItem.EndRentDate, bookingItem.StartOdometer, bookingItem.id);
+            AddJourney addJourney = new AddJourney(bookingItem.StartRentDate, bookingItem.EndRentDate, bookingItem.StartOdometer, bookingItem.id, bookingItem.Vehicleid);
             addJourney.ShowDialog();
         }
 
@@ -77,16 +77,16 @@ namespace Assignment2_TDD_Fleet
             Debug.WriteLine($"Selected: {e.AddedItems[0]}");
         }
 
-        private void EndBookingButton_Clicked(object sender, RoutedEventArgs e)
-        {
-            Button button = sender as Button;
-            CarList carList = button.DataContext as CarList;
-            Booking booking = button.DataContext as Booking;
-            Bookings bookingsEdit = new Bookings(this, booking.id, booking, false);
-            bookingsEdit.carList = carList;
-            bookingsEdit.ShowDialog();
-            bookingListView.ItemsSource = CarList.bookings;
-            bookingListView.Items.Refresh();
-        }
+        //private void EndBookingButton_Clicked(object sender, RoutedEventArgs e)
+        //{
+        //    Button button = sender as Button;
+        //    CarList carList = button.DataContext as CarList;
+        //    Booking booking = button.DataContext as Booking;
+        //    Bookings bookingsEdit = new Bookings(this, booking.id, booking, false);
+        //    bookingsEdit.carList = carList;
+        //    bookingsEdit.ShowDialog();
+        //    bookingListView.ItemsSource = CarList.bookings;
+        //    bookingListView.Items.Refresh();
+        //}
     }
 }

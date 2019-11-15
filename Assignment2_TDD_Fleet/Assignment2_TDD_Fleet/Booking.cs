@@ -12,6 +12,7 @@ namespace Assignment2_TDD_Fleet
     public class Booking
     {
         public Guid id { get; set; }
+        public Guid Vehicleid { get; set; }
         public string CustomerName { get; set; }
         public string SelectedVehicle { get; set; }
         public string RentalType { get; set; }
@@ -29,6 +30,20 @@ namespace Assignment2_TDD_Fleet
         [JsonIgnore]
         public bool bookingListChanged = false;
 
+        public enum BookingType
+        {
+            Km,
+            Day
+        }
+
+        [JsonIgnore]
+        public double totalDistanceTravelled
+        {
+            get
+            {
+                return (EndOdometer - StartOdometer);
+            }
+        }
         public void SaveBookings(List<Booking> bookings)
         {
             // serialize JSON to a string and then write string to a file

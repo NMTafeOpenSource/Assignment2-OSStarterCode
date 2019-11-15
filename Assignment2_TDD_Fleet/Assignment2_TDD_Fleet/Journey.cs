@@ -12,7 +12,7 @@ namespace Assignment2_TDD_Fleet
     {
         public Guid id { get; set; }
         public Guid BookingID { get; set; }
-        //public Guid vehicleID { get; set; }
+        public Guid vehicleID { get; set; }
         public DateTime JourneyStartAt { get; set; }
         public DateTime JourneyEndedAt { get; set; }
         public int StartOdometer { get; set; }
