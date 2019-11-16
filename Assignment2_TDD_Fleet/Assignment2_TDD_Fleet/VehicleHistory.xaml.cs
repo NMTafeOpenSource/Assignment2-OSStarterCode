@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ namespace Assignment2_TDD_Fleet
         public BookingList bookingList;
         public List<Journey> journeys;
         public List<Booking> bookings;
+        public List<FuelPurchase> fuelPurchases;
 
         public VehicleHistory()
         {
@@ -40,5 +42,6 @@ namespace Assignment2_TDD_Fleet
             TextBoxtankCapacityHistory.Text = tankCapacity.ToString();
             TextBoxVehicleOdometerHistory.Text = vehicleOdometer.ToString();
         }
+
     }
 }

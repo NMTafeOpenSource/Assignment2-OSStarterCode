@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +20,6 @@ namespace Assignment2_TDD_Fleet
     /// </summary>
     public partial class AddJourney : Window
     {
-        public CarList carList;
         public static Journey journeys;
         public static Booking bookings;
         public static bool newJourney = true;
@@ -30,6 +30,8 @@ namespace Assignment2_TDD_Fleet
         public AddJourney()
         {
             InitializeComponent();
+            // Debug.WriteLine($"Owner Window: {this.Owner}");
+            // Console.WriteLine("hello???");
         }
 
         public AddJourney(DateTime startRentDate, DateTime endRentDate, int startOdometer)
@@ -64,6 +66,16 @@ namespace Assignment2_TDD_Fleet
                 journey.JourneyTo = JourneyToTextBox.Text;
 
                 CarList.journeys.Add(journey);
+
+                Booking associatedBooking = CarList.bookings.Find(b => b.id == journey.BookingID);
+                Vehicle associatedVehicle = CarList.vehicles.Find(v => v.Id == journey.vehicleID);
+                List<Journey> associatedJourneys = CarList.journeys.FindAll(j => j.BookingID == journey.BookingID);
+                List<Booking> bookings = CarList.bookings.FindAll(b => b.Vehicleid == associatedVehicle.Id);
+                associatedBooking.updateRentPrice(associatedJourneys);
+                associatedVehicle.updateTotalRentCost(bookings);
+
+                ((CarList)this.Owner).updateOdometer();
+
             }
             else
             {
@@ -76,6 +88,11 @@ namespace Assignment2_TDD_Fleet
             }
             journeys.SaveJourney(CarList.journeys);
             Close();
+        }
+
+        private void AddJourney_Loaded(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine($"Owner Window: {this.Owner}");
         }
     }
 }

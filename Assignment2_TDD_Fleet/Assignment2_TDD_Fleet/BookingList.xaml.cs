@@ -23,7 +23,6 @@ namespace Assignment2_TDD_Fleet
     /// </summary>
     public partial class BookingList : Window
     {
-        public CarList carList;
         public List<Vehicle> vehicles;
         public ViewJourneys viewJourneys;
         public List<Booking> bookings;
@@ -58,6 +57,7 @@ namespace Assignment2_TDD_Fleet
             Button button = sender as Button;
             Booking bookingItem = button.DataContext as Booking;
             AddJourney addJourney = new AddJourney(bookingItem.StartRentDate, bookingItem.EndRentDate, bookingItem.StartOdometer, bookingItem.id, bookingItem.Vehicleid);
+            addJourney.Owner = (CarList)this.Owner;
             addJourney.ShowDialog();
         }
 
@@ -66,7 +66,7 @@ namespace Assignment2_TDD_Fleet
             Button selectedButton = (Button)sender;
             Booking b = selectedButton.CommandParameter as Booking;
             viewJourneys = new ViewJourneys();
-            viewJourneys.Owner = carList;
+            viewJourneys.Owner = (CarList)this.Owner;
             viewJourneys.journeys = CarList.journeys.Where(journey => journey.BookingID == b.id).ToList();
             viewJourneys.JourneysListView.ItemsSource = viewJourneys.journeys;
             viewJourneys.ShowDialog();
@@ -77,16 +77,13 @@ namespace Assignment2_TDD_Fleet
             Debug.WriteLine($"Selected: {e.AddedItems[0]}");
         }
 
-        //private void EndBookingButton_Clicked(object sender, RoutedEventArgs e)
-        //{
-        //    Button button = sender as Button;
-        //    CarList carList = button.DataContext as CarList;
-        //    Booking booking = button.DataContext as Booking;
-        //    Bookings bookingsEdit = new Bookings(this, booking.id, booking, false);
-        //    bookingsEdit.carList = carList;
-        //    bookingsEdit.ShowDialog();
-        //    bookingListView.ItemsSource = CarList.bookings;
-        //    bookingListView.Items.Refresh();
-        //}
+        private void FuelPurchases_Clicked(object sender, RoutedEventArgs e)
+        {
+            Button fuelButton = (Button)sender;
+            Booking f = fuelButton.CommandParameter as Booking;
+            FuelPurchases fuelPurchases = new FuelPurchases(f.Vehicleid);
+            fuelPurchases.Owner = (CarList)this.Owner;
+            fuelPurchases.ShowDialog();
+        }        
     }
 }

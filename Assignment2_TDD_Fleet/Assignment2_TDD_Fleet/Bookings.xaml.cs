@@ -39,8 +39,8 @@ namespace Assignment2_TDD_Fleet
             InitializeComponent();
             BookingStartOdometerTextBox.Text = CarOdometer.ToString();
             SelectedVehicleTextBox.Text = CarManufacture + " " + CarModel.ToString();
-            ComboBoxRentalType.Items.Add(Booking.BookingType.Day);
-            ComboBoxRentalType.Items.Add(Booking.BookingType.Km);
+            ComboBoxRentalType.Items.Add(BookingType.Day);
+            ComboBoxRentalType.Items.Add(BookingType.Km);
             bookings = new Booking();
             vehicles = new Vehicle();
         }
@@ -60,23 +60,6 @@ namespace Assignment2_TDD_Fleet
             vehicles = new Vehicle();
         }
 
-        //public Bookings(BookingList bookingList, Guid id, Booking booking, bool newBooking)
-        //{
-        //    InitializeComponent();
-        //    bookings = new Booking();
-        //    this.bookingList = bookingList;
-        //    Bookings.newBooking = newBooking;
-        //    vehicleID = id;
-        //    bookings = booking;
-
-
-        //    CustomerNameTextBox.Text = bookings.CustomerName;
-        //    BookingStartOdometerTextBox.Text = bookings.StartOdometer.ToString();
-        //    SelectedVehicleTextBox.Text = bookings.SelectedVehicle;
-        //    BookingStartDatePicker.Text = bookings.StartRentDate.ToString();
-        //    BookingEndDatePicker.Text = bookings.EndRentDate.ToString();
-        //    ComboBoxRentalType.Text = bookings.RentalType;
-        //}
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
@@ -91,9 +74,14 @@ namespace Assignment2_TDD_Fleet
                 booking.SelectedVehicle = SelectedVehicleTextBox.Text;
                 booking.StartRentDate = DateTime.Parse(BookingStartDatePicker.Text);
                 booking.EndRentDate = DateTime.Parse(BookingEndDatePicker.Text);
-                booking.RentalType = ComboBoxRentalType.Text;
+                booking.RentalType = (BookingType)Enum.Parse(typeof(BookingType), ComboBoxRentalType.Text);
+                booking.updateRentPrice(null);
 
                 CarList.bookings.Add(booking);
+
+                Vehicle associatedVehicle = CarList.vehicles.Find(v => v.Id == booking.Vehicleid);
+                List<Booking> bookings = CarList.bookings.FindAll(b => b.Vehicleid == associatedVehicle.Id);
+                associatedVehicle.updateTotalRentCost(bookings);
            }
            else
            {
@@ -102,9 +90,7 @@ namespace Assignment2_TDD_Fleet
                 bookings.SelectedVehicle = SelectedVehicleTextBox.Text;
                 bookings.StartRentDate = DateTime.Parse(BookingStartDatePicker.Text);
                 bookings.EndRentDate = DateTime.Parse(BookingEndDatePicker.Text);
-                //bookings.RentalType = booking.RentalType.ToString();
-                bookings.EndOdometer = int.Parse(BookingEndOdometerTextBox.Text);
-
+                
            }
            bookings.SaveBookings(CarList.bookings);
            Close();

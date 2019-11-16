@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assignment2_TDD_Fleet"
         mc:Ignorable="d"
-        Title="CarList" Height="450" Width="860">
+        Title="CarList" Height="450" Width="1000">
     <DockPanel>
         <Menu DockPanel.Dock="Top"
               HorizontalAlignment="Left"
@@ -26,14 +26,9 @@
                           Header="Add Vehicle" Click="AddVehicle_Clicked"
                           />
             </MenuItem>
-            <MenuItem x:Name="Services"
-                      Header="Services"/>
 
             <MenuItem x:Name="BookingListMenu"
                       Header="Booking List" Click="BookingList_Clicked" />
-
-            <MenuItem x:Name="Journey"
-                      Header="Journey"/>
 
             <Separator></Separator>
             <MenuItem x:Name="About" 
@@ -112,7 +107,7 @@
                       HorizontalAlignment="Center"
                       Height="auto"
                       MinWidth="400"
-                      Width="850" Grid.ColumnSpan="2" Margin="2,50,1.6,0.2" Grid.RowSpan="2">
+                      Width="990" Grid.ColumnSpan="2" Margin="2,50,1.6,0.2" Grid.RowSpan="2">
                 <ListView.View>
                     <GridView>
                         <GridView.ColumnHeaderTemplate>
@@ -145,6 +140,11 @@
                         <GridViewColumn Header="Vehicle Odometer" 
                                     Width="120" 
                                     DisplayMemberBinding="{Binding Path=VehicleOdometer}"/>
+
+                        <GridViewColumn Header="Car Revenue" 
+                                    Width="120" 
+                                    DisplayMemberBinding="{Binding Path=TotalRentalCost, StringFormat={}{0:C}}"/>
+
 
                         <GridViewColumn 
                             Header="Actions" Width="auto">

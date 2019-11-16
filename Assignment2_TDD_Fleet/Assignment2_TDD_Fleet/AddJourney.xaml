@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assignment2_TDD_Fleet"
         mc:Ignorable="d"
-        Title="AddJourney" Height="500" Width="400">
+        Title="AddJourney" Height="500" Width="400" Loaded="AddJourney_Loaded"
+        >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

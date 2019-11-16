@@ -71,7 +71,11 @@
     <Compile Include="Bookings.xaml.cs">
       <DependentUpon>Bookings.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BookingType.cs" />
     <Compile Include="FuelPurchase.cs" />
+    <Compile Include="FuelPurchases.xaml.cs">
+      <DependentUpon>FuelPurchases.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Journey.cs" />
     <Compile Include="JourneyHistory.xaml.cs">
       <DependentUpon>JourneyHistory.xaml</DependentUpon>
@@ -113,6 +117,10 @@
       <DependentUpon>CarList.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="FuelPurchases.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="JourneyHistory.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

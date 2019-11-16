@@ -15,7 +15,6 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -44,7 +43,7 @@
                  Width="207"/>
 
         <Label x:Name="SelectedVehicleLabel"
-               Grid.Row="3"
+               Grid.Row="2"
                Content="Selected Vehicle" 
                HorizontalAlignment="Left"
                Margin="10,6,0,0"
@@ -52,7 +51,7 @@
                Width="107"/>
 
         <TextBox x:Name="SelectedVehicleTextBox"
-                 Grid.Row="3"
+                 Grid.Row="2"
                  Grid.ColumnSpan="2"
                  Grid.Column="1" 
                  HorizontalAlignment="Left"
@@ -65,7 +64,7 @@
                  Width="207" Background="#FFE6E5E5"/>
 
         <Label x:Name="LabelStartDateBookings"
-               Grid.Row="4"
+               Grid.Row="3"
                Content="Start Date" 
                HorizontalAlignment="Left"
                Margin="10,6,0,0"
@@ -74,7 +73,7 @@
         
 
         <Label x:Name="LabelEndDateBookings"
-               Grid.Row="5"
+               Grid.Row="4"
                Content="End Date" 
                HorizontalAlignment="Left"
                Margin="10,6,0,0"
@@ -94,7 +93,7 @@
                     Grid.Column="1"
                     HorizontalAlignment="Left"
                     Margin="16,10,0,0"
-                    Grid.Row="4"
+                    Grid.Row="3"
                     VerticalAlignment="Top"
                     Grid.ColumnSpan="2"
                     Width="207"/>
@@ -117,13 +116,13 @@
                     Grid.Column="1"
                     HorizontalAlignment="Left"
                     Margin="16,10,0,0"
-                    Grid.Row="5"
+                    Grid.Row="4"
                     VerticalAlignment="Top"
                     Grid.ColumnSpan="2"
                     Width="207"/>
 
         <Label x:Name="LabelRentalType"
-               Grid.Row="6"
+               Grid.Row="5"
                Content="Rental Type" 
                HorizontalAlignment="Left"
                Margin="10,6,0,0"
@@ -135,7 +134,7 @@
                 Grid.Column="1"
                 HorizontalAlignment="Left"
                 Margin="29,10,0,0"
-                Grid.Row="7"
+                Grid.Row="6"
                 VerticalAlignment="Top"
                 Width="76" Click="Button_Click_1"/>
         
@@ -143,7 +142,7 @@
                 Grid.Column="2"
                 HorizontalAlignment="Left"
                 Margin="29,10,0,0"
-                Grid.Row="7"
+                Grid.Row="6"
                 VerticalAlignment="Top"
                 Width="75" Click="Button_Click"
                 />
@@ -153,31 +152,9 @@
                   Grid.Column="1"
                   HorizontalAlignment="Left"
                   Margin="16,10.2,0,0"
-                  Grid.Row="6" 
+                  Grid.Row="5" 
                   VerticalAlignment="Top"
                   Width="207"/>
-
-
-        <Label x:Name="LabelEndOdometerBooking"
-               Grid.Row="2"
-               Content="End Odometer" 
-               HorizontalAlignment="Left"
-               Margin="10,6,0,0"
-               VerticalAlignment="Top"
-               Width="94"
-               FontSize="12"/>
-
-        <TextBox x:Name="BookingEndOdometerTextBox"
-                 Grid.ColumnSpan="2"
-                 Grid.Row="2"
-                 Grid.Column="1" 
-                 HorizontalAlignment="Left"
-                 Height="23"
-                 Margin="16,8,0,0"
-                 TextWrapping="Wrap"
-                 Text=""
-                 VerticalAlignment="Top"
-                 Width="207"/>
 
     </Grid>
 </Window>

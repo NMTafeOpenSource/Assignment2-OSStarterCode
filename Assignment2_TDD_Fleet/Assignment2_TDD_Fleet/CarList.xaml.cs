@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -22,6 +23,7 @@ namespace Assignment2_TDD_Fleet
         public static List<Vehicle> vehicles;
         public static List<Booking> bookings;
         public static List<Journey> journeys;
+        public static List<FuelPurchase> fuelPurchases;
         internal ListView vehicleListView;
         public Booking booking;
         public ViewJourneys viewJourneys;
@@ -32,6 +34,7 @@ namespace Assignment2_TDD_Fleet
         string vehiclesFileName = "jsontestshit.json";
         string bookingFileName = "Bookings.json";
         string journeysFileName = "Journey.json";
+        string fuelPurchasesFileName = "FuelPurchases.json";
         internal SaveFileDialog saveFileDialog = new SaveFileDialog();
         internal OpenFileDialog openFileDialog = new OpenFileDialog();
 
@@ -46,9 +49,13 @@ namespace Assignment2_TDD_Fleet
             vehicles = new List<Vehicle>();
             bookings = new List<Booking>();
             journeys = new List<Journey>();
+            fuelPurchases = new List<FuelPurchase>();
             LoadJourneys();
             LoadBooking();
             LoadVehicle();
+            LoadFuelPurchases();
+            updateOdometer();
+            updateRentalCosts();
         }
 
 
@@ -83,7 +90,7 @@ namespace Assignment2_TDD_Fleet
                 // The text color will change into gray
                 CapsLockStatus.Foreground = Brushes.Gray;
             }
-            
+
             if (isScrollLockToggled)
             {
                 // if the ScrollLock is toggled on keyboard
@@ -119,8 +126,6 @@ namespace Assignment2_TDD_Fleet
         private void AddVehicle_Clicked(object sender, RoutedEventArgs e)
         {
             Guid id = Guid.NewGuid();
-            //int newId = vehicles.Max(x => x.Id) + 1;
-            //Journey journeyItems = DataContext as Journey;
             AddVehicle addVehicle = new AddVehicle(id);
             addVehicle.ShowDialog();
             VehicleListView.ItemsSource = vehicles;
@@ -134,8 +139,6 @@ namespace Assignment2_TDD_Fleet
             if (openFileDialog.ShowDialog() == true)
             {
                 vehicles = (List<Vehicle>)JsonConvert.DeserializeObject(File.ReadAllText(openFileDialog.FileName), typeof(List<Vehicle>));
-                //FileNameLabel.Text = openFileDialog.FileName;
-                // companyListChanged = false;
             }
             VehicleListView.ItemsSource = vehicles;
             VehicleListView.Items.Refresh();
@@ -161,7 +164,6 @@ namespace Assignment2_TDD_Fleet
             Button button = sender as Button;
             Vehicle detailsForAVehicle = button.DataContext as Vehicle;
             vehicles.Remove(detailsForAVehicle);
-            //this.SaveCompanies(MainWindow.companies);
             CollectionViewSource.GetDefaultView(vehicleListView.ItemsSource).Refresh();
             vehicleListChanged = true;
         }
@@ -219,6 +221,11 @@ namespace Assignment2_TDD_Fleet
             journeys = (List<Journey>)JsonConvert.DeserializeObject(File.ReadAllText(journeysFileName), typeof(List<Journey>));
         }
 
+        public void LoadFuelPurchases()
+        {
+            fuelPurchases = (List<FuelPurchase>)JsonConvert.DeserializeObject(File.ReadAllText(fuelPurchasesFileName), typeof(List<FuelPurchase>));
+        }
+
         private void ViewButton_Clicked(object sender, RoutedEventArgs e)
         {
             Button selectedButton = (Button)sender;
@@ -229,7 +236,43 @@ namespace Assignment2_TDD_Fleet
             vehicleHistory.JourneysListViewForHistory.ItemsSource = vehicleHistory.journeys;
             vehicleHistory.bookings = bookings.Where(booking => booking.Vehicleid == v.Id).ToList();
             vehicleHistory.BookingsListViewForHistory.ItemsSource = vehicleHistory.bookings;
+            vehicleHistory.fuelPurchases = fuelPurchases.Where(fuelP => fuelP.VId == v.Id).ToList();
+            vehicleHistory.FuelPurchasesViewForHistory.ItemsSource = vehicleHistory.fuelPurchases;
             vehicleHistory.ShowDialog();
+        }
+
+        public void updateOdometer()
+        {
+            if (CarList.vehicles.Count > 0)
+            {
+                vehicles.ForEach(v =>
+                {
+                    List<Journey> associatedJourneys = CarList.journeys.FindAll(j => j.vehicleID == v.Id).ToList<Journey>();
+                    List<Journey> journeysUpToToday = associatedJourneys
+                    .Where(j => DateTime.Compare(j.JourneyEndedAt, DateTime.Now) <= 0)
+                    .ToList<Journey>();
+
+                    DateTime latestJourneyDate;
+
+                    if (journeysUpToToday.Count > 0)
+                    {
+                        latestJourneyDate = journeysUpToToday.Max(j => j.JourneyEndedAt).Date;
+                        Journey latestJourney = associatedJourneys.Find(j => (j.JourneyEndedAt - latestJourneyDate).TotalDays == 0);
+                        v.VehicleOdometer = latestJourney.EndOdometer;
+                    }
+                });
+
+            }
+            VehicleListView.Items.Refresh();
+        }
+
+        public void updateRentalCosts()
+        {
+            vehicles.ForEach(v =>
+            {
+                List<Booking> associatedBookings = bookings.FindAll(b => b.Vehicleid == v.Id).ToList<Booking>();
+                v.updateTotalRentCost(associatedBookings);
+            });
         }
     }
 }

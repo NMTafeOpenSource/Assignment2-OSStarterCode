@@ -61,5 +61,10 @@ namespace Assignment2_TDD_Fleet
             }
             //vehicleListChanged = false;
         }
+
+        public override string ToString()
+        {
+            return $"Journey start date: {this.JourneyStartAt}, Journey end date: {this.JourneyEndedAt}, journey end odometer: {this.EndOdometer}"; ;
+        }
     }
 }

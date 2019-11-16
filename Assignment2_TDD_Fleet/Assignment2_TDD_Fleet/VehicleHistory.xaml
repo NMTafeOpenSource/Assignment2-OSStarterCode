@@ -213,7 +213,7 @@
                             
                             <GridViewColumn Header="Price (Au$)" 
                                     Width="80" 
-                                    DisplayMemberBinding="{Binding Path=RentPrice}"/>
+                                    DisplayMemberBinding="{Binding Path=RentPrice,  StringFormat={}{0:C}}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -269,7 +269,37 @@
                 </ListView>
             </TabItem>
             <TabItem Header="Fuel Purchases">
-                
+                <ListView  x:Name="FuelPurchasesViewForHistory"
+                   HorizontalAlignment="Center"
+                   Grid.Row="1"
+                   Height="auto"
+                   Width="780"
+                   SelectionMode="Single"
+                  >
+                    <ListView.View>
+                        <GridView>
+                            <GridView.ColumnHeaderTemplate>
+                                <DataTemplate>
+                                    <Border BorderBrush="AliceBlue" BorderThickness="2" CornerRadius="5">
+                                        <TextBlock Text="{Binding}" Width="auto"/>
+                                    </Border>
+                                </DataTemplate>
+                            </GridView.ColumnHeaderTemplate>
+                            <GridViewColumn Header="Fuel Quantity (L)"
+                                    Width="120" 
+                                    DisplayMemberBinding="{Binding Path=FuelQuantity}"/>
+
+                            <GridViewColumn Header="Fuel Price (/L)"
+                                    Width="100" 
+                                    DisplayMemberBinding="{Binding Path=FuelPrice, StringFormat={}{0:c}}"/>
+
+                            <GridViewColumn Header="Total Cost"
+                                    Width="100"
+                                    DisplayMemberBinding="{Binding Path=TotalCost, StringFormat={}{0:c}}" />
+
+                        </GridView>
+                    </ListView.View>
+                </ListView>
             </TabItem>
         </TabControl>
     </Grid>

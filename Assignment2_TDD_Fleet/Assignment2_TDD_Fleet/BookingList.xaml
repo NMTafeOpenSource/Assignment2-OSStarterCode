@@ -70,8 +70,6 @@
                                         <ColumnDefinition Width="auto"></ColumnDefinition>
                                         <ColumnDefinition Width="4"></ColumnDefinition>
                                         <ColumnDefinition Width="auto"></ColumnDefinition>
-                                        <ColumnDefinition Width="4"></ColumnDefinition>
-                                        <ColumnDefinition Width="auto"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
                                     <Button x:Name="ButtonForJourneys"                                                
                                                 Grid.Column="0"
@@ -87,7 +85,9 @@
                                                 Grid.Column="2"
                                                 Height="24" Width="45"
                                                 Content="Fuel"
-                                                Background="Green"
+                                                Background="Green" 
+                                                Click="FuelPurchases_Clicked"
+                                                CommandParameter="{Binding}"
                                                 >
                                     </Button>
                                     <Button     x:Name="ButtonViewJourneys"
@@ -99,14 +99,7 @@
                                                 CommandParameter="{Binding}"
                                                 >
                                     </Button>
-                                    <Button x:Name="ButtonForEndBooking"                                                
-                                                Grid.Column="6"
-                                                Height="24" Width="auto"
-                                                Content="End Booking"
-                                                Foreground="White"
-                                                Background="Blue" 
-                                               >
-                                    </Button>
+                                    
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
