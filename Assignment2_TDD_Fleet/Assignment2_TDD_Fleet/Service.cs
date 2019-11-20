@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,46 +10,41 @@ namespace Assignment2_TDD_Fleet
 {
     public class Service
     {
+        public Guid vehicleID { get; set; }
+        public int ServiceOdometer { get; set; }
+        public DateTime ServiceDate { get; set; }
 
-        // Constant to indicate that the vehicle needs to be serviced every 10,000km
-        public static int SERVICE_KILOMETER_LIMIT = 10000;
-        private int lastServiceOdometerKm = 0;
-        private int serviceCount = 0;
-        // TODO add lastServiceDate
-
-        // return the last service
-        public int getLastServiceOdometerKm()
+        [JsonIgnore]
+        public bool servicesListChanged = false;
+        public static void SaveServices(List<Service> services)
         {
-            return this.lastServiceOdometerKm;
+            // serialize JSON to a string and then write string to a file
+            //File.WriteAllText(@companyFileName, JsonConvert.SerializeObject(CompanyList));
+
+            // serialize JSON directly to a file
+            using (StreamWriter file = File.CreateText("Service.json"))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Serialize(file, services);
+            }
+            //servicesListChanged = false;
         }
 
-        /**
-         * The function recordService expects the total distance traveled by the car, 
-         * saves it and increase serviceCount.
-         * @param distance 
-         */
-        public void recordService(int distance)
+        public static Service getLatestService(List<Service> vehicleServices)
         {
-            this.lastServiceOdometerKm = distance;
-            this.serviceCount++;
+            return vehicleServices.Find(s =>
+            {
+                return DateTime.Compare(s.ServiceDate.Date, DateTime.Now.Date) == 0;
+            });
         }
 
-        // return how many services the car has had
-        public int getServiceCount()
+        public static bool requiresService(List<Service> vehicleServices)
         {
-            return this.serviceCount;
+            return vehicleServices.Any(s =>
+            {
+                return DateTime.Compare(s.ServiceDate.Date, DateTime.Now.Date) >= 0;
+            });
         }
-
-        /**
-         * Calculates the total services by dividing kilometers by
-         * {@link #SERVICE_KILOMETER_LIMIT} and floors the value. 
-         * 
-         * @return the number of services needed per SERVICE_KILOMETER_LIMIT
-         */
-        //public int getTotalScheduledServices()
-        //{
-        //    return (int)Math.Floor(lastServiceOdometerKm / SERVICE_KILOMETER_LIMIT);
-        //}
 
     }
 }

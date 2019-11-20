@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assignment2_TDD_Fleet"
         mc:Ignorable="d"
-        Title="AddJourney" Height="500" Width="400" Loaded="AddJourney_Loaded"
+        Title="AddJourney" Height="500" Width="500" Loaded="AddJourney_Loaded"
         >
     <Grid>
         <Grid.RowDefinitions>
@@ -40,7 +40,7 @@
                     Margin="10,22,0,0" 
                     Text=""
                     VerticalAlignment="Top"
-                    Width="236"
+                    Width="236" SelectedDateChanged="JourneyStartAtDate_SelectedDateChanged"
                  />
 
         <Label x:Name="JourneyEndAtLabel"
@@ -59,7 +59,7 @@
                     Height="23" 
                     Margin="10,22,0,0" 
                     VerticalAlignment="Top"
-                    Width="236" />
+                    Width="236" SelectedDateChanged="JourneyEndedAtDate_SelectedDateChanged" />
 
         <Label x:Name="StartOdometerJourney"
                Grid.Row="2"
@@ -164,10 +164,10 @@
                Content="Remember!"
                Grid.Column="1"
                HorizontalAlignment="Left"
-               Margin="10,50,0,0" 
+               Margin="10.4,50,0,0" 
                VerticalAlignment="Top"
                Grid.ColumnSpan="2"
-               Width="236"
+               Width="302"
                Height="27"
                FontSize="10"
                FontWeight="DemiBold"
@@ -178,10 +178,10 @@
                Grid.Column="1"
                Grid.Row="1"
                HorizontalAlignment="Left"
-               Margin="10,49.6,0,0" 
+               Margin="10.4,49.6,0,0" 
                VerticalAlignment="Top"
                Grid.ColumnSpan="2"
-               Width="236"
+               Width="302"
                Height="26"
                FontSize="10"
                FontWeight="DemiBold"

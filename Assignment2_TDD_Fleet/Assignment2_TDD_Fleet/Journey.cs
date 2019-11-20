@@ -48,6 +48,9 @@ namespace Assignment2_TDD_Fleet
             return kilometers;
         }
 
+        [JsonIgnore]
+        public bool journeysListChanged = false;
+
         public void SaveJourney(List<Journey> journeys)
         {
             // serialize JSON to a string and then write string to a file
@@ -59,7 +62,7 @@ namespace Assignment2_TDD_Fleet
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Serialize(file, journeys);
             }
-            //vehicleListChanged = false;
+            journeysListChanged = false;
         }
 
         public override string ToString()

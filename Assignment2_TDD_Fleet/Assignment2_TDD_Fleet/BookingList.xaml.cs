@@ -25,6 +25,7 @@ namespace Assignment2_TDD_Fleet
     {
         public List<Vehicle> vehicles;
         public ViewJourneys viewJourneys;
+        public ListView vehicleListView;
         public List<Booking> bookings;
         public List<Journey> journeys;
         public List<Booking> bookingsFromJSONFile;
@@ -58,6 +59,7 @@ namespace Assignment2_TDD_Fleet
             Booking bookingItem = button.DataContext as Booking;
             AddJourney addJourney = new AddJourney(bookingItem.StartRentDate, bookingItem.EndRentDate, bookingItem.StartOdometer, bookingItem.id, bookingItem.Vehicleid);
             addJourney.Owner = (CarList)this.Owner;
+            addJourney.BookingID = bookingItem.id;
             addJourney.ShowDialog();
         }
 
@@ -67,8 +69,10 @@ namespace Assignment2_TDD_Fleet
             Booking b = selectedButton.CommandParameter as Booking;
             viewJourneys = new ViewJourneys();
             viewJourneys.Owner = (CarList)this.Owner;
+            viewJourneys.BookingID = b.id;
             viewJourneys.journeys = CarList.journeys.Where(journey => journey.BookingID == b.id).ToList();
             viewJourneys.JourneysListView.ItemsSource = viewJourneys.journeys;
+            viewJourneys.vehicleListView = vehicleListView;
             viewJourneys.ShowDialog();
         }
 
@@ -84,6 +88,22 @@ namespace Assignment2_TDD_Fleet
             FuelPurchases fuelPurchases = new FuelPurchases(f.Vehicleid);
             fuelPurchases.Owner = (CarList)this.Owner;
             fuelPurchases.ShowDialog();
-        }        
+        }
+
+        private void ButtonDeleteBooking_Clicked(object sender, RoutedEventArgs e)
+        {
+            Button deleteBookingButton = sender as Button;
+            Booking detailsForBooking = deleteBookingButton.DataContext as Booking;
+            CarList.bookings.Remove(detailsForBooking);
+            CollectionViewSource.GetDefaultView(BookingsListView.ItemsSource).Refresh();
+            bookingListChanged = true;
+            detailsForBooking.SaveBookings(bookings);
+            Vehicle relatedVehicle = CarList.vehicles.Find(v => v.Id == detailsForBooking.Vehicleid);
+            List<Booking> allBookingsWithRelatedVehicle = CarList.bookings.FindAll(b => b.Vehicleid == relatedVehicle.Id);
+            relatedVehicle.updateTotalRentCost(allBookingsWithRelatedVehicle);
+            relatedVehicle.SaveVehicles(CarList.vehicles);
+            vehicleListView.ItemsSource = CarList.vehicles;
+            vehicleListView.Items.Refresh();
+        }
     }
 }

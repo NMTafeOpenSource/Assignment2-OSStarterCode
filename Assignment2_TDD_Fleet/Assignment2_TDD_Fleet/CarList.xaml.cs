@@ -24,17 +24,19 @@ namespace Assignment2_TDD_Fleet
         public static List<Booking> bookings;
         public static List<Journey> journeys;
         public static List<FuelPurchase> fuelPurchases;
-        internal ListView vehicleListView;
+        public static List<Service> services;
+        public ListView vehicleListView;
         public Booking booking;
         public ViewJourneys viewJourneys;
         public VehicleHistory vehicleHistory;
         public BookingList bookingList;
         public bool vehicleListChanged;
         public Vehicle vehicle;
-        string vehiclesFileName = "jsontestshit.json";
+        string vehiclesFileName = "Vehicles.json";
         string bookingFileName = "Bookings.json";
         string journeysFileName = "Journey.json";
         string fuelPurchasesFileName = "FuelPurchases.json";
+        string servicesFileName = "Service.json";
         internal SaveFileDialog saveFileDialog = new SaveFileDialog();
         internal OpenFileDialog openFileDialog = new OpenFileDialog();
 
@@ -50,10 +52,12 @@ namespace Assignment2_TDD_Fleet
             bookings = new List<Booking>();
             journeys = new List<Journey>();
             fuelPurchases = new List<FuelPurchase>();
+            services = new List<Service>();
             LoadJourneys();
             LoadBooking();
             LoadVehicle();
             LoadFuelPurchases();
+            LoadServices();
             updateOdometer();
             updateRentalCosts();
         }
@@ -166,6 +170,7 @@ namespace Assignment2_TDD_Fleet
             vehicles.Remove(detailsForAVehicle);
             CollectionViewSource.GetDefaultView(vehicleListView.ItemsSource).Refresh();
             vehicleListChanged = true;
+            detailsForAVehicle.SaveVehicles(vehicles);
         }
 
         private void ButtonEdit_Clicked(object sender, RoutedEventArgs e)
@@ -199,6 +204,7 @@ namespace Assignment2_TDD_Fleet
             Button button = sender as Button;
             Vehicle vehicleItem = button.DataContext as Vehicle;
             Bookings bookings = new Bookings(vehicleItem.VehicleOdometer, vehicleItem.CarModel, vehicleItem.CarManufacture, vehicleItem.Id, NewId);
+            bookings.vehicleId = vehicleItem.Id;
             bookings.ShowDialog();
         }
 
@@ -213,6 +219,7 @@ namespace Assignment2_TDD_Fleet
             bookingList.Owner = this;
             bookingList.bookings = CarList.bookings;
             bookingList.BookingsListView.ItemsSource = CarList.bookings;
+            bookingList.vehicleListView = VehicleListView;
             bookingList.ShowDialog();
         }
 
@@ -226,11 +233,15 @@ namespace Assignment2_TDD_Fleet
             fuelPurchases = (List<FuelPurchase>)JsonConvert.DeserializeObject(File.ReadAllText(fuelPurchasesFileName), typeof(List<FuelPurchase>));
         }
 
+        public void LoadServices()
+        {
+            services = (List<Service>)JsonConvert.DeserializeObject(File.ReadAllText(servicesFileName), typeof(List<Service>));
+        }
         private void ViewButton_Clicked(object sender, RoutedEventArgs e)
         {
             Button selectedButton = (Button)sender;
             Vehicle v = selectedButton.CommandParameter as Vehicle;
-            vehicleHistory = new VehicleHistory(v.RegistrationID, v.CarManufacture, v.CarModel, v.CarYear, v.FuelType, v.TankCapacity, v.VehicleOdometer);
+            vehicleHistory = new VehicleHistory(v.RegistrationID, v.CarManufacture, v.CarModel, v.CarYear, v.FuelType, v.TankCapacity, v.VehicleOdometer, v.serviceCount);
             vehicleHistory.Owner = this;
             vehicleHistory.journeys = journeys.Where(journey => journey.vehicleID == v.Id).ToList();
             vehicleHistory.JourneysListViewForHistory.ItemsSource = vehicleHistory.journeys;
@@ -238,6 +249,8 @@ namespace Assignment2_TDD_Fleet
             vehicleHistory.BookingsListViewForHistory.ItemsSource = vehicleHistory.bookings;
             vehicleHistory.fuelPurchases = fuelPurchases.Where(fuelP => fuelP.VId == v.Id).ToList();
             vehicleHistory.FuelPurchasesViewForHistory.ItemsSource = vehicleHistory.fuelPurchases;
+            vehicleHistory.services = services.Where(service => service.vehicleID == v.Id).ToList();
+            vehicleHistory.servicesListView .ItemsSource= vehicleHistory.services;
             vehicleHistory.ShowDialog();
         }
 
@@ -273,6 +286,24 @@ namespace Assignment2_TDD_Fleet
                 List<Booking> associatedBookings = bookings.FindAll(b => b.Vehicleid == v.Id).ToList<Booking>();
                 v.updateTotalRentCost(associatedBookings);
             });
+        }
+
+        private void ButtonService_Clicked(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            Vehicle vehicleService = button.DataContext as Vehicle;
+            vehicleHistory = new VehicleHistory();
+            AddService addService = new AddService(vehicleService.Id, vehicleService.VehicleOdometer);
+            addService.ShowDialog();
+        }
+
+        private void buttonPrintVehicle_Click(object sender, RoutedEventArgs e)
+        {
+            Button printButton = (Button)sender;
+            Vehicle v = printButton.CommandParameter as Vehicle;
+            PrintDetails printDetails = new PrintDetails();
+            printDetails.vehicle = v;
+            printDetails.ShowDialog();
         }
     }
 }

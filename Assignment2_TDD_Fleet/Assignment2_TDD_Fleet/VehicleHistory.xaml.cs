@@ -22,16 +22,19 @@ namespace Assignment2_TDD_Fleet
     {
         public CarList carlist;
         public BookingList bookingList;
+
         public List<Journey> journeys;
         public List<Booking> bookings;
         public List<FuelPurchase> fuelPurchases;
+        public List<Service> services;
+        public bool servicesListChanged;
 
         public VehicleHistory()
         {
             InitializeComponent();
         }
 
-        public VehicleHistory(string registrationID, string carManufacture, string carModel, int carYear, string fuelType, double tankCapacity, int vehicleOdometer)
+        public VehicleHistory(string registrationID, string carManufacture, string carModel, int carYear, string fuelType, double tankCapacity, int vehicleOdometer, int serviceCount)
         {
             InitializeComponent();
             TextBoxRegistrationIDHistory.Text = registrationID;
@@ -41,7 +44,23 @@ namespace Assignment2_TDD_Fleet
             TextBoxFuelTypeHistory.Text = fuelType;
             TextBoxtankCapacityHistory.Text = tankCapacity.ToString();
             TextBoxVehicleOdometerHistory.Text = vehicleOdometer.ToString();
+            TextBoxServiceCountHistory.Text = serviceCount.ToString();
         }
 
+        private void ButtonForDeleteServices_Click(object sender, RoutedEventArgs e)
+        {
+            Button deleteServicesButton = (Button)sender;
+            Service s = deleteServicesButton.CommandParameter as Service;
+            CarList.services.Remove(s);
+            Vehicle relatedVehicle = CarList.vehicles.Find(v => v.Id == s.vehicleID);
+            List<Service> servicesRelatedWithVehicle = CarList.services.FindAll(service => service.vehicleID == relatedVehicle.Id);
+            this.servicesListView.ItemsSource = servicesRelatedWithVehicle;
+            servicesListChanged = true;
+            relatedVehicle.updateServicesCount(servicesRelatedWithVehicle);
+            Service.SaveServices(CarList.services);
+            relatedVehicle.SaveVehicles(CarList.vehicles);
+            servicesListView.ItemsSource = CarList.services.FindAll(service => service.vehicleID == relatedVehicle.Id);
+            servicesListView.Items.Refresh();
+        }
     }
 }

@@ -21,6 +21,7 @@ namespace Assignment2_TDD_Fleet
         public double TankCapacity { get; set; }
         public int VehicleOdometer { get; set; }
         public double TotalRentalCost { get; set; }
+        public int serviceCount { get; set; }
 
         public Vehicle()
         {
@@ -35,7 +36,7 @@ namespace Assignment2_TDD_Fleet
             //File.WriteAllText(@companyFileName, JsonConvert.SerializeObject(CompanyList));
 
             // serialize JSON directly to a file
-            using (StreamWriter file = File.CreateText("jsontestshit.json"))
+            using (StreamWriter file = File.CreateText("Vehicles.json"))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Serialize(file, vehicles);
@@ -54,26 +55,33 @@ namespace Assignment2_TDD_Fleet
             SaveVehicles(CarList.vehicles);
         }
 
-        //private FuelPurchase fuelPurchase;
+        public void updateServicesCount(List<Service> servicesList)
+        {
+            List<Service> servicesUpToToday = servicesList.Where(s => DateTime.Compare(s.ServiceDate, DateTime.Now) <= 0).ToList<Service>();
+            this.serviceCount = servicesUpToToday.Count;
+            this.SaveVehicles(CarList.vehicles);
+        }
 
-        /**
-         * Class constructor specifying name of make (manufacturer), model and year
-         * of make.
-         * @param manufacturer
-         * @param model
-         * @param makeYear
-         */
-        
-        /**
-         * Prints details for {@link Vehicle}
-         */
-        
-       //public void printDetails()
-       //{
-       //    Console.WriteLine("Vehicle: " + CarYear + " " + CarManufacture + " " + CarModel);
-       //    // TODO Display additional information about this vehicle
-       //}
-       
+
+        public string printDetails()
+        {
+            List<Service> vehicleServices = CarList.services != null && CarList.services.Count > 0 ? CarList.services.FindAll(s => s.vehicleID == this.Id) : new List<Service>();
+            Service latestService = vehicleServices != null && vehicleServices.Count > 0 ? Service.getLatestService(vehicleServices) : null;
+            double kmSinceLastService = latestService != null ? this.VehicleOdometer - latestService.ServiceOdometer : 0;
+            bool requiresService = vehicleServices != null && vehicleServices.Count > 0 ? Service.requiresService(vehicleServices) : false;
+            string requiresServiceText = requiresService ? "Yes" : "No";
+
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"Vehicle: {this.CarManufacture} {this.CarModel} {this.CarYear}");
+            sb.AppendLine($"Registration No: {this.RegistrationID}");
+            sb.AppendLine($"Distance Travelled: {this.VehicleOdometer}");
+            sb.AppendLine($"Total Services: {this.serviceCount}");
+            sb.AppendLine($"Car Revenue: {this.TotalRentalCost.ToString("C")}");
+            sb.AppendLine($"KM Since last service: {kmSinceLastService} km");
+            sb.AppendLine($"Requires service: {requiresServiceText}");
+
+            return sb.ToString();
+        }
 
     }
 }

@@ -70,6 +70,8 @@
                                         <ColumnDefinition Width="auto"></ColumnDefinition>
                                         <ColumnDefinition Width="4"></ColumnDefinition>
                                         <ColumnDefinition Width="auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="4"></ColumnDefinition>
+                                        <ColumnDefinition Width="auto"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
                                     <Button x:Name="ButtonForJourneys"                                                
                                                 Grid.Column="0"
@@ -99,7 +101,18 @@
                                                 CommandParameter="{Binding}"
                                                 >
                                     </Button>
-                                    
+
+                                    <Button     x:Name="ButtonDeleteBooking"
+                                                Grid.Column="6"
+                                                Height="24" Width="Auto"
+                                                Content="Delete"
+                                                Background="Red" 
+                                                CommandParameter="{Binding}"
+                                                Click="ButtonDeleteBooking_Clicked"
+                                                
+                                                >
+                                    </Button>
+
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

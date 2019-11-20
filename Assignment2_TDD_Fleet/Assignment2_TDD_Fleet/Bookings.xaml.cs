@@ -27,6 +27,8 @@ namespace Assignment2_TDD_Fleet
         public Guid bookingId;
         public Guid vehicleId;
         public int vehicleOdometer;
+        public bool isBookingsStartDateValid = false;
+        public bool isBookingsEndDateValid = false;
 
         public Bookings()
         {
@@ -63,9 +65,9 @@ namespace Assignment2_TDD_Fleet
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-           bookings.bookingListChanged = true;
-           if (newBooking)
-           {
+            bookings.bookingListChanged = true;
+            if (newBooking)
+            {
                 Booking booking = new Booking();
                 booking.id = bookingId;
                 booking.Vehicleid = vehicleId;
@@ -82,18 +84,79 @@ namespace Assignment2_TDD_Fleet
                 Vehicle associatedVehicle = CarList.vehicles.Find(v => v.Id == booking.Vehicleid);
                 List<Booking> bookings = CarList.bookings.FindAll(b => b.Vehicleid == associatedVehicle.Id);
                 associatedVehicle.updateTotalRentCost(bookings);
-           }
-           else
-           {
+            }
+            else
+            {
                 bookings.CustomerName = CustomerNameTextBox.Text;
                 bookings.StartOdometer = int.Parse(BookingStartOdometerTextBox.Text);
                 bookings.SelectedVehicle = SelectedVehicleTextBox.Text;
                 bookings.StartRentDate = DateTime.Parse(BookingStartDatePicker.Text);
                 bookings.EndRentDate = DateTime.Parse(BookingEndDatePicker.Text);
-                
-           }
-           bookings.SaveBookings(CarList.bookings);
-           Close();
+
+            }
+            bookings.SaveBookings(CarList.bookings);
+            Close();
         }
+
+        //private void BookingStartDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    DateTime? bookingStartDate = BookingStartDatePicker.SelectedDate;
+
+        //    if (bookingStartDate != null)
+        //    {
+        //        Booking relatedBooked = CarList.bookings.Find(b => b.Vehicleid == vehicleId);
+        //        if (relatedBooked.StartRentDate == null)
+        //        {
+        //            LabelRentDateError.Content = "OK";
+        //            isBookingsStartDateValid = true;
+        //        }
+        //        else
+        //        {
+                    
+        //            if (DateTime.Compare((DateTime)bookingStartDate, relatedBooked.StartRentDate) == 0)
+        //            {
+        //                LabelRentDateError.Content = "this vehicle already booked on this date";
+        //                isBookingsStartDateValid = false;
+        //            }
+        //            else if (DateTime.Compare((DateTime)bookingStartDate, relatedBooked.EndRentDate) == 0)
+        //            {
+        //                LabelRentDateError.Content = "this vehicle already booked on this date";
+        //                isBookingsStartDateValid = false;
+        //            }
+        //            else
+        //            {
+        //                LabelRentDateError.Content = "OK";
+        //                isBookingsStartDateValid = true;
+        //            }
+        //        }
+        //    }
+        //}
+
+        //private void BookingEndDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    DateTime? bookingStartDate = BookingStartDatePicker.SelectedDate;
+        //    DateTime? bookingEndDate = BookingEndDatePicker.SelectedDate;
+        //    Booking relatedBooked = CarList.bookings.Find(b => b.Vehicleid == vehicleId);
+
+        //    if (bookingStartDate != null)
+        //    {
+        //        if (DateTime.Compare((DateTime)bookingStartDate, (DateTime)bookingEndDate) > 0)
+        //        {
+        //            LabelEndDateError.Content = "booking end date cannot be before booking start date";
+        //            isBookingsStartDateValid = false;
+        //        }
+        //        else
+        //        {
+        //            LabelEndDateError.Content = "OK";
+        //            isBookingsStartDateValid = true;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        LabelEndDateError.Content = "you need to choose your end date!";
+        //        isBookingsStartDateValid = false;
+        //    }
+        //}
+
     }
 }

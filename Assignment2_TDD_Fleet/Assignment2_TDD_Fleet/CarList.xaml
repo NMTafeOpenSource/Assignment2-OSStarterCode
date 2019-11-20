@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assignment2_TDD_Fleet"
         mc:Ignorable="d"
-        Title="CarList" Height="450" Width="1000">
+        Title="CarList" Height="450" Width="1080">
     <DockPanel>
         <Menu DockPanel.Dock="Top"
               HorizontalAlignment="Left"
               VerticalAlignment="Top"
-              Width="850">
+              Width="1080">
             <MenuItem x:Name="MenuFile"
                       Header="File">
                 <MenuItem x:Name="LoadFile"
@@ -20,7 +20,7 @@
                           Header="Save" Click="SaveFile_Clicked" />
 
             </MenuItem>
-            <MenuItem x:Name="Vehicle" 
+            <MenuItem x:Name="MenuVehicle" 
                       Header="Vehicle">
                 <MenuItem x:Name="AddVehicle"
                           Header="Add Vehicle" Click="AddVehicle_Clicked"
@@ -107,7 +107,8 @@
                       HorizontalAlignment="Center"
                       Height="auto"
                       MinWidth="400"
-                      Width="990" Grid.ColumnSpan="2" Margin="2,50,1.6,0.2" Grid.RowSpan="2">
+                      Width="1080" Grid.ColumnSpan="2" Margin="2,50,1.6,0.2" Grid.RowSpan="2"
+                      >
                 <ListView.View>
                     <GridView>
                         <GridView.ColumnHeaderTemplate>
@@ -162,6 +163,10 @@
                                             <ColumnDefinition Width="auto"></ColumnDefinition>
                                             <ColumnDefinition Width="4"></ColumnDefinition>
                                             <ColumnDefinition Width="auto"></ColumnDefinition>
+                                            <ColumnDefinition Width="4"></ColumnDefinition>
+                                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                                            <ColumnDefinition Width="4"></ColumnDefinition>
+                                            <ColumnDefinition Width="auto"></ColumnDefinition>
                                         </Grid.ColumnDefinitions>
 
                                         <Button x:Name="btnEditVehicle"
@@ -177,8 +182,8 @@
                                                 Grid.Column="2"
                                                 Height="24" Width="45"
                                                 Content="Book"
-                                                Background="BlueViolet" Click="BtnRentVehicle_Click"
-                                                
+                                                Background="BlueViolet" 
+                                                Click="BtnRentVehicle_Click"
                                                 >
                                         </Button>
 
@@ -200,6 +205,24 @@
                                                 CommandParameter="{Binding}" 
                                                 >
                                         </Button>
+                                        <Button x:Name="btnServiceVehicle"
+                                                Grid.Column="8"
+                                                Height="24" Width="45"
+                                                Content="Service"
+                                                Background="Orange"
+                                                Click="ButtonService_Clicked"
+                                                >
+                                        </Button>
+                                        <Button x:Name="buttonPrintVehicle"
+                                                Grid.Column="10"
+                                                Height="24" Width="auto"
+                                                Content="Print Details"
+                                                Background="Coral"
+                                                CommandParameter="{Binding}" 
+                                                Click="buttonPrintVehicle_Click"
+                                                >
+                                        </Button>
+
 
                                     </Grid>
                                 </DataTemplate>

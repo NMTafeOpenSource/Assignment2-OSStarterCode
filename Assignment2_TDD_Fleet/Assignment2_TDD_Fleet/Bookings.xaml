@@ -70,7 +70,7 @@
                Margin="10,6,0,0"
                VerticalAlignment="Top"
                Width="63"/>
-        
+
 
         <Label x:Name="LabelEndDateBookings"
                Grid.Row="4"
@@ -121,6 +121,35 @@
                     Grid.ColumnSpan="2"
                     Width="207"/>
 
+        <Label x:Name="LabelRentDateError"
+               Content="Remember!"
+               Grid.Row="3"
+               Grid.Column="1"
+               HorizontalAlignment="Left"
+               Margin="10,38.4,0,0" 
+               VerticalAlignment="Top"
+               Grid.ColumnSpan="2"
+               Width="246"
+               Height="27"
+               FontSize="10"
+               FontWeight="DemiBold"
+               Foreground="Red"/>
+
+        <Label x:Name="LabelEndDateError"
+               Content="Remember!"
+               Grid.Row="4"
+               Grid.Column="1"
+               HorizontalAlignment="Left"
+               Margin="10,38.4,0,0" 
+               VerticalAlignment="Top"
+               Grid.ColumnSpan="2"
+               Width="246"
+               Height="27"
+               FontSize="10"
+               FontWeight="DemiBold"
+               Foreground="Red"/>
+
+
         <Label x:Name="LabelRentalType"
                Grid.Row="5"
                Content="Rental Type" 
@@ -137,7 +166,7 @@
                 Grid.Row="6"
                 VerticalAlignment="Top"
                 Width="76" Click="Button_Click_1"/>
-        
+
         <Button Content="Cancel"
                 Grid.Column="2"
                 HorizontalAlignment="Left"
