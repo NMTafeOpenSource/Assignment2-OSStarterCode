@@ -14,15 +14,14 @@ namespace Assignment2_TDD_Fleet
         public static Vehicle vehicle;
         public static bool newVehicle = true;
         public Guid id;
-        //public int odometer;
-
-        //public AddVehicle(int newId)
-        //{
-        //    //id = newId;
-        //    InitializeComponent();
-        //    vehicles = new Vehicle();
-        //}
-
+        
+        /// <summary>
+        /// this is a constructor for this window and getting
+        /// items from carList, vehicle, and boolean for new vehicle
+        /// </summary>
+        /// <param name="car"></param>
+        /// <param name="vehicle"></param>
+        /// <param name="newVehicle"></param>
         public AddVehicle(CarList car, Vehicle vehicle, bool newVehicle)
         {
             InitializeComponent();
@@ -38,7 +37,11 @@ namespace Assignment2_TDD_Fleet
             TextBoxFuelCapacity.Text = vehicles.TankCapacity.ToString();
             TextBoxOdometer.Text = vehicles.VehicleOdometer.ToString();
         }
-
+        /// <summary>
+        /// this is constructor for this window
+        /// to get guid of vehicle
+        /// </summary>
+        /// <param name="id"></param>
         public AddVehicle(Guid id)
         {
             this.id = id;
@@ -46,7 +49,11 @@ namespace Assignment2_TDD_Fleet
             InitializeComponent();
             vehicles = new Vehicle();
         }
-
+        /// <summary>
+        /// this is a click event to add new vehicle
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             vehicles.vehicleListChanged = true;
@@ -74,12 +81,18 @@ namespace Assignment2_TDD_Fleet
                 vehicles.TankCapacity = double.Parse(TextBoxFuelCapacity.Text);
                 vehicles.VehicleOdometer = int.Parse(TextBoxOdometer.Text);
             }
+            // save the new vehicle to list of vehicles on carList window
             vehicles.SaveVehicles(CarList.vehicles);
             Close();
         }
-
+        /// <summary>
+        /// this is a click event to close the add vehicle form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            // close the window
             Close();
         }
     }

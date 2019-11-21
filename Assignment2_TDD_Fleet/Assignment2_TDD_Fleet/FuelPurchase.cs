@@ -15,18 +15,25 @@ namespace Assignment2_TDD_Fleet
         public double FuelPrice { get; set; }
         public double TotalCost { get; set; }
         
-
-        //private double fuelEconomy;
-        //private double litres = 0;
-        //private double cost = 0;
-
+        /// <summary>
+        /// this is a constructor for this window and
+        /// getting fuelquantity and fuel purchase
+        /// from fuel pucrhcases window
+        /// </summary>
+        /// <param name="fuelQuantity"></param>
+        /// <param name="fuelPrice"></param>
         public FuelPurchase(double fuelQuantity, double fuelPrice)
         {
             this.FuelQuantity = fuelQuantity;
             this.FuelPrice = fuelPrice;
             this.TotalCost = fuelPrice * fuelQuantity;
         }
-
+        /// <summary>
+        /// this is a method to get the fuel economy by
+        /// seacrhing totalKmtravelled divided by total fuel
+        /// </summary>
+        /// <param name="VId"></param>
+        /// <returns></returns>
         public static double getFuelEconomy(Guid VId)
         {
             Vehicle relatedVehicle = CarList.vehicles.Find(v => v.Id == VId);
@@ -45,8 +52,10 @@ namespace Assignment2_TDD_Fleet
             return totalKmTravelled/totalFuelUsed;
         }
 
-        
-
+        /// <summary>
+        /// this is a method to save fuel purchases
+        /// </summary>
+        /// <param name="fuelPurchases"></param>
         public static void SaveFuelPurchases(List<FuelPurchase> fuelPurchases)
         {
             // serialize JSON to a string and then write string to a file

@@ -40,7 +40,9 @@ namespace Assignment2_TDD_Fleet
         internal SaveFileDialog saveFileDialog = new SaveFileDialog();
         internal OpenFileDialog openFileDialog = new OpenFileDialog();
 
-
+        /// <summary>
+        /// this is a constructor for CarList Window
+        /// </summary>
         public CarList()
         {
             InitializeComponent();
@@ -62,7 +64,9 @@ namespace Assignment2_TDD_Fleet
             updateRentalCosts();
         }
 
-
+        /// <summary>
+        /// this is a method to check toggled key on your keyboard
+        /// </summary>
         public void CheckKeyStatus()
         {
             var isNumLockToggled = Keyboard.IsKeyToggled(Key.NumLock); // variable for NumLock
@@ -108,7 +112,10 @@ namespace Assignment2_TDD_Fleet
                 ScrollLockStatus.Foreground = Brushes.Gray;
             }
         }
-
+        /// <summary>
+        /// to check the toggled key using await
+        /// </summary>
+        /// <returns></returns>
         private async Task ScanStatusKeysInBackground()
         {
             while (true)
@@ -117,7 +124,9 @@ namespace Assignment2_TDD_Fleet
                 await Task.Delay(100);
             }
         }
-
+        /// <summary>
+        /// this is a method to load vehicle form json File
+        /// </summary>
         public void LoadVehicle()
         {
             vehicles.Clear();
@@ -126,7 +135,11 @@ namespace Assignment2_TDD_Fleet
             vehicleListView.ItemsSource = vehicles;
             vehicleListView.Items.Refresh();
         }
-
+        /// <summary>
+        /// this is a click event to open Add vehicle on menu bar
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddVehicle_Clicked(object sender, RoutedEventArgs e)
         {
             Guid id = Guid.NewGuid();
@@ -135,7 +148,11 @@ namespace Assignment2_TDD_Fleet
             VehicleListView.ItemsSource = vehicles;
             VehicleListView.Items.Refresh();
         }
-
+        /// <summary>
+        /// this is method to load specific json file for vehicle list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LoadFile_Clicked(object sender, RoutedEventArgs e)
         {
             openFileDialog.Filter = "JSON Files (*.json) | *.json";
@@ -147,7 +164,11 @@ namespace Assignment2_TDD_Fleet
             VehicleListView.ItemsSource = vehicles;
             VehicleListView.Items.Refresh();
         }
-
+        /// <summary>
+        /// this is a method to save a new json file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SaveFile_Clicked(object sender, RoutedEventArgs e)
         {
             saveFileDialog.Filter = "JSON Files (*.json) | *.json";
@@ -162,7 +183,11 @@ namespace Assignment2_TDD_Fleet
                 vehicleListChanged = false;
             }
         }
-
+        /// <summary>
+        /// this is a click event for delete button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeleteButton_Clicked(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
@@ -172,7 +197,11 @@ namespace Assignment2_TDD_Fleet
             vehicleListChanged = true;
             detailsForAVehicle.SaveVehicles(vehicles);
         }
-
+        /// <summary>
+        /// this is a click event for edit button 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonEdit_Clicked(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
@@ -183,7 +212,11 @@ namespace Assignment2_TDD_Fleet
             vehicleListView.ItemsSource = vehicles;
             vehicleListView.Items.Refresh();
         }
-
+        /// <summary>
+        /// this is an event to filter vehicle
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Filter_Text_Changed(object sender, TextChangedEventArgs e)
         {
             string textSearch = FilterTextBox.Text;
@@ -191,13 +224,22 @@ namespace Assignment2_TDD_Fleet
                 => Regex.Matches(vehicles.CarManufacture.ToLower(), textSearch.ToLower()).Count > 0).ToList();
             VehicleListView.ItemsSource = matches;
         }
-
+        /// <summary>
+        /// this is a click event to clear filter textbox for vehicle
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonClear_Click(object sender, RoutedEventArgs e)
         {
             FilterTextBox.Text = "";
             VehicleListView.ItemsSource = vehicles;
         }
-
+        /// <summary>
+        /// this is a click event to open booking form
+        /// or if the user wants to add booking
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnRentVehicle_Click(object sender, RoutedEventArgs e)
         {
             Guid NewId = Guid.NewGuid();
@@ -207,12 +249,18 @@ namespace Assignment2_TDD_Fleet
             bookings.vehicleId = vehicleItem.Id;
             bookings.ShowDialog();
         }
-
+        /// <summary>
+        /// this is a method to load booking list from json File
+        /// </summary>
         public void LoadBooking()
         {
             bookings = (List<Booking>)JsonConvert.DeserializeObject(File.ReadAllText(bookingFileName), typeof(List<Booking>));
         }
-
+        /// <summary>
+        /// this is a click event to open booking list menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BookingList_Clicked(object sender, RoutedEventArgs e)
         {
             bookingList = new BookingList();
@@ -222,21 +270,32 @@ namespace Assignment2_TDD_Fleet
             bookingList.vehicleListView = VehicleListView;
             bookingList.ShowDialog();
         }
-
+        /// <summary>
+        /// this is a method to load journeys form json File
+        /// </summary>
         public void LoadJourneys()
         {
             journeys = (List<Journey>)JsonConvert.DeserializeObject(File.ReadAllText(journeysFileName), typeof(List<Journey>));
         }
-
+        /// <summary>
+        /// this is a method to load fuel purchases from json file
+        /// </summary>
         public void LoadFuelPurchases()
         {
             fuelPurchases = (List<FuelPurchase>)JsonConvert.DeserializeObject(File.ReadAllText(fuelPurchasesFileName), typeof(List<FuelPurchase>));
         }
-
+        /// <summary>
+        /// this is a method to load services from json file
+        /// </summary>
         public void LoadServices()
         {
             services = (List<Service>)JsonConvert.DeserializeObject(File.ReadAllText(servicesFileName), typeof(List<Service>));
         }
+        /// <summary>
+        /// this is a click event to open history button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ViewButton_Clicked(object sender, RoutedEventArgs e)
         {
             Button selectedButton = (Button)sender;
@@ -253,7 +312,9 @@ namespace Assignment2_TDD_Fleet
             vehicleHistory.servicesListView .ItemsSource= vehicleHistory.services;
             vehicleHistory.ShowDialog();
         }
-
+        /// <summary>
+        /// this is a method to update odometer
+        /// </summary>
         public void updateOdometer()
         {
             if (CarList.vehicles.Count > 0)
@@ -278,7 +339,9 @@ namespace Assignment2_TDD_Fleet
             }
             VehicleListView.Items.Refresh();
         }
-
+        /// <summary>
+        /// this is a method to update rentalCost
+        /// </summary>
         public void updateRentalCosts()
         {
             vehicles.ForEach(v =>
@@ -287,7 +350,11 @@ namespace Assignment2_TDD_Fleet
                 v.updateTotalRentCost(associatedBookings);
             });
         }
-
+        /// <summary>
+        /// this is a click event to open service window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonService_Clicked(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
@@ -296,7 +363,11 @@ namespace Assignment2_TDD_Fleet
             AddService addService = new AddService(vehicleService.Id, vehicleService.VehicleOdometer);
             addService.ShowDialog();
         }
-
+        /// <summary>
+        /// this is a click event to view details for the selected vehicle row
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonPrintVehicle_Click(object sender, RoutedEventArgs e)
         {
             Button printButton = (Button)sender;

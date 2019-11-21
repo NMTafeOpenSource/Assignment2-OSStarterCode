@@ -30,6 +30,10 @@ namespace Assignment2_TDD_Fleet
 
         [JsonIgnore]
         public bool vehicleListChanged = false; // this is updated if you edit/add/delete the vehicles list
+        /// <summary>
+        /// this is a method to save vehicles to json file
+        /// </summary>
+        /// <param name="vehicles"></param>
         public void SaveVehicles(List<Vehicle> vehicles)
         {
             // serialize JSON to a string and then write string to a file
@@ -43,7 +47,10 @@ namespace Assignment2_TDD_Fleet
             }
             vehicleListChanged = false;
         }
-
+        /// <summary>
+        /// this is a method to update the rental cost
+        /// </summary>
+        /// <param name="vehicleBookings"></param>
         public void updateTotalRentCost(List<Booking> vehicleBookings)
         {
             double totalCost = 0.0;
@@ -54,14 +61,21 @@ namespace Assignment2_TDD_Fleet
             this.TotalRentalCost = totalCost;
             SaveVehicles(CarList.vehicles);
         }
-
+        /// <summary>
+        /// this is a method to get the number of services
+        /// </summary>
+        /// <param name="servicesList"></param>
         public void updateServicesCount(List<Service> servicesList)
         {
             List<Service> servicesUpToToday = servicesList.Where(s => DateTime.Compare(s.ServiceDate, DateTime.Now) <= 0).ToList<Service>();
             this.serviceCount = servicesUpToToday.Count;
             this.SaveVehicles(CarList.vehicles);
         }
-
+        /// <summary>
+        /// this is a method to get distance travelled
+        /// from registered start odometer upToNow
+        /// </summary>
+        /// <returns></returns>
         public double getTotalDistanceTravelled()
         {
             List<Journey> relatedJourneys = CarList.journeys.Where(j => j.vehicleID == Id).ToList();
@@ -72,8 +86,10 @@ namespace Assignment2_TDD_Fleet
             }
             return totalDistanceTravelled;
         }
-
-
+        /// <summary>
+        /// this is a method to show details for specific vehicle
+        /// </summary>
+        /// <returns></returns>
         public string printDetails()
         {
             List<Service> vehicleServices = CarList.services != null && CarList.services.Count > 0 ? CarList.services.FindAll(s => s.vehicleID == this.Id) : new List<Service>();

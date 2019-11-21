@@ -20,18 +20,27 @@ namespace Assignment2_TDD_Fleet
     public partial class FuelPurchases : Window
     {
         public Guid VehicleId;
-
+        /// <summary>
+        /// this is a constructor for this window
+        /// </summary>
         public FuelPurchases()
         {
             InitializeComponent();
         }
-
+        /// <summary>
+        /// this is a constructor to get vehicleId
+        /// </summary>
+        /// <param name="vehicleid"></param>
         public FuelPurchases(Guid vehicleid)
         {
             InitializeComponent();
             VehicleId = vehicleid;
         }
-
+        /// <summary>
+        /// this is a click event for add fuel purchases
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddFuelPurchasesButton_Clicked(object sender, RoutedEventArgs e)
         {
             double FuelQuantity = double.Parse(TextBoxFuelQuantity.Text);
@@ -45,7 +54,11 @@ namespace Assignment2_TDD_Fleet
             Close();
         }
         
-
+        /// <summary>
+        /// this is a click event to close the fuel purchases window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FuelPurchasesCancelButton_Clicked(object sender, RoutedEventArgs e)
         {
             Close();

@@ -30,14 +30,20 @@ namespace Assignment2_TDD_Fleet
         public bool journeysListChanged;
         public Guid BookingID;
 
+        /// <summary>
+        /// this is a constructor for this window
+        /// </summary>
         public ViewJourneys()
         {
             InitializeComponent();
             journeysListView = JourneysListView;
-            //JourneysListView.ItemsSource = CarList.journeys;
-            //CollectionViewSource.GetDefaultView(JourneysListView.ItemsSource);
+            
         }
-
+        /// <summary>
+        /// this is a click event to delete journey
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonDeleteJourney_Clicked(object sender, RoutedEventArgs e)
         {
             Button deleteJourneyButton = sender as Button;

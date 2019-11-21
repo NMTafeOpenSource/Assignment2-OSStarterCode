@@ -19,6 +19,9 @@ namespace Assignment2_TDD_Fleet
     /// </summary>
     public partial class JourneyHistory : Window
     {
+        /// <summary>
+        /// this is a constructor for this window
+        /// </summary>
         public JourneyHistory()
         {
             InitializeComponent();

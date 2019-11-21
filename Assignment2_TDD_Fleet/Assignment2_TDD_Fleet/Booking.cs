@@ -21,6 +21,9 @@ namespace Assignment2_TDD_Fleet
         public DateTime EndRentDate { get; set; }
         public double RentPrice { get; set; }
 
+        /// <summary>
+        /// this is constructor
+        /// </summary>
         public Booking()
         {
 
@@ -29,20 +32,10 @@ namespace Assignment2_TDD_Fleet
         [JsonIgnore]
         public bool bookingListChanged = false;
 
-        //public enum BookingType
-        //{
-        //    Km,
-        //    Day
-        //}
-
-        //[JsonIgnore]
-        //public double totalDistanceTravelled
-        //{
-        //    get
-        //    {
-        //        return (EndOdometer - StartOdometer);
-        //    }
-        //}
+        /// <summary>
+        /// this is a save method for bookings
+        /// </summary>
+        /// <param name="bookings"></param>
         public void SaveBookings(List<Booking> bookings)
         {
             // serialize JSON to a string and then write string to a file
@@ -56,7 +49,10 @@ namespace Assignment2_TDD_Fleet
             } 
             bookingListChanged = false;
         }
-
+        /// <summary>
+        /// this is a method to update the rent price or rental cost
+        /// </summary>
+        /// <param name="bookingJourneys"></param>
         public void updateRentPrice(List<Journey> bookingJourneys)
         {
             if (this.RentalType == BookingType.Day)

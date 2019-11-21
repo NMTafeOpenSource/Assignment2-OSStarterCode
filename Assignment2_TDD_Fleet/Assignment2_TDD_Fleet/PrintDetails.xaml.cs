@@ -20,11 +20,18 @@ namespace Assignment2_TDD_Fleet
     public partial class PrintDetails : Window
     {
         public Vehicle vehicle;
+        /// <summary>
+        /// this a constructor for this window
+        /// </summary>
         public PrintDetails()
         {
             InitializeComponent();
         }
-
+        /// <summary>
+        /// this is an event on window loaded
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             if (vehicle != null)

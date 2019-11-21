@@ -29,11 +29,24 @@ namespace Assignment2_TDD_Fleet
         public List<Service> services;
         public bool servicesListChanged;
 
+        /// <summary>
+        /// this is a constructor for this window
+        /// </summary>
         public VehicleHistory()
         {
             InitializeComponent();
         }
-
+        /// <summary>
+        /// this is a constructor to parse data from vehicle class
+        /// </summary>
+        /// <param name="registrationID"></param>
+        /// <param name="carManufacture"></param>
+        /// <param name="carModel"></param>
+        /// <param name="carYear"></param>
+        /// <param name="fuelType"></param>
+        /// <param name="tankCapacity"></param>
+        /// <param name="vehicleOdometer"></param>
+        /// <param name="serviceCount"></param>
         public VehicleHistory(string registrationID, string carManufacture, string carModel, int carYear, string fuelType, double tankCapacity, int vehicleOdometer, int serviceCount)
         {
             InitializeComponent();
@@ -46,7 +59,11 @@ namespace Assignment2_TDD_Fleet
             TextBoxVehicleOdometerHistory.Text = vehicleOdometer.ToString();
             TextBoxServiceCountHistory.Text = serviceCount.ToString();
         }
-
+        /// <summary>
+        /// this is a click event to delete service
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonForDeleteServices_Click(object sender, RoutedEventArgs e)
         {
             Button deleteServicesButton = (Button)sender;

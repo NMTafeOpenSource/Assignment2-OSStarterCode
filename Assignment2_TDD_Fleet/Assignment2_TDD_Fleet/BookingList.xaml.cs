@@ -29,21 +29,23 @@ namespace Assignment2_TDD_Fleet
         public List<Booking> bookings;
         public List<Journey> journeys;
         public List<Booking> bookingsFromJSONFile;
-        //string journeysFileName = "Journey.json";
         public ListView bookingListView;
         public bool bookingListChanged;
         public Guid selectedId;
 
+        /// <summary>
+        /// this is a constructor for this window
+        /// </summary>
         public BookingList()
         {
             InitializeComponent();
             bookingListView = BookingsListView;
-            
-            // BookingsListView.ItemsSource = bookings;
-            // CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(BookingsListView.ItemsSource);
-            // bookings = new List<Booking>();
         }
-
+        /// <summary>
+        /// this is an event for filter textbox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FilterBoxBookingList_TextChanged(object sender, TextChangedEventArgs e)
         {
             string textSearch = FilterTextBoxBookingList.Text;
@@ -51,7 +53,11 @@ namespace Assignment2_TDD_Fleet
                 => Regex.Matches(bookings.SelectedVehicle.ToLower(), textSearch.ToLower()).Count > 0).ToList();
             bookingListView.ItemsSource = matches;
         }
-
+        /// <summary>
+        /// this is a click event to open addJourney Form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonForJourneys_Click(object sender, RoutedEventArgs e)
         {
             //Guid JourneyId = new Guid(); 
@@ -62,7 +68,11 @@ namespace Assignment2_TDD_Fleet
             addJourney.BookingID = bookingItem.id;
             addJourney.ShowDialog();
         }
-
+        /// <summary>
+        /// this is a click event for viewJourneys window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonViewJourneys_Clicked(object sender, RoutedEventArgs e)
         {
             Button selectedButton = (Button)sender;
@@ -75,12 +85,21 @@ namespace Assignment2_TDD_Fleet
             viewJourneys.vehicleListView = vehicleListView;
             viewJourneys.ShowDialog();
         }
-
+        /// <summary>
+        /// this is an event that i used to get the first selected item
+        /// just for debugging, ignore it
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BookingsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Debug.WriteLine($"Selected: {e.AddedItems[0]}");
         }
-
+        /// <summary>
+        /// this is a click event to open fuel purchases window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FuelPurchases_Clicked(object sender, RoutedEventArgs e)
         {
             Button fuelButton = (Button)sender;
@@ -89,7 +108,11 @@ namespace Assignment2_TDD_Fleet
             fuelPurchases.Owner = (CarList)this.Owner;
             fuelPurchases.ShowDialog();
         }
-
+        /// <summary>
+        /// this is a click event to delete selected row of booking
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonDeleteBooking_Clicked(object sender, RoutedEventArgs e)
         {
             Button deleteBookingButton = sender as Button;
@@ -101,8 +124,11 @@ namespace Assignment2_TDD_Fleet
             Vehicle relatedVehicle = CarList.vehicles.Find(v => v.Id == detailsForBooking.Vehicleid);
             List<Booking> allBookingsWithRelatedVehicle = CarList.bookings.FindAll(b => b.Vehicleid == relatedVehicle.Id);
             Journey allJourneysRelatedWithBooking = CarList.journeys.Find(j => j.BookingID == detailsForBooking.id);
-            CarList.journeys.Remove(allJourneysRelatedWithBooking);
-            allJourneysRelatedWithBooking.SaveJourney(CarList.journeys);
+            if (allJourneysRelatedWithBooking != null)
+            {
+                CarList.journeys.Remove(allJourneysRelatedWithBooking);
+                allJourneysRelatedWithBooking.SaveJourney(CarList.journeys);
+            }
             relatedVehicle.updateTotalRentCost(allBookingsWithRelatedVehicle);
             relatedVehicle.SaveVehicles(CarList.vehicles);
             vehicleListView.ItemsSource = CarList.vehicles;

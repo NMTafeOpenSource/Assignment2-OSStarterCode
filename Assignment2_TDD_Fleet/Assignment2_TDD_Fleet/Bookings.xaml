@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assignment2_TDD_Fleet"
         mc:Ignorable="d"
-        Title="Bookings" Height="500" Width="400">
+        Title="Bookings" Height="500" Width="420">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -97,6 +97,7 @@
                     VerticalAlignment="Top"
                     Grid.ColumnSpan="2"
                     Width="207"
+                    
                     />
 
         <TextBox x:Name="BookingStartOdometerTextBox"
@@ -120,19 +121,20 @@
                     Grid.Row="4"
                     VerticalAlignment="Top"
                     Grid.ColumnSpan="2"
-                    Width="207"/>
+                    Width="207"
+                    />
 
         <Label x:Name="LabelRentDateError"
                Content="Remember!"
                Grid.Row="3"
                Grid.Column="1"
                HorizontalAlignment="Left"
-               Margin="10,38.4,0,0" 
+               Margin="9.6,38.4,0,0" 
                VerticalAlignment="Top"
-               Grid.ColumnSpan="2"
-               Width="246"
+               Grid.ColumnSpan="3"
+               Width="260"
                Height="27"
-               FontSize="10"
+               FontSize="11"
                FontWeight="DemiBold"
                Foreground="Red"/>
 
@@ -141,14 +143,14 @@
                Grid.Row="4"
                Grid.Column="1"
                HorizontalAlignment="Left"
-               Margin="10,38.4,0,0" 
+               Margin="9.6,38.8,0,0" 
                VerticalAlignment="Top"
-               Grid.ColumnSpan="2"
-               Width="246"
+               Grid.ColumnSpan="3"
+               Width="260"
                Height="27"
-               FontSize="10"
+               FontSize="11"
                FontWeight="DemiBold"
-               Foreground="Red"/>
+               Foreground="Red" Grid.RowSpan="2"/>
 
 
         <Label x:Name="LabelRentalType"

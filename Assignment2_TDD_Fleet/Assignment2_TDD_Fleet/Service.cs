@@ -16,6 +16,10 @@ namespace Assignment2_TDD_Fleet
 
         [JsonIgnore]
         public bool servicesListChanged = false;
+        /// <summary>
+        /// this is a method to save services to json FIle
+        /// </summary>
+        /// <param name="services"></param>
         public static void SaveServices(List<Service> services)
         {
             // serialize JSON to a string and then write string to a file
@@ -29,7 +33,11 @@ namespace Assignment2_TDD_Fleet
             }
             //servicesListChanged = false;
         }
-
+        /// <summary>
+        /// this is a method to find service uptoDay
+        /// </summary>
+        /// <param name="vehicleServices"></param>
+        /// <returns></returns>
         public static Service getLatestService(List<Service> vehicleServices)
         {
             return vehicleServices.Find(s =>
@@ -37,7 +45,11 @@ namespace Assignment2_TDD_Fleet
                 return DateTime.Compare(s.ServiceDate.Date, DateTime.Now.Date) == 0;
             });
         }
-
+        /// <summary>
+        /// this is to check if the vehicle requires service or not
+        /// </summary>
+        /// <param name="vehicleServices"></param>
+        /// <returns></returns>
         public static bool requiresService(List<Service> vehicleServices)
         {
             return vehicleServices.Any(s =>
