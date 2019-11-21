@@ -100,6 +100,9 @@ namespace Assignment2_TDD_Fleet
             detailsForBooking.SaveBookings(bookings);
             Vehicle relatedVehicle = CarList.vehicles.Find(v => v.Id == detailsForBooking.Vehicleid);
             List<Booking> allBookingsWithRelatedVehicle = CarList.bookings.FindAll(b => b.Vehicleid == relatedVehicle.Id);
+            Journey allJourneysRelatedWithBooking = CarList.journeys.Find(j => j.BookingID == detailsForBooking.id);
+            CarList.journeys.Remove(allJourneysRelatedWithBooking);
+            allJourneysRelatedWithBooking.SaveJourney(CarList.journeys);
             relatedVehicle.updateTotalRentCost(allBookingsWithRelatedVehicle);
             relatedVehicle.SaveVehicles(CarList.vehicles);
             vehicleListView.ItemsSource = CarList.vehicles;

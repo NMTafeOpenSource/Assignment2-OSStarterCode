@@ -96,7 +96,8 @@
                     Grid.Row="3"
                     VerticalAlignment="Top"
                     Grid.ColumnSpan="2"
-                    Width="207"/>
+                    Width="207"
+                    />
 
         <TextBox x:Name="BookingStartOdometerTextBox"
                  Grid.ColumnSpan="2"

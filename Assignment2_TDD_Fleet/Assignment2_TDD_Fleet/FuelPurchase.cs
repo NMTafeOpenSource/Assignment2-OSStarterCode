@@ -16,9 +16,9 @@ namespace Assignment2_TDD_Fleet
         public double TotalCost { get; set; }
         
 
-        private double fuelEconomy;
-        private double litres = 0;
-        private double cost = 0;
+        //private double fuelEconomy;
+        //private double litres = 0;
+        //private double cost = 0;
 
         public FuelPurchase(double fuelQuantity, double fuelPrice)
         {
@@ -27,26 +27,26 @@ namespace Assignment2_TDD_Fleet
             this.TotalCost = fuelPrice * fuelQuantity;
         }
 
-        public double getFuelEconomy()
+        public static double getFuelEconomy(Guid VId)
         {
-            return fuelEconomy;
-            //return this.cost / this.litres;
+            Vehicle relatedVehicle = CarList.vehicles.Find(v => v.Id == VId);
+            Journey relatedJourneys = CarList.journeys.Find(j => j.vehicleID == VId);
+            List<FuelPurchase> fuelPurchases = CarList.fuelPurchases.Where(fp => fp.VId == relatedJourneys.vehicleID).ToList();
+            List<Journey> allJourneysRelatedWithFps = CarList.journeys.Where(j => j.vehicleID == relatedVehicle.Id).ToList();
+
+            double totalKmTravelled = 0.0;
+            double totalFuelUsed = 0.0;
+
+            if (fuelPurchases != null)
+            {
+                totalFuelUsed = fuelPurchases.Sum(fps => fps.FuelQuantity);
+                totalKmTravelled = allJourneysRelatedWithFps.Max(max => max.EndOdometer) - allJourneysRelatedWithFps.Min(min => min.StartOdometer);
+            }
+            return totalKmTravelled/totalFuelUsed;
         }
 
-        public double getFuel()
-        {
-            return this.litres;
-        }
+        
 
-        public void setFuelEconomy(double fuelEconomy)
-        {
-            this.fuelEconomy = fuelEconomy;
-        }
-        public void purchaseFuel(double amount, double price)
-        {
-            this.litres += amount;
-            this.cost += price;
-        }
         public static void SaveFuelPurchases(List<FuelPurchase> fuelPurchases)
         {
             // serialize JSON to a string and then write string to a file

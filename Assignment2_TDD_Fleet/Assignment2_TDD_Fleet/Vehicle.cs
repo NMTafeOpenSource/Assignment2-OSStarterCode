@@ -62,22 +62,62 @@ namespace Assignment2_TDD_Fleet
             this.SaveVehicles(CarList.vehicles);
         }
 
+        public double getTotalDistanceTravelled()
+        {
+            List<Journey> relatedJourneys = CarList.journeys.Where(j => j.vehicleID == Id).ToList();
+            double totalDistanceTravelled = 0.0;
+            if (relatedJourneys != null)
+            {
+                totalDistanceTravelled = relatedJourneys.Max(max => max.EndOdometer) - relatedJourneys.Min(min => min.StartOdometer);
+            }
+            return totalDistanceTravelled;
+        }
+
 
         public string printDetails()
         {
             List<Service> vehicleServices = CarList.services != null && CarList.services.Count > 0 ? CarList.services.FindAll(s => s.vehicleID == this.Id) : new List<Service>();
             Service latestService = vehicleServices != null && vehicleServices.Count > 0 ? Service.getLatestService(vehicleServices) : null;
-            double kmSinceLastService = latestService != null ? this.VehicleOdometer - latestService.ServiceOdometer : 0;
+            //double kmSinceLastService = latestService != null ? (this.VehicleOdometer - latestService.ServiceOdometer) : 0;
+            double kmSinceLastService = vehicleServices != null ? this.VehicleOdometer - vehicleServices.Last(v => v.vehicleID == Id).ServiceOdometer : 0;
+            Journey relatedJourneys = CarList.journeys.Find(j => j.vehicleID == Id);
+
             bool requiresService = vehicleServices != null && vehicleServices.Count > 0 ? Service.requiresService(vehicleServices) : false;
             string requiresServiceText = requiresService ? "Yes" : "No";
 
             StringBuilder sb = new StringBuilder();
             sb.AppendLine($"Vehicle: {this.CarManufacture} {this.CarModel} {this.CarYear}");
             sb.AppendLine($"Registration No: {this.RegistrationID}");
-            sb.AppendLine($"Distance Travelled: {this.VehicleOdometer}");
-            sb.AppendLine($"Total Services: {this.serviceCount}");
+            double distanceTravelled = this.getTotalDistanceTravelled();
+            if (distanceTravelled > 0)
+            {
+                sb.AppendLine($"Distance Travelled: {distanceTravelled} km");
+            }
+            else
+            {
+                sb.AppendLine($"This vehicle never used before for journeys");
+            }
+            
+            int serviceCount = this.serviceCount;
+            if (serviceCount > 0)
+            {
+                sb.AppendLine($"Total Services: {this.serviceCount}");
+            }
+            else
+            {
+                sb.AppendLine($"Total Services: no record");
+            }
             sb.AppendLine($"Car Revenue: {this.TotalRentalCost.ToString("C")}");
             sb.AppendLine($"KM Since last service: {kmSinceLastService} km");
+            double fuelEconomy = FuelPurchase.getFuelEconomy(this.Id);
+            if (fuelEconomy > 0)
+            {
+                sb.AppendLine($"Fuel Economy: {fuelEconomy} km/L");
+            }
+            else
+            {
+                sb.AppendLine($"Fuel Economy: not available yet");
+            }
             sb.AppendLine($"Requires service: {requiresServiceText}");
 
             return sb.ToString();

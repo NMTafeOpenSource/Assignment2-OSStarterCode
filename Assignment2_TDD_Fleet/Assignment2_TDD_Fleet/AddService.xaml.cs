@@ -20,6 +20,7 @@ namespace Assignment2_TDD_Fleet
     public partial class AddService : Window
     {
         public Guid id;
+        public static Service services;
         public int vehicleOdometer;
         public VehicleHistory vehicleHistory;
         public CarList carList;
@@ -29,12 +30,6 @@ namespace Assignment2_TDD_Fleet
             InitializeComponent();
 
         }
-
-        //public AddService(int vehicleodometer)
-        //{
-        //    InitializeComponent();
-            
-        //}
 
         public AddService(Guid id, int vehicleOdometer)
         {
@@ -56,6 +51,7 @@ namespace Assignment2_TDD_Fleet
             service.ServiceOdometer = int.Parse(TextBoxLastOdometerForService.Text);
             service.ServiceDate = DateTime.Parse(DatePickerForLastServiceDate.Text);
 
+            //CarList.services = new List<Service>();
             CarList.services.Add(service);
             Service.SaveServices(CarList.services);
             Vehicle relatedVehicle = CarList.vehicles.Find(v => v.Id == service.vehicleID);

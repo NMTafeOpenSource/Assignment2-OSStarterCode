@@ -53,12 +53,15 @@ namespace Assignment2_TDD_Fleet
             Service s = deleteServicesButton.CommandParameter as Service;
             CarList.services.Remove(s);
             Vehicle relatedVehicle = CarList.vehicles.Find(v => v.Id == s.vehicleID);
-            List<Service> servicesRelatedWithVehicle = CarList.services.FindAll(service => service.vehicleID == relatedVehicle.Id);
-            this.servicesListView.ItemsSource = servicesRelatedWithVehicle;
-            servicesListChanged = true;
-            relatedVehicle.updateServicesCount(servicesRelatedWithVehicle);
-            Service.SaveServices(CarList.services);
-            relatedVehicle.SaveVehicles(CarList.vehicles);
+            if (relatedVehicle != null)
+            {
+                List<Service> servicesRelatedWithVehicle = CarList.services.FindAll(service => service.vehicleID == relatedVehicle.Id);
+                this.servicesListView.ItemsSource = servicesRelatedWithVehicle;
+                servicesListChanged = true;
+                relatedVehicle.updateServicesCount(servicesRelatedWithVehicle);
+                Service.SaveServices(CarList.services);
+                relatedVehicle.SaveVehicles(CarList.vehicles);
+            }
             servicesListView.ItemsSource = CarList.services.FindAll(service => service.vehicleID == relatedVehicle.Id);
             servicesListView.Items.Refresh();
         }
