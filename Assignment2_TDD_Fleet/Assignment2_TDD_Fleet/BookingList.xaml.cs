@@ -122,8 +122,8 @@ namespace Assignment2_TDD_Fleet
             bookingListChanged = true;
             detailsForBooking.SaveBookings(bookings);
             Vehicle relatedVehicle = CarList.vehicles.Find(v => v.Id == detailsForBooking.Vehicleid);
-            List<Booking> allBookingsWithRelatedVehicle = CarList.bookings.FindAll(b => b.Vehicleid == relatedVehicle.Id);
-            Journey allJourneysRelatedWithBooking = CarList.journeys.Find(j => j.BookingID == detailsForBooking.id);
+            List<Booking> allBookingsWithRelatedVehicle = CarList.bookings != null && CarList.bookings.Count > 0 ? CarList.bookings.FindAll(b => b.Vehicleid == relatedVehicle.Id): null;
+            Journey allJourneysRelatedWithBooking = CarList.journeys != null && CarList.journeys.Count > 0 ?CarList.journeys.Find(j => j.BookingID == detailsForBooking.id): null;
             if (allJourneysRelatedWithBooking != null)
             {
                 CarList.journeys.Remove(allJourneysRelatedWithBooking);

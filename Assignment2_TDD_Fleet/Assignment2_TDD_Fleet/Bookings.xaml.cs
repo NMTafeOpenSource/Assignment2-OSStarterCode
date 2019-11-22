@@ -93,8 +93,8 @@ namespace Assignment2_TDD_Fleet
         /// <param name="e"></param>
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            //if (isBookingsStartDateValid && isBookingsEndDateValid)
-            //{
+            if (isBookingsStartDateValid && isBookingsEndDateValid)
+            {
                 bookings.bookingListChanged = true;
                 if (newBooking)
                 {
@@ -126,81 +126,105 @@ namespace Assignment2_TDD_Fleet
                 }
                 bookings.SaveBookings(CarList.bookings);
                 Close();
-            //}
-            //else
-            //{ 
-            //LabelRentDateError.Content = "You must choose booking start date!!";
-            //LabelEndDateError.Content = "You must choose booking end date!!";
-            //}
+            }
+            else
+            {
+                LabelRentDateError.Content = "You must choose booking start date!!";
+                LabelEndDateError.Content = "You must choose booking end date!!";
+            }
         }
         /// <summary>
         /// this is a validation to check the startDatePicker for booking
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        //private void BookingStartDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    DateTime? bookingStartDate = BookingStartDatePicker.SelectedDate;
-        //    DateTime? bookingEndDate = BookingEndDatePicker.SelectedDate;
+        private void BookingStartDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DateTime? bookingStartDate = BookingStartDatePicker.SelectedDate;
+            DateTime? bookingEndDate = BookingEndDatePicker.SelectedDate;
 
-        //    if (bookingStartDate != null)
-        //    {
-        //        Booking relatedBooked = CarList.bookings.Find(b => b.Vehicleid == vehicleId);
-        //        Service relatedService = CarList.services.Find(s => s.vehicleID == vehicleId);
+            if (bookingStartDate != null)
+            {
+                Booking relatedBooked = CarList.bookings != null && CarList.bookings.Count > 0 ? CarList.bookings.Find(b => b.Vehicleid == vehicleId) : null;
+                Service relatedService = CarList.bookings != null && CarList.bookings.Count > 0 ? CarList.services.Find(s => s.vehicleID == vehicleId) : null;
 
-        //        if (DateTime.Compare((DateTime)bookingStartDate, relatedBooked.StartRentDate) == 0)
-        //        {
-        //            LabelRentDateError.Content = "this vehicle already booked on this date";
-        //            isBookingsStartDateValid = false;
-        //        }
+                if (relatedBooked != null)
+                {
+                    if (DateTime.Compare((DateTime)bookingStartDate, relatedBooked.StartRentDate) == 0)
+                    {
+                        LabelRentDateError.Content = "this vehicle already booked on this date";
+                        isBookingsStartDateValid = false;
+                    }
 
-        //        else if (DateTime.Compare((DateTime)bookingStartDate, relatedBooked.EndRentDate) == 0)
-        //        {
-        //            LabelRentDateError.Content = "this vehicle already booked on this date";
-        //            isBookingsStartDateValid = false;
-        //        }
-        //        else if (DateTime.Compare((DateTime)bookingStartDate, relatedService.ServiceDate) == 0)
-        //        {
-        //            LabelRentDateError.Content = "this vehicle is due service on this date";
-        //            isBookingsStartDateValid = false;
-        //        }
-        //        else
-        //        {
-        //            LabelRentDateError.Content = "OK";
-        //            isBookingsStartDateValid = true;
-        //        }
-        //    }
-        //}
+                    else if (DateTime.Compare((DateTime)bookingStartDate, relatedBooked.EndRentDate) == 0)
+                    {
+                        LabelRentDateError.Content = "this vehicle already booked on this date";
+                        isBookingsStartDateValid = false;
+                    }
+                    else
+                    {
+                        LabelRentDateError.Content = "OK";
+                        isBookingsStartDateValid = true;
+                    }
+                }
+                else if (relatedService != null)
+                {
+                    if (DateTime.Compare((DateTime)bookingStartDate, relatedService.ServiceDate) == 0)
+                    {
+                        LabelRentDateError.Content = "this vehicle is due service on this date";
+                        isBookingsStartDateValid = false;
+                    }
+                    else
+                    {
+                        LabelRentDateError.Content = "OK";
+                        isBookingsStartDateValid = true;
+                    }
+                }
+                else
+                {
+                    LabelRentDateError.Content = "OK";
+                    isBookingsStartDateValid = true;
+                }
+            }
+        }
         /// <summary>
         /// this is a validation to check endDate for booking
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        //private void BookingEndDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    DateTime? bookingStartDate = BookingStartDatePicker.SelectedDate;
-        //    DateTime? bookingEndDate = BookingEndDatePicker.SelectedDate;
-        //    Booking relatedBooked = CarList.bookings.Find(b => b.Vehicleid == vehicleId);
+        private void BookingEndDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DateTime? bookingStartDate = BookingStartDatePicker.SelectedDate;
+            DateTime? bookingEndDate = BookingEndDatePicker.SelectedDate;
+            Booking relatedBooked = CarList.bookings != null && CarList.bookings.Count > 0 ? CarList.bookings.Find(b => b.Vehicleid == vehicleId) : null;
 
-        //    if (bookingEndDate != null)
-        //    {
-        //        if (DateTime.Compare((DateTime)bookingStartDate, (DateTime)bookingEndDate) > 0)
-        //        {
-        //            LabelEndDateError.Content = "booking end date cannot be before booking start date";
-        //            isBookingsStartDateValid = false;
-        //        }
-        //        else if (DateTime.Compare((DateTime)bookingEndDate, relatedBooked.StartRentDate) == 0)
-        //        {
-        //            LabelEndDateError.Content = "this vehicle is already booked on this date";
-        //            isBookingsEndDateValid = false;
-        //        }
-        //        else
-        //        {
-        //            LabelEndDateError.Content = "OK";
-        //            isBookingsEndDateValid = true;
-        //        }
-        //    }
-        //}
+            if (bookingEndDate != null)
+            {
+                if (DateTime.Compare((DateTime)bookingStartDate, (DateTime)bookingEndDate) > 0)
+                {
+                    LabelEndDateError.Content = "booking end date cannot be before booking start date";
+                    isBookingsStartDateValid = false;
+                }
+                else if (relatedBooked != null)
+                {
+                    if (DateTime.Compare((DateTime)bookingEndDate, relatedBooked.StartRentDate) == 0)
+                    {
+                        LabelEndDateError.Content = "this vehicle is already booked on this date";
+                        isBookingsEndDateValid = false;
+                    }
+                    else
+                    {
+                        LabelEndDateError.Content = "OK";
+                        isBookingsEndDateValid = true;
+                    }
+                }
+                else
+                {
+                    LabelEndDateError.Content = "OK";
+                    isBookingsEndDateValid = true;
+                }
+            }
+        }
 
     }
 }
