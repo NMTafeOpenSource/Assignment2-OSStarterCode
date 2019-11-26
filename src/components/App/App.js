@@ -22,7 +22,7 @@ import {Journey} from "../../Models/Journey";
 import {Service} from "../../Models/Service";
 import {FuelPurchase} from "../../Models/FuelPurchase";
 import {Dashboard} from "../Dashboard/Dashboard";
-import moment from "moment";
+import {calculateTotalRevenue} from "./calculateTotalRevenue";
 
 /**
  * App component - entry point of this application
@@ -49,8 +49,10 @@ export class App extends React.Component {
 	 * Edits a vehicle and updates both the state and firebase
 	 * @param {Vehicle} vehicle - a vehicle object that has the same ID as the vehicle to be
 	 * edited (for immutability), containing updated data
+	 * @param {Boolean} updateRemote - optional parameter to also update the remote database
+	 * (defaults to true)
 	 */
-	this.editVehicle = vehicle => {
+	this.editVehicle = (vehicle, updateRemote = true) => {
 	  let fieldsChanged = {};
 	  this.setState({
 		loading: true
@@ -63,7 +65,7 @@ export class App extends React.Component {
 			.keys(oldVehicle)
 			.reduce((fields, field) => {
 			  if ((oldVehicle[field] !== vehicle[field]) && !Array.isArray(vehicle[field])) {
-			    fields[field] = vehicle[field];
+				fields[field] = vehicle[field];
 			  }
 			  return fields;
 			}, {});
@@ -74,33 +76,35 @@ export class App extends React.Component {
 			vehicles
 		  })
 		}, () => {
-		  const db = firebase.firestore();
+		  if (updateRemote) {
+			const db = firebase.firestore();
 
-		  return db
-			.collection('vehicles')
-			.doc(vehicle.id)
-			.update(fieldsChanged)
-			.then(() => {
-			  this.setState({
-				loading: false,
-				notification: {
-				  display: true,
-				  message: `The vehicle has been successfully updated`
-				}
-			  }, this.dismissNotification)
-			})
-			.catch(err => {
-			  this.setState({
-				loading: false,
-				notification: {
-				  display: true,
-				  message: `Could not edit vehicle: ${err}`
-				}
-			  }, () => {
-				this.dismissNotification();
-				console.dir(err);
+			return db
+			  .collection('vehicles')
+			  .doc(vehicle.id)
+			  .update(fieldsChanged)
+			  .then(() => {
+				this.setState({
+				  loading: false,
+				  notification: {
+					display: true,
+					message: `The vehicle has been successfully updated`
+				  }
+				}, this.dismissNotification)
 			  })
-			})
+			  .catch(err => {
+				this.setState({
+				  loading: false,
+				  notification: {
+					display: true,
+					message: `Could not edit vehicle: ${err}`
+				  }
+				}, () => {
+				  this.dismissNotification();
+				  console.dir(err);
+				})
+			  })
+		  }
 		});
 	  })
 	};
@@ -110,8 +114,10 @@ export class App extends React.Component {
 	 * @param {string} resourceType - one of: "vehicle", "booking", "journey", "service", "fuel
 	 * purchase" or "fuelPurchase"
 	 * @param {Vehicle|Booking|Journey|Service|FuelPurchase} resource
+	 * @param {Boolean} updateRemote - optional parameter to also update the remote database
+	 * (defaults to true)
 	 */
-	this.addResource = (resourceType, resource) => {
+	this.addResource = (resourceType, resource, updateRemote = true) => {
 	  if (!resourceType || !resource) {
 		return this.setState({
 		  notification: {
@@ -202,30 +208,32 @@ export class App extends React.Component {
 		}
 	  }, () => {
 		if (collectionName && collection) {
-		  const db = firebase.firestore();
-		  db
-			.collection(collectionName)
-			.doc(resource.id)
-			.set({...resource})
-			.then(() => {
-			  this.setState(prevState => ({
-				loading: false,
-				revenue: this.calculateTotalRevenue(prevState.vehicles),
-				notification: {
-				  display: true,
-				  message: `The new ${resourceType} has been successfully added to the system`
-				}
-			  }), this.dismissNotification)
-			})
-			.catch(err => {
-			  this.setState({
-				loading: false,
-				notification: {
-				  display: true,
-				  message: `Could not add new ${resourceType}. Error: ${err.message}`
-				}
-			  }, this.dismissNotification)
-			})
+		  if (updateRemote) {
+			const db = firebase.firestore();
+			db
+			  .collection(collectionName)
+			  .doc(resource.id)
+			  .set({...resource})
+			  .then(() => {
+				this.setState(prevState => ({
+				  loading: false,
+				  revenue: calculateTotalRevenue(prevState.vehicles),
+				  notification: {
+					display: true,
+					message: `The new ${resourceType} has been successfully added to the system`
+				  }
+				}), this.dismissNotification)
+			  })
+			  .catch(err => {
+				this.setState({
+				  loading: false,
+				  notification: {
+					display: true,
+					message: `Could not add new ${resourceType}. Error: ${err.message}`
+				  }
+				}, this.dismissNotification)
+			  })
+		  }
 		} else {
 		  this.setState({
 			notification: {
@@ -242,8 +250,10 @@ export class App extends React.Component {
 	 * @param {string} resourceType - one of: "vehicle", "booking", "journey", "service", "fuel
 	 * purchase" or "fuelPurchase"
 	 * @param {Vehicle|Booking|Journey|Service|FuelPurchase} resource
+	 * @param {Boolean} updateRemote - optional parameter to also update the remote database
+	 * (defaults to true)
 	 */
-	this.confirmDeleteResource = (resourceType, resource) => {
+	this.confirmDeleteResource = (resourceType, resource, updateRemote = true) => {
 	  if (resourceType && resource) {
 		this.setDeleteResourceModalShow(null, null, () => {
 		  this.setState(prevState => ({
@@ -281,58 +291,58 @@ export class App extends React.Component {
 			  if (collection === 'vehicles') {
 				// delete everything associated with the vehicle first
 				// delete journeys and bookings
-				resource.bookings.forEach(b => {
-				  // delete all journeys for each booking
-				  b.journeys.forEach(j => {
+				if (updateRemote) {
+				  resource.bookings.forEach(b => {
+					// delete all journeys for each booking
+					b.journeys.forEach(j => {
+					  db
+						.collection('journeys')
+						.doc(j.id)
+						.delete()
+					});
+
+					// delete all fuel purchases for this booking
+					b.fuelPurchases.forEach(f => {
+					  db
+						.collection('fuelPurchases')
+						.doc(f.id)
+						.delete()
+					});
+
+					// delete the booking itself
 					db
-					  .collection('journeys')
-					  .doc(j.id)
+					  .collection('bookings')
+					  .doc(b.id)
 					  .delete()
 				  });
 
-				  // delete all fuel purchases for this booking
-				  b.fuelPurchases.forEach(f => {
+				  // delete services
+				  resource.services.forEach(s => {
 					db
-					  .collection('fuelPurchases')
-					  .doc(f.id)
+					  .collection('services')
+					  .doc(s.id)
 					  .delete()
 				  });
 
-				  // delete the booking itself
+				  // delete the vehicle itself
 				  db
-					.collection('bookings')
-					.doc(b.id)
+					.collection('vehicles')
+					.doc(resource.id)
 					.delete()
-				});
-
-				// delete services
-				resource.services.forEach(s => {
-				  db
-					.collection('services')
-					.doc(s.id)
-					.delete()
-				});
-
-				// delete the vehicle itself
-				db
-				  .collection('vehicles')
-				  .doc(resource.id)
-				  .delete()
-				  .then(() => {
-					this.setState(prevState => {
-					  let {vehicles} = prevState;
-					  vehicles = vehicles.filter(v => v.id !== resource.id);
-					  return ({
-						vehicles,
-						loading: false,
-						revenue: this.calculateTotalRevenue(vehicles),
-						notification: {
-						  display: true,
-						  message: `The ${resourceType} has been successfully removed from the system`
-						}
-					  });
-					}, this.dismissNotification)
-				  })
+				}
+				this.setState(prevState => {
+				  let {vehicles} = prevState;
+				  vehicles = vehicles.filter(v => v.id !== resource.id);
+				  return ({
+					vehicles,
+					loading: false,
+					revenue: calculateTotalRevenue(vehicles),
+					notification: {
+					  display: true,
+					  message: `The ${resourceType} has been successfully removed from the system`
+					}
+				  });
+				}, this.dismissNotification)
 			  } else if (collection === 'bookings') {
 				// delete booking from state first
 				this.setState(prevState => {
@@ -341,27 +351,27 @@ export class App extends React.Component {
 				  vehicleToBeModified.removeBookingByID(resource.id);
 				  return ({
 					vehicles: [
-					  ...vehicles.filter(v => v.id !== vehicleToBeModified.id),
-					  vehicleToBeModified
+					  vehicleToBeModified,
+					  ...vehicles.filter(v => v.id !== vehicleToBeModified.id)
 					]
 				  })
 				}, () => {
-				  // delete booking from firebase
-				  db
-					.collection('bookings')
-					.doc(resource.id)
-					.delete()
-					.then(() => {
-					  this.setState(prevState => ({
-						loading: false,
-						revenue: this.calculateTotalRevenue(prevState.vehicles),
-						notification: {
-						  display: true,
-						  message: `The ${resourceType} has been successfully removed from the system`
-						}
-					  }), this.dismissNotification)
-					})
-					.catch(err => {
+				  if (updateRemote) {
+					// delete booking from firebase
+					db
+					  .collection('bookings')
+					  .doc(resource.id)
+					  .delete()
+				  }
+				  this.setState(prevState => ({
+					loading: false,
+					revenue: calculateTotalRevenue(prevState.vehicles),
+					notification: {
+					  display: true,
+					  message: `The ${resourceType} has been successfully removed from the system`
+					}
+				  }), this.dismissNotification)
+/*					.catch(err => {
 					  this.state({
 						loading: false,
 						notification: {
@@ -369,7 +379,7 @@ export class App extends React.Component {
 						  message: `Error: ${err.message}`
 						}
 					  })
-					})
+					})*/
 				})
 			  } else if (collection === 'journeys') {
 				// delete journey from state
@@ -380,28 +390,29 @@ export class App extends React.Component {
 
 				  return ({
 					vehicles: [
-					  ...vehicles.filter(v => v.id !== vehicleToBeModified.id),
-					  vehicleToBeModified
+					  vehicleToBeModified,
+					  ...vehicles.filter(v => v.id !== vehicleToBeModified.id)
 					]
 				  })
 				}, () => {
-				  // delete journey from firebase
-				  db
-					.collection('journeys')
-					.doc(resource.id)
-					.delete()
-					.then(() => {
-					  this.setState(prevState => ({
-						loading: false,
-						revenue: this.calculateTotalRevenue(prevState.vehicles),
-						notification: {
-						  display: true,
-						  message: `The ${resourceType} has been successfully removed from the system`
-						}
-					  }), this.dismissNotification)
-					})
+				  if (updateRemote) {
+					// delete journey from firebase
+					db
+					  .collection('journeys')
+					  .doc(resource.id)
+					  .delete()
+					  .then(() => {
+						this.setState(prevState => ({
+						  loading: false,
+						  revenue: calculateTotalRevenue(prevState.vehicles),
+						  notification: {
+							display: true,
+							message: `The ${resourceType} has been successfully removed from the system`
+						  }
+						}), this.dismissNotification)
+					  })
+				  }
 				})
-
 			  } else if (collection === 'services') {
 				// delete service from state
 				this.setState(prevState => {
@@ -411,25 +422,27 @@ export class App extends React.Component {
 
 				  return ({
 					vehicles: [
-					  ...vehicles.filter(v => v.id !== vehicleToBeModified.id),
-					  vehicleToBeModified
+					  vehicleToBeModified,
+					  ...vehicles.filter(v => v.id !== vehicleToBeModified.id)
 					]
 				  })
 				}, () => {
-				  // delete service from firebase
-				  db
-					.collection('services')
-					.doc(resource.id)
-					.delete()
-					.then(() => {
-					  this.setState({
-						loading: false,
-						notification: {
-						  display: true,
-						  message: `The ${resourceType} has been successfully removed from the system`
-						}
-					  }, this.dismissNotification)
-					})
+				  if (updateRemote) {
+					// delete service from firebase
+					db
+					  .collection('services')
+					  .doc(resource.id)
+					  .delete()
+					  .then(() => {
+						this.setState({
+						  loading: false,
+						  notification: {
+							display: true,
+							message: `The ${resourceType} has been successfully removed from the system`
+						  }
+						}, this.dismissNotification)
+					  })
+				  }
 				})
 			  } else if (collection === 'fuelPurchases') {
 				// delete fuel purchase from the state
@@ -440,25 +453,27 @@ export class App extends React.Component {
 
 				  return ({
 					vehicles: [
-					  ...vehicles.filter(v => v.id !== vehicleToBeModified.id),
-					  vehicleToBeModified
+					  vehicleToBeModified,
+					  ...vehicles.filter(v => v.id !== vehicleToBeModified.id)
 					]
 				  })
 				}, () => {
-				  // delete fuel purchase from firebase
-				  db
-					.collection('fuelPurchases')
-					.doc(resource.id)
-					.delete()
-					.then(() => {
-					  this.setState({
-						loading: false,
-						notification: {
-						  display: true,
-						  message: `The ${resourceType} has been successfully removed from the system`
-						}
-					  }, this.dismissNotification)
-					})
+				  if (updateRemote) {
+					// delete fuel purchase from firebase
+					db
+					  .collection('fuelPurchases')
+					  .doc(resource.id)
+					  .delete()
+					  .then(() => {
+						this.setState({
+						  loading: false,
+						  notification: {
+							display: true,
+							message: `The ${resourceType} has been successfully removed from the system`
+						  }
+						}, this.dismissNotification)
+					  })
+				  }
 				})
 			  } else {
 				this.setState({
@@ -575,7 +590,7 @@ export class App extends React.Component {
 			});
 		  });
 
-		  const revenue = this.calculateTotalRevenue(vehicles);
+		  const revenue = calculateTotalRevenue(vehicles);
 		  return ({
 			vehicles,
 			revenue
@@ -616,7 +631,7 @@ export class App extends React.Component {
 				break;
 
 			  case 'bookings':
-				resource = new Booking(resource._vehicleID, resource._bookingType, resource._startDate, resource._endDate, resource._startOdometer, resource._id, resource._createdAt, resource._updatedAt);
+				resource = new Booking(resource._vehicleID, resource._bookingType, resource._startDate, resource._endDate, resource._startOdometer, resource._endOdometer, resource._id, resource._createdAt, resource._updatedAt);
 				break;
 
 			  case 'journeys':
@@ -663,74 +678,6 @@ export class App extends React.Component {
   async fetchCollections(...collections) {
 	return Promise.all(collections.map(collection => this.fetchCollection(collection)))
   }
-
-  /**
-   * @typedef {Object} Revenue
-   * @property {string} monthAndYear - month / year of the revenue recorded
-   * @property {number} revenue - revenue recorded for this month and year
-   */
-  /**
-   * Calculates and maps total revenue generated (by month and year, for the last 6 months) by all
-   * vehicles in the system
-   * @param {Array<Vehicle>} vehicles - vehicles registered in the system
-   * @returns {Array<Revenue>} data - mapped revenue data
-   */
-  calculateTotalRevenue = vehicles => {
-	let data = [];
-	vehicles = vehicles || this.state.vehicles;
-	if (vehicles && vehicles.length) {
-	  vehicles.forEach(v => {
-		const vehicleRevenue =
-		  v
-			.bookings
-			.reduce((mappedBookings, b) => {
-			  const {bookingCost} = b;
-			  const bookingMonthAndYear = moment(b.startDate, "YYYY-MM-DD").format('MMMM YYYY');
-			  const mappedBooking = {
-				bookingMonthAndYear,
-				bookingCost
-			  };
-			  mappedBookings.push(mappedBooking);
-			  return mappedBookings;
-			}, [])
-			.sort((mappedBooking1, mappedBooking2) => {
-			  return moment(mappedBooking1.bookingMonthAndYear, 'MMMM YYYY').isSameOrBefore(moment(mappedBooking2.bookingMonthAndYear, 'MMMM YYYY'))
-			})
-			.reduce((bookingsByMonthAndYear, mappedBooking) => {
-			  if (bookingsByMonthAndYear.some(b => moment(b.monthAndYear, 'MMMM YYYY').isSame(moment(mappedBooking.bookingMonthAndYear, 'MMMM YYYY')))) {
-				bookingsByMonthAndYear[bookingsByMonthAndYear.findIndex(entry => moment(entry.monthAndYear, 'MMMM YYYY').isSame(moment(mappedBooking.bookingMonthAndYear, 'MMMM YYYY')))].revenue += mappedBooking.bookingCost;
-			  } else {
-				bookingsByMonthAndYear.push({
-				  monthAndYear: mappedBooking.bookingMonthAndYear,
-				  revenue: mappedBooking.bookingCost
-				})
-			  }
-			  return bookingsByMonthAndYear;
-			}, []);
-		data.push(...vehicleRevenue);
-	  });
-	  data =
-		data
-		  .reduce((mappedRevenue, entry) => {
-			if (mappedRevenue.some(r => moment(r.monthAndYear, 'MMMM YYYY').isSame(moment(entry.monthAndYear, 'MMMM YYYY')))) {
-			  mappedRevenue[mappedRevenue.findIndex(r => moment(r.monthAndYear, 'MMMM YYYY').isSame(moment(entry.monthAndYear, 'MMMM YYYY')))].revenue += entry.revenue;
-			} else {
-			  mappedRevenue.push({
-				monthAndYear: entry.monthAndYear,
-				revenue: entry.revenue
-			  })
-			}
-			return mappedRevenue;
-		  }, []);
-	}
-	return data
-	  .sort((revenue1, revenue2) => {
-		return moment(revenue1.monthAndYear, 'MMMM YYYY').diff(moment(revenue2.monthAndYear, 'MMMM' +
-		  ' YYYY'))
-	  })
-	  .filter(revenue => moment(revenue.monthAndYear, 'MMMM YYYY').isSameOrBefore(moment(moment(), 'MMMM YYYY')))
-	  .filter(revenue => moment(revenue.monthAndYear, 'MMMM YYYY').isSameOrAfter(moment(moment(), 'MMMM YYYY').subtract(6, 'months')));
-  };
 
   render() {
 	return (
