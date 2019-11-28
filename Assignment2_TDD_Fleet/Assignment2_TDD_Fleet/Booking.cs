@@ -57,8 +57,15 @@ namespace Assignment2_TDD_Fleet
         {
             if (this.RentalType == BookingType.Day)
             {
-                int daysElapsed = (int)(this.EndRentDate - this.StartRentDate).TotalDays;
-                this.RentPrice = daysElapsed * 100 * 1.0;
+                if (DateTime.Compare(this.StartRentDate, this.EndRentDate) == 0)
+                {
+                    this.RentPrice = 100 * 1.0;
+                }
+                else
+                {
+                    int daysElapsed = (int)(this.EndRentDate - this.StartRentDate).TotalDays;
+                    this.RentPrice = daysElapsed * 100 * 1.0;
+                }
             }
             else
             {

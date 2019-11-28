@@ -319,6 +319,35 @@
                                     Width="100"
                                     DisplayMemberBinding="{Binding Path=TotalCost, StringFormat={}{0:c}}" />
 
+                            <GridViewColumn Header="Action" Width="auto">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="auto"></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="4"></ColumnDefinition>
+                                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                                <ColumnDefinition Width="4"></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Button x:Name="ButtonForDeleteFuel"                                                
+                                                Grid.Column="1"
+                                                Height="24" Width="auto"
+                                                Content="Delete Fuel"
+                                                Foreground="White"
+                                                Background="Red"
+                                                CommandParameter="{Binding}" Click="ButtonForDeleteFuel_Clicked"
+                                                >
+                                            </Button>
+
+                                        </Grid>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+
                         </GridView>
                     </ListView.View>
                 </ListView>

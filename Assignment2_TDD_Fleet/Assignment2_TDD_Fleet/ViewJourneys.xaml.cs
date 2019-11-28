@@ -21,6 +21,7 @@ namespace Assignment2_TDD_Fleet
     public partial class ViewJourneys : Window
     {
         public CarList carlist;
+        public Booking booking;
         public BookingList bookingList;
         public static Journey Journey;
         public List<Booking> bookings;
@@ -48,7 +49,7 @@ namespace Assignment2_TDD_Fleet
         {
             Button deleteJourneyButton = sender as Button;
             Journey j = deleteJourneyButton.CommandParameter as Journey;
-            CarList.journeys.Remove(j);
+            deleteJourney(j);
             Vehicle vehicle = CarList.vehicles.Find(v => v.Id == j.vehicleID);
             Booking booking = CarList.bookings.Find(b => b.id == BookingID);
             List<Journey> journeys = CarList.journeys.FindAll(journey => journey.BookingID == BookingID);
@@ -60,6 +61,15 @@ namespace Assignment2_TDD_Fleet
             vehicle.SaveVehicles(CarList.vehicles);
             vehicleListView.ItemsSource = CarList.vehicles;
             vehicleListView.Items.Refresh();
+        }
+        /// <summary>
+        /// this is a bool to test the delete method
+        /// </summary>
+        /// <param name="j"></param>
+        /// <returns></returns>
+        public static bool deleteJourney(Journey j)
+        {
+            return CarList.journeys.Remove(j);
         }
     }
 }

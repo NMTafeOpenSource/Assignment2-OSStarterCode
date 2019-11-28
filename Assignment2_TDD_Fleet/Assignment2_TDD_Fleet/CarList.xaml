@@ -31,8 +31,9 @@
                       Header="Booking List" Click="BookingList_Clicked" />
 
             <Separator></Separator>
-            <MenuItem x:Name="About" 
-                      Header="About"/>
+            <MenuItem x:Name="AboutMenu" 
+                      Header="About" Click="AboutMenu_Clicked"
+                      />
         </Menu>
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBar.ItemsPanel>

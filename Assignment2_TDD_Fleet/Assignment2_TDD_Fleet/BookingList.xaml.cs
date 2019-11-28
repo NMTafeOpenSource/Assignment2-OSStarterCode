@@ -117,7 +117,7 @@ namespace Assignment2_TDD_Fleet
         {
             Button deleteBookingButton = sender as Button;
             Booking detailsForBooking = deleteBookingButton.DataContext as Booking;
-            CarList.bookings.Remove(detailsForBooking);
+            deleteBooking(detailsForBooking);
             CollectionViewSource.GetDefaultView(BookingsListView.ItemsSource).Refresh();
             bookingListChanged = true;
             detailsForBooking.SaveBookings(bookings);
@@ -133,6 +133,15 @@ namespace Assignment2_TDD_Fleet
             relatedVehicle.SaveVehicles(CarList.vehicles);
             vehicleListView.ItemsSource = CarList.vehicles;
             vehicleListView.Items.Refresh();
+        }
+        /// <summary>
+        /// test bool to check if the delete function is working or not
+        /// </summary>
+        /// <param name="booking"></param>
+        /// <returns></returns>
+        public static bool deleteBooking(Booking booking)
+        {
+            return CarList.bookings.Remove(booking);
         }
     }
 }

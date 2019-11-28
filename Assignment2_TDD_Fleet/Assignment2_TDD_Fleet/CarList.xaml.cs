@@ -192,11 +192,21 @@ namespace Assignment2_TDD_Fleet
         {
             Button button = sender as Button;
             Vehicle detailsForAVehicle = button.DataContext as Vehicle;
-            vehicles.Remove(detailsForAVehicle);
+            deleteVehicle(detailsForAVehicle);
             CollectionViewSource.GetDefaultView(vehicleListView.ItemsSource).Refresh();
             vehicleListChanged = true;
             detailsForAVehicle.SaveVehicles(vehicles);
         }
+        /// <summary>
+        /// test bool to check if the delete function is working or not
+        /// </summary>
+        /// <param name="vehicle"></param>
+        /// <returns></returns>
+        public static bool deleteVehicle(Vehicle vehicle)
+        {
+            return vehicles.Remove(vehicle);
+        }
+
         /// <summary>
         /// this is a click event for edit button 
         /// </summary>
@@ -375,6 +385,12 @@ namespace Assignment2_TDD_Fleet
             PrintDetails printDetails = new PrintDetails();
             printDetails.vehicle = v;
             printDetails.ShowDialog();
+        }
+
+        private void AboutMenu_Clicked(object sender, RoutedEventArgs e)
+        {
+            About about = new About();
+            about.ShowDialog();
         }
     }
 }

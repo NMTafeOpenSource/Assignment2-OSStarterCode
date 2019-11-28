@@ -68,7 +68,7 @@ namespace Assignment2_TDD_Fleet
         {
             Button deleteServicesButton = (Button)sender;
             Service s = deleteServicesButton.CommandParameter as Service;
-            CarList.services.Remove(s);
+            deleteService(s);
             Vehicle relatedVehicle = CarList.vehicles.Find(v => v.Id == s.vehicleID);
             if (relatedVehicle != null)
             {
@@ -81,6 +81,41 @@ namespace Assignment2_TDD_Fleet
             }
             servicesListView.ItemsSource = CarList.services.FindAll(service => service.vehicleID == relatedVehicle.Id);
             servicesListView.Items.Refresh();
+        }
+        /// <summary>
+        /// this is a bool for unit test
+        /// to check if the delete button is working or not
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static bool deleteService(Service s)
+        {
+            return CarList.services.Remove(s);
+        }
+
+        /// <summary>
+        /// this is click event for delete fuel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButtonForDeleteFuel_Clicked(object sender, RoutedEventArgs e)
+        {
+            Button deleteFuelPurchase = (Button)sender;
+            FuelPurchase f = deleteFuelPurchase.CommandParameter as FuelPurchase;
+            deleteFuelPurchases(f);
+            Vehicle relatedVehicle = CarList.vehicles.Find(v => v.Id == f.VId);
+            FuelPurchasesViewForHistory.ItemsSource = CarList.fuelPurchases.FindAll(fuel => fuel.VId == relatedVehicle.Id);
+            FuelPurchasesViewForHistory.Items.Refresh();
+        }
+        /// <summary>
+        /// this is a bool for unit test
+        /// to check if the delete button is working or not
+        /// </summary>
+        /// <param name="f"></param>
+        /// <returns></returns>
+        public static bool deleteFuelPurchases(FuelPurchase f)
+        {
+            return CarList.fuelPurchases.Remove(f);
         }
     }
 }
