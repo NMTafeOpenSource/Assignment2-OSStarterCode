@@ -1,0 +1,265 @@
+﻿<Window x:Class="Assignment2_TDD_Fleet.CarList"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Assignment2_TDD_Fleet"
+        mc:Ignorable="d"
+        Title="CarList" Height="450" Width="1080">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top"
+              HorizontalAlignment="Left"
+              VerticalAlignment="Top"
+              Width="1080">
+            <MenuItem x:Name="MenuFile"
+                      Header="File">
+                <MenuItem x:Name="LoadFile"
+                          Header="Load" Click="LoadFile_Clicked"
+                          />
+                <MenuItem x:Name="SaveFile"
+                          Header="Save" Click="SaveFile_Clicked" />
+
+            </MenuItem>
+            <MenuItem x:Name="MenuVehicle" 
+                      Header="Vehicle">
+                <MenuItem x:Name="AddVehicle"
+                          Header="Add Vehicle" Click="AddVehicle_Clicked"
+                          />
+            </MenuItem>
+
+            <MenuItem x:Name="BookingListMenu"
+                      Header="Booking List" Click="BookingList_Clicked" />
+
+            <Separator></Separator>
+            <MenuItem x:Name="AboutMenu" 
+                      Header="About" Click="AboutMenu_Clicked"
+                      />
+        </Menu>
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="36"/>
+                            <ColumnDefinition Width="36"/>
+                            <ColumnDefinition Width="36"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+
+            <StatusBarItem>
+                <TextBlock x:Name="MessageTextBlock">Loading...</TextBlock>
+            </StatusBarItem>
+            <Separator Grid.Column="1"
+                       Margin="5"
+                       Width="1"
+                       Foreground="DimGray"/>
+
+            <StatusBarItem Grid.Column="2">
+                <TextBlock x:Name="SetTextBlock">Set</TextBlock>
+            </StatusBarItem>
+
+            <StatusBarItem Grid.Column="5"
+                           x:Name="NumLockStatus"
+                           Foreground="Gray"
+                           HorizontalContentAlignment="Center" Height="22" VerticalAlignment="Bottom">
+                <TextBlock>NUM</TextBlock>
+            </StatusBarItem>
+
+            <StatusBarItem Grid.Column="6"
+                           x:Name="CapsLockStatus"
+                           Foreground="Gray"
+                           HorizontalContentAlignment="Center">
+                <TextBlock>CAPS</TextBlock>
+            </StatusBarItem>
+
+            <StatusBarItem Grid.Column="7"
+                           x:Name="ScrollLockStatus"
+                           Foreground="Gray"
+                           HorizontalContentAlignment="Center">
+                <TextBlock>SCRL</TextBlock>
+            </StatusBarItem>
+        </StatusBar>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="331*"/>
+                <ColumnDefinition Width="563*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40*"
+                               MinHeight="40"/>
+                <RowDefinition Height="250*"
+                               MinHeight="250"/>
+                <RowDefinition Height="10*"
+                               MinHeight="10"/>
+            </Grid.RowDefinitions>
+
+            <ListView x:Name="VehicleListView"
+                      HorizontalAlignment="Center"
+                      Height="auto"
+                      MinWidth="400"
+                      Width="1080" Grid.ColumnSpan="2" Margin="2,50,1.6,0.2" Grid.RowSpan="2"
+                      >
+                <ListView.View>
+                    <GridView>
+                        <GridView.ColumnHeaderTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="AliceBlue" BorderThickness="2" CornerRadius="5">
+                                    <TextBlock Text="{Binding}" Width="auto"/>
+                                </Border>
+                            </DataTemplate>
+                        </GridView.ColumnHeaderTemplate>
+                        <GridViewColumn Header="Registration ID"
+                                    Width="100" 
+                                    DisplayMemberBinding="{Binding Path=RegistrationID}"/>
+
+                        <GridViewColumn Header="Manufacture"
+                                    Width="100" 
+                                    DisplayMemberBinding="{Binding Path=CarManufacture}"/>
+
+                        <GridViewColumn Header="Car Model"
+                                    Width="100"
+                                    DisplayMemberBinding="{Binding Path=CarModel}"/>
+
+                        <GridViewColumn Header="Year"
+                                    Width="100"
+                                    DisplayMemberBinding="{Binding Path=CarYear}"/>
+
+                        <GridViewColumn Header="Tank Capacity" 
+                                    Width="100"
+                                    DisplayMemberBinding="{Binding Path=TankCapacity}"/>
+
+                        <GridViewColumn Header="Vehicle Odometer" 
+                                    Width="120" 
+                                    DisplayMemberBinding="{Binding Path=VehicleOdometer}"/>
+
+                        <GridViewColumn Header="Car Revenue" 
+                                    Width="120" 
+                                    DisplayMemberBinding="{Binding Path=TotalRentalCost, StringFormat={}{0:C}}"/>
+
+
+                        <GridViewColumn 
+                            Header="Actions" Width="auto">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                                            <ColumnDefinition Width="4"></ColumnDefinition>
+                                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                                            <ColumnDefinition Width="4"></ColumnDefinition>
+                                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                                            <ColumnDefinition Width="4"></ColumnDefinition>
+                                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                                            <ColumnDefinition Width="4"></ColumnDefinition>
+                                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                                            <ColumnDefinition Width="4"></ColumnDefinition>
+                                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Button x:Name="btnEditVehicle"
+                                                Grid.Column="0"
+                                                Height="24" Width="45"
+                                                Content="Edit"
+                                                Background="Yellow"
+                                                Click="ButtonEdit_Clicked"
+                                                >
+                                        </Button>
+
+                                        <Button x:Name="btnRentVehicle"
+                                                Grid.Column="2"
+                                                Height="24" Width="45"
+                                                Content="Book"
+                                                Background="BlueViolet" 
+                                                Click="BtnRentVehicle_Click"
+                                                >
+                                        </Button>
+
+                                        <Button x:Name="btnDeleteVehicle"
+                                                Grid.Column="4"
+                                                Height="24" Width="45"
+                                                Content="Delete"
+                                                Background="IndianRed"
+                                                Click="DeleteButton_Clicked"
+                                                >
+                                        </Button>
+
+                                        <Button x:Name="ButtonViewJourneysForSelectedVehicle"
+                                                Grid.Column="6"
+                                                Height="24" Width="Auto"
+                                                Content="History"
+                                                Background="Silver" 
+                                                Click="ViewButton_Clicked"
+                                                CommandParameter="{Binding}" 
+                                                >
+                                        </Button>
+                                        <Button x:Name="btnServiceVehicle"
+                                                Grid.Column="8"
+                                                Height="24" Width="45"
+                                                Content="Service"
+                                                Background="Orange"
+                                                Click="ButtonService_Clicked"
+                                                >
+                                        </Button>
+                                        <Button x:Name="buttonPrintVehicle"
+                                                Grid.Column="10"
+                                                Height="24" Width="auto"
+                                                Content="Print Details"
+                                                Background="Coral"
+                                                CommandParameter="{Binding}" 
+                                                Click="buttonPrintVehicle_Click"
+                                                >
+                                        </Button>
+
+
+                                    </Grid>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+
+
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <Label Content="Filter"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   Margin="10,10,0,0"
+                   />
+
+            <TextBox x:Name="FilterTextBox" 
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Top"
+                     TextWrapping="Wrap"
+                     Text=""
+                     Margin="54,13,0,0"
+                     Height="23"
+                     Width="120" 
+                     TextChanged="Filter_Text_Changed"/>
+
+            <Button x:Name="buttonClear"
+                    Content="Clear" 
+                    HorizontalAlignment="Left"
+                    Margin="189,13,0,0"
+                    VerticalAlignment="Top"
+                    Width="48"
+                    Height="23" Click="buttonClear_Click"/>
+        </Grid>
+    </DockPanel>
+
+</Window>
