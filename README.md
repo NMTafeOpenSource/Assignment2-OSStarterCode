@@ -3,6 +3,9 @@ A basic car rental system developed for an assignment at North Metropolitan TAFE
  uses [React](https://reactjs.org/ "React") and the
  backend is
  currently handled by [Firebase](https://firebase.google.com/ "Firebase").
+ 
+ My original repo can be found [here](https://github.com/diego-cc/car-rental-system "Car Rental
+  System").
 
 ## Download
 `git clone https://github.com/diego-cc/car-rental-system.git`
